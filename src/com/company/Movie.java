@@ -9,10 +9,10 @@ public class Movie extends FileManager {
     private String id;
     private String title;
     private String year;
-    private ArrayList<Genre> genre = new ArrayList<>();
-    private ArrayList<Director> director = new ArrayList<>();
-    private ArrayList<Actor> cast = new ArrayList<>();
-    private ArrayList<AcademyAward> awards = new ArrayList<>();
+    private List<Genre> genre = new ArrayList<>();
+    private List<Director> director = new ArrayList<>();
+    private List<Actor> cast = new ArrayList<>();
+    private List<AcademyAward> awards = new ArrayList<>();
     private String format;
     private String lengthMinutes;
     String[] stringsInfo = new String[9];
