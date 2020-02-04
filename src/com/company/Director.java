@@ -3,7 +3,7 @@ package com.company;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Director extends FileManager {
+public class Director extends FileManager implements java.io.Serializable {
 
     private String id;
     private String firstName;

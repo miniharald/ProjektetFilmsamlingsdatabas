@@ -1,9 +1,6 @@
 package com.company;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.ObjectInputStream;
+import java.io.*;
 import java.util.Random;
 
 public class FileManager {
@@ -38,5 +35,19 @@ public class FileManager {
         Random random = new Random();
         int number = random.nextInt(99999999);
         return String.format("%08d", number);
+    }
+
+    public void writeToFile(String fileName, Object object) {
+        try {
+            FileOutputStream file =
+                    new FileOutputStream(fileName);
+            ObjectOutputStream output = new ObjectOutputStream(file);
+            output.writeObject(object);
+            output.close();
+            file.close();
+        } catch (IOException i) {
+            System.out.println("Någon blev fel när filen skulle skapas!");
+            i.printStackTrace();
+        }
     }
 }

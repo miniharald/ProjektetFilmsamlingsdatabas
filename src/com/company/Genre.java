@@ -2,7 +2,7 @@ package com.company;
 
 import java.util.List;
 
-public class Genre extends FileManager{
+public class Genre extends FileManager implements java.io.Serializable {
 
     private String name;
     private String id;

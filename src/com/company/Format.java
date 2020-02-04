@@ -2,7 +2,7 @@ package com.company;
 
 import java.util.List;
 
-public class Format extends FileManager {
+public class Format extends FileManager implements java.io.Serializable {
 
     private String name;
     private String id;

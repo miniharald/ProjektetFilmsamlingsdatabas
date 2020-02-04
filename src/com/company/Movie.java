@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class Movie extends FileManager {
+public class Movie extends FileManager implements java.io.Serializable {
 
     private String id;
     private String title;
