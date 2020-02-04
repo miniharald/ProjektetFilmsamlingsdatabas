@@ -9,6 +9,7 @@ public class AddMovie {
     private App app;
     private Check checker;
     private AddCrewToMovie addCrew;
+    private AddGenreAndAwardsToMovie addGenreAndAwardsToMovie;
     private FileManager fileManager = new FileManager();
     private boolean inputOk = false;
     private boolean isDuplicate;
@@ -24,7 +25,8 @@ public class AddMovie {
     public AddMovie(App app) {
         this.app = app;
         this.checker = new Check(app);
-        this.addCrew = new AddCrewToMovie(app)
+        this.addCrew = new AddCrewToMovie(app);
+        this.addGenreAndAwardsToMovie = new AddGenreAndAwardsToMovie(app);
     }
 
     public void run(Object o) {
@@ -32,7 +34,7 @@ public class AddMovie {
         title = title();
         year = year();
         format(fileName, title, year);
-        addGenre();
+        addGenreAndAwardsToMovie.addGenre();
         addMore("genre");
         addCrew.addDirector();
         addMore("regissör");
@@ -56,11 +58,6 @@ public class AddMovie {
     private String title() {
         System.out.println("Titel: ");
         title = scan.nextLine();
-        isDuplicate = checker.checkForDuplicates(title);
-        if (isDuplicate) {
-            System.out.println("Filmen finns redan.");
-            return null;
-        }
         return title;
     }
 
@@ -78,5 +75,25 @@ public class AddMovie {
             }
         } while (!yearCheck);
         return year;
+    }
+
+    private void addMore(String choice) {
+        boolean addMore = true;
+        String input;
+        do {
+            System.out.printf("Tryck 1 för att lägga till en till %s, tryck annars valfri siffra eller bokstav!", choice);
+            input = scan.nextLine();
+            if(input.equals("1") && choice.equals("regissör")) {
+                addCrew.addDirector();
+            }
+            else if(input.equals("1") && choice.equals("genre")) {
+                addGenreAndAwardsToMovie.addGenre();
+            }
+            else if(input.equals("1") && choice.equals("skådespelare")) {
+                addCrew.addActor();
+            } else {
+                addMore = false;
+            }
+        }while (addMore);
     }
 }

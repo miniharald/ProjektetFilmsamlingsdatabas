@@ -7,6 +7,7 @@ import java.util.Scanner;
 public class AddCrewToMovie {
 
     private App app;
+    private Check checker;
     private Scanner scan = new Scanner(System.in);
     private boolean inputOk = false;
     private boolean isDuplicate;
@@ -16,6 +17,7 @@ public class AddCrewToMovie {
 
     public AddCrewToMovie(App app) {
         this.app = app;
+        this.checker = new Check(app);
     }
 
     public void addDirector() {
