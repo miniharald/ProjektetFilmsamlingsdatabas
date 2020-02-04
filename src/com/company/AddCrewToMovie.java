@@ -79,11 +79,11 @@ public class AddCrewToMovie {
             Director directorObj = new Director();
             id = directorObj.getId();
             File folderPath = new File("database/directors/");
-            isDuplicate = fileManager.checkForDuplicateFileNames(folderPath, id);
+            isDuplicate = directorObj.checkForDuplicateFileNames(folderPath, id);
         } while (isDuplicate);
         app.getDirectors().add(new Director(directorFname, directorLname, id, app.getMovies().get(app.getMovies().size() - 1)));
         Director directorObj = app.getDirectors().get(app.getDirectors().size() - 1);
-        director.writeToFile("database/directors/" + id + ".txt", app.getDirectors().get(i));
+        fileManager.writeToFile("database/directors/" + id + ".txt", app.getDirectors().get(app.getDirectors().size() - 1));
         app.getMovies().get(app.getMovies().size() - 1).addToDirector(directorObj);
     }
 
