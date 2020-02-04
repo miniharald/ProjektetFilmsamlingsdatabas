@@ -1,10 +1,16 @@
 package com.company;
 
+import java.io.File;
 import java.util.Random;
 
 public class FileManager {
 
     public FileManager() {
+    }
+
+    public File[] readFromFolder(File folderPath) {
+        File[] fileList = folderPath.listFiles();
+        return fileList;
     }
 
     public String idGenerator() {
