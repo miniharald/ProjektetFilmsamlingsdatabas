@@ -38,7 +38,8 @@ public class AddMovie {
         title = title();
         year = year();
         lengthMinutes = lengthMinutes();
-        format(fileName, title, year, lengthMinutes);
+        format = format();
+        app.getMovies().add(new Movie(fileName, title, year, format, lengthMinutes));
         addGenreAndAwardsToMovie.addGenre();
         addMore("genre");
         addGenreAndAwardsToMovie.addAward();
@@ -94,7 +95,7 @@ public class AddMovie {
         return year;
     }
 
-    private void format(String fileName, String title, String year, String lengthMinutes) {
+    private String format() {
         do {
             int formatCounter = 1;
             for (Format formatObj : app.getFormats()) {
@@ -107,28 +108,41 @@ public class AddMovie {
             String formatChoice = scan.nextLine();
             int choice = Integer.parseInt(formatChoice);
             if (choice < formatCounter) {
-                for (int i = 0; i < app.getFormats().size(); i++) {
-                    if (choice - 1 == i) {
-                        format = app.getFormats().get(i).getId();
-                        inputOk = true;
-                    }
-                }
+                format = addExistingFormat(choice);
+                inputOk = true;
             } else if (choice == formatCounter) {
-                System.out.println("Nytt Format:");
-                format = scan.nextLine();
-                inputOk = checker.checkIfStringOfLetters(format);
-                if (format.length() < 1 || format.isBlank()) {
-                    System.out.println("Formatet måste innehålla minst en bokstav!");
-                    inputOk = false;
-                } else {
-                    app.getFormats().add(new Format(format));
-                    Format formatObj = app.getFormats().get(app.getFormats().size() - 1);
-                    format = app.getFormats().get(app.getFormats().size() - 1).getId();
-                    fileManager.writeToFile("database/formats/" + formatObj.getId(), formatObj);
-                }
+                format = addNewFormat();
+                inputOk = true;
             }
         } while (!inputOk);
-        app.getMovies().add(new Movie(fileName, title, year, format, lengthMinutes));
+        return format;
+    }
+
+    private String addExistingFormat(int choice) {
+        for (int i = 0; i < app.getFormats().size(); i++) {
+            if (choice - 1 == i) {
+                format = app.getFormats().get(i).getId();
+            }
+        }
+        return format;
+    }
+
+    private String addNewFormat() {
+        do {
+            System.out.println("Nytt Format:");
+            format = scan.nextLine();
+            inputOk = checker.checkIfStringOfLetters(format);
+            if (format.length() < 1 || format.isBlank()) {
+                System.out.println("Formatet måste innehålla minst en bokstav!");
+                inputOk = false;
+            } else {
+                app.getFormats().add(new Format(format));
+                Format formatObj = app.getFormats().get(app.getFormats().size() - 1);
+                format = app.getFormats().get(app.getFormats().size() - 1).getId();
+                fileManager.writeToFile("database/formats/" + formatObj.getId(), formatObj);
+            }
+        } while (!inputOk);
+        return format;
     }
 
     private void addMore(String choice) {
