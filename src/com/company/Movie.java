@@ -57,7 +57,7 @@ public class Movie extends FileManager {
             for (AcademyAward award : awards) {
                 String matchId = award.getId();
                 if (matchId.equals(genreId)) {
-                    this.award.add(award);
+                    this.awards.add(award);
                 }
             }
         }
@@ -91,31 +91,31 @@ public class Movie extends FileManager {
         this.year = year;
     }
 
-    public ArrayList<Genre> getGenre() {
+    public List<Genre> getGenre() {
         return genre;
     }
 
-    public void setGenre(ArrayList<Genre> genre) {
+    public void setGenre(List<Genre> genre) {
         this.genre = genre;
     }
 
-    public ArrayList<Director> getDirector() {
+    public List<Director> getDirector() {
         return director;
     }
 
-    public void setDirector(ArrayList<Director> director) {
+    public void setDirector(List<Director> director) {
         this.director = director;
     }
 
-    public ArrayList<Actor> getCast() {
+    public List<Actor> getCast() {
         return cast;
     }
 
-    public void setCast(ArrayList<Actor> cast) {
+    public void setCast(List<Actor> cast) {
         this.cast = cast;
     }
 
-    public ArrayList<AcademyAward> getAwards() {
+    public List<AcademyAward> getAwards() {
         return awards;
     }
 
@@ -145,6 +145,38 @@ public class Movie extends FileManager {
 
     public void setStringsInfo(String[] stringsInfo) {
         this.stringsInfo = stringsInfo;
+    }
+
+    public void addToGenre(Genre newGenre) {
+        genre.add(newGenre);
+    }
+
+    public void removeFromGenre(Genre newGenre) {
+        genre.remove(newGenre);
+    }
+
+    public void addToCast(Actor newActor) {
+        cast.add(newActor);
+    }
+
+    public void removeFromCast(Actor newActor) {
+        cast.remove(newActor);
+    }
+
+    public void addToDirector(Director newDirector) {
+        director.add(newDirector);
+    }
+
+    public void removeFromDirector(Director newDirector) {
+        director.remove(newDirector);
+    }
+
+    public void addToAwards(AcademyAward newAward) {
+        awards.add(newAward);
+    }
+
+    public void removeFromAwards(AcademyAward newAward) {
+        awards.remove(newAward);
     }
 
     public String writeToString() {

@@ -92,6 +92,22 @@ public class Director extends FileManager {
         this.filmography = filmography;
     }
 
+    public void addToFilmography(Movie newMovie) {
+        filmography.add(newMovie);
+    }
+
+    public void removeFromFilmography(Movie movie) {
+        filmography.remove(movie);
+    }
+
+    public void addToAwards(AcademyAward newAward) {
+        awards.add(newAward);
+    }
+
+    public void removeFromAwards(AcademyAward newAward) {
+        awards.remove(newAward);
+    }
+
     public String WriteToString() {
         String movies = "";
         String awardsWon = "";
