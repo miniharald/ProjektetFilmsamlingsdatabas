@@ -8,6 +8,7 @@ public class AddMovie {
     private Scanner scan = new Scanner(System.in);
     private App app;
     private Check checker;
+    private AddCrewToMovie addCrew;
     private FileManager fileManager = new FileManager();
     private boolean inputOk = false;
     private boolean isDuplicate;
@@ -23,6 +24,7 @@ public class AddMovie {
     public AddMovie(App app) {
         this.app = app;
         this.checker = new Check(app);
+        this.addCrew = new AddCrewToMovie(app)
     }
 
     public void run(Object o) {
@@ -32,9 +34,9 @@ public class AddMovie {
         format(fileName, title, year);
         addGenre();
         addMore("genre");
-        addDirector();
+        addCrew.addDirector();
         addMore("regissör");
-        addActor();
+        addCrew.addActor();
         addMore("skådespelare");
         app.getMovies().get(app.getMovies().size() - 1).writeToFile(("database/movies/" + fileName), (app.getMovies().get(app.getMovies().size() - 1).toString()));
         Movie movie = app.getMovies().get(app.getMovies().size() - 1);

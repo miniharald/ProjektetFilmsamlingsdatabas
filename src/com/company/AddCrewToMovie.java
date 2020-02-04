@@ -6,18 +6,19 @@ import java.util.Scanner;
 
 public class AddCrewToMovie {
 
-    AddMovie addMovie;
-    private FileManager fileManager = new FileManager();
+    private App app;
     private Scanner scan = new Scanner(System.in);
     private boolean inputOk = false;
     private boolean isDuplicate;
     private String id ="";
+    private String firstName;
+    private String lastName;
 
-    public AddCrewToMovie(AddMovie addMovie) {
-        this.addMovie = addMovie;
+    public AddCrewToMovie(App app) {
+        this.app = app;
     }
 
-    private void addDirector() {
+    public void addDirector() {
         do {
             int counter = 1;
             for (Director directorObj : app.getDirectors()) {
@@ -55,43 +56,24 @@ public class AddCrewToMovie {
     }
 
     private void addNewDirector() {
-        String directorFname;
-        do {
-            System.out.println("Förnamn:");
-            directorFname = scan.nextLine();
-            inputOk = checker.checkIfStringOfLetters(directorFname);
-            if (directorFname.length() < 1 || directorFname.isBlank()) {
-                System.out.println("Namnet måste innehålla minst en bokstav!");
-                inputOk = false;
-            }
-        }while (!inputOk);
-        String directorLname;
-        do {
-            System.out.println("Efternamn:");
-            directorLname = scan.nextLine();
-            inputOk = checker.checkIfStringOfLetters(directorLname);
-            if (directorLname.length() < 1 || directorLname.isBlank()) {
-                System.out.println("Namnet måste innehålla minst en bokstav!");
-                inputOk = false;
-            }
-        }while (!inputOk);
+        inputName();
         do {
             Director directorObj = new Director();
             id = directorObj.getId();
             File folderPath = new File("database/directors/");
             isDuplicate = directorObj.checkForDuplicateFileNames(folderPath, id);
         } while (isDuplicate);
-        app.getDirectors().add(new Director(directorFname, directorLname, id, app.getMovies().get(app.getMovies().size() - 1)));
+        app.getDirectors().add(new Director(firstName, lastName, id, app.getMovies().get(app.getMovies().size() - 1)));
         Director directorObj = app.getDirectors().get(app.getDirectors().size() - 1);
-        fileManager.writeToFile("database/directors/" + id + ".txt", app.getDirectors().get(app.getDirectors().size() - 1));
+        directorObj.writeToFile("database/directors/" + id + ".txt", app.getDirectors().get(app.getDirectors().size() - 1));
         app.getMovies().get(app.getMovies().size() - 1).addToDirector(directorObj);
     }
 
-    private void addActor() {
+    public void addActor() {
         do {
             int counter = 1;
-            for (Actor actorObj : app.getActors()) {
-                System.out.println("[" + counter + "]" + " " + actorObj.getFirstName() + " " + actorObj.getLastName());
+            for (Actor actor : app.getActors()) {
+                System.out.println("[" + counter + "]" + " " + actor.getFirstName() + " " + actor.getLastName());
                 counter++;
             }
             System.out.println("[" + counter + "] Lägg till skådespelare");
@@ -111,16 +93,13 @@ public class AddCrewToMovie {
     private void addExistingActor(int choice) {
         for (int i = 0; i < app.getActors().size(); i++) {
             if (choice - 1 == i) {
-                actorId = app.getActors().get(i).getId();
+                id = app.getActors().get(i).getId();
                 for (Actor actor : app.getActors()) {
-                    if (actor.getId().equals(actorId)) {
-                        String actorsMovies = "";
+                    if (actor.getId().equals(id)) {
                         actor.addToFilmography(app.getMovies().get(app.getMovies().size() - 1));
-                        for (Movie movie : actor.getFilmography()) {
-                            actorsMovies = actorsMovies.concat(movie.getId() + " ");
-                        }
                         app.getMovies().get(app.getMovies().size() - 1).addToCast(actor);
-                        actor.editFile("database/actors/" + actorId + ".txt", "Filmer", "Filmer: " + actorsMovies);
+                        actor.deleteFiles(Paths.get("database/actors/" + id + ".txt"));
+                        actor.writeToFile("database/actors/" + id + ".txt", app.getActors().get(i));
                     }
                 }
             }
@@ -128,35 +107,39 @@ public class AddCrewToMovie {
     }
 
     private void addNewActor() {
-        String actorFname;
-        do {
-            System.out.println("Förnamn:");
-            actorFname = scan.nextLine();
-            inputOk = checker.checkIfStringOfLetters(actorFname);
-            if (actorFname.length() < 1 || actorFname.isBlank()) {
-                System.out.println("Namnet måste innehålla minst en bokstav!");
-                inputOk = false;
-            }
-        } while (!inputOk);
-        String actorLname;
-        do {
-            System.out.println("Efternamn:");
-            actorLname = scan.nextLine();
-            inputOk = checker.checkIfStringOfLetters(actorLname);
-            if (actorLname.length() < 1 || actorLname.isBlank()) {
-                System.out.println("Namnet måste innehålla minst en bokstav!");
-                inputOk = false;
-            }
-        } while (!inputOk);
+        inputName();
         do {
             Actor actorObj = new Actor();
-            actorId = actorObj.getId();
+            id = actorObj.getId();
             File folderPath = new File("database/actors/");
-            isDuplicate = fileManager.checkForDuplicateFileNames(folderPath, actorId);
+            isDuplicate = actorObj.checkForDuplicateFileNames(folderPath, id);
         } while (isDuplicate);
-        app.getActors().add(new Actor(actorFname, actorLname, actorId, app.getMovies().get(app.getMovies().size() - 1)));
+        app.getActors().add(new Actor(firstName, lastName, id, app.getMovies().get(app.getMovies().size() - 1)));
         Actor actorObj = app.getActors().get(app.getActors().size() - 1);
-        actorObj.writeToFile(("database/actors/" + actorObj.getId()), (actorObj.toString()));
+        actorObj.writeToFile("database/actors/" + id + ".txt", app.getActors().get(app.getActors().size() - 1));
         app.getMovies().get(app.getMovies().size() - 1).addToCast(actorObj);
+    }
+
+    private void inputName() {
+        firstName = "";
+        do {
+            System.out.println("Förnamn:");
+            firstName = scan.nextLine();
+            inputOk = checker.checkIfStringOfLetters(firstName);
+            if (firstName.length() < 1 || firstName.isBlank()) {
+                System.out.println("Namnet måste innehålla minst en bokstav!");
+                inputOk = false;
+            }
+        }while (!inputOk);
+        lastName = "";
+        do {
+            System.out.println("Efternamn:");
+            lastName = scan.nextLine();
+            inputOk = checker.checkIfStringOfLetters(lastName);
+            if (lastName.length() < 1 || lastName.isBlank()) {
+                System.out.println("Namnet måste innehålla minst en bokstav!");
+                inputOk = false;
+            }
+        }while (!inputOk);
     }
 }
