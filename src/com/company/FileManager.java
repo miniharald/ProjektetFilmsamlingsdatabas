@@ -1,6 +1,8 @@
 package com.company;
 
 import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.Random;
 
 public class FileManager {
@@ -29,6 +31,20 @@ public class FileManager {
             c.printStackTrace();
         }
         return object;
+    }
+
+    public void deleteFiles(Path path) {
+        File file = path.toFile();
+        if (!file.exists()) {
+            System.out.println("Filen existerar inte, försök igen!");
+        } else {
+            try {
+
+                Files.delete(path);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     public String idGenerator() {
