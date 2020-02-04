@@ -1,4 +1,6 @@
-package com.company;
+package com.company.methods;
+
+import com.company.App;
 
 public class Check {
 
@@ -8,7 +10,7 @@ public class Check {
         this.app = app;
     }
 
-    protected boolean checkIfStringOfNumbers(String stringToCheck) {
+    public boolean checkIfStringOfNumbers(String stringToCheck) {
         stringToCheck = stringToCheck.replace(" ", "");
         Character[] charList = new Character[stringToCheck.length()];
         for (int i = 0; i < stringToCheck.length(); i++) {
@@ -23,7 +25,7 @@ public class Check {
         return true;
     }
 
-    protected boolean checkIfStringOfLetters(String stringToCheck) {
+    public boolean checkIfStringOfLetters(String stringToCheck) {
         stringToCheck = stringToCheck.replace(" ", "");
         stringToCheck = stringToCheck.replace(".", "");
         stringToCheck = stringToCheck.replace("-", "");

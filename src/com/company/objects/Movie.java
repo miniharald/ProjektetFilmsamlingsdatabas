@@ -1,4 +1,6 @@
-package com.company;
+package com.company.objects;
+
+import com.company.FileManager;
 
 import java.util.ArrayList;
 import java.util.Arrays;

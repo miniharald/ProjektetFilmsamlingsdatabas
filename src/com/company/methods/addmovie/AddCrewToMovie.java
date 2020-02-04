@@ -1,4 +1,9 @@
-package com.company;
+package com.company.methods.addmovie;
+
+import com.company.objects.Actor;
+import com.company.App;
+import com.company.objects.Director;
+import com.company.methods.Check;
 
 import java.io.File;
 import java.nio.file.Paths;

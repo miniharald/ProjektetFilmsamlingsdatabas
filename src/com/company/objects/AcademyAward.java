@@ -1,23 +1,25 @@
-package com.company;
+package com.company.objects;
+
+import com.company.FileManager;
 
 import java.util.List;
 
-public class Genre extends FileManager implements java.io.Serializable {
+public class AcademyAward extends FileManager implements java.io.Serializable {
 
     private String name;
     private String id;
 
-    public Genre(String name) {
+    public AcademyAward(String name) {
         this.name = name;
         this.id = idGenerator();
     }
 
-    public Genre(String name, String id) {
+    public AcademyAward(String name, String id) {
         this.name = name;
         this.id = id;
     }
 
-    public Genre(List<String> readFromFile) {
+    public AcademyAward(List<String> readFromFile) {
         int i = 0;
         String[] stringsInfo = new String[2];
         for (String content : readFromFile) {
@@ -29,7 +31,7 @@ public class Genre extends FileManager implements java.io.Serializable {
         this.name = stringsInfo[1];
     }
 
-    public Genre() {
+    public AcademyAward() {
         this.id = idGenerator();
     }
 
@@ -50,7 +52,7 @@ public class Genre extends FileManager implements java.io.Serializable {
     }
 
     public String writeToString() {
-        return "Id: " + this.id + "\nGenre: " + this.name;
+        return "Id: " + this.id + "\nOscar: " + this.name;
     }
 
     @Override

@@ -1,4 +1,6 @@
-package com.company;
+package com.company.methods;
+
+import com.company.App;
 
 import java.util.Scanner;
 
