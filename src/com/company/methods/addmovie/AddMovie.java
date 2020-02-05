@@ -33,7 +33,7 @@ public class AddMovie {
         this.addGenreAndAwardsToMovie = new AddGenreAndAwardsToMovie(app);
     }
 
-    public void run(Object o) {
+    public void run() {
         fileName = fileName();
         title = title();
         year = year();
@@ -42,15 +42,14 @@ public class AddMovie {
         app.getMovies().add(new Movie(fileName, title, year, format, lengthMinutes));
         addGenreAndAwardsToMovie.addGenre();
         addMore("genre");
-        addGenreAndAwardsToMovie.addAward();
+        addGenreAndAwardsToMovie.areYouAddingAward();
         addMore("Oscar");
         addCrew.addDirector();
         addMore("regissör");
         addCrew.addActor();
         addMore("skådespelare");
-        app.getMovies().get(app.getMovies().size() - 1).writeToFile(("database/movies/" + fileName), (app.getMovies().get(app.getMovies().size() - 1).toString()));
         Movie movie = app.getMovies().get(app.getMovies().size() - 1);
-        movie.writeToFile(movie.getId(), movie);
+        movie.writeToFile("database/movies/" + fileName + ".txt", movie);
         System.out.println("Filmen är inlagd");
     }
 
@@ -139,7 +138,7 @@ public class AddMovie {
                 app.getFormats().add(new Format(format));
                 Format formatObj = app.getFormats().get(app.getFormats().size() - 1);
                 format = app.getFormats().get(app.getFormats().size() - 1).getId();
-                fileManager.writeToFile("database/formats/" + formatObj.getId(), formatObj);
+                fileManager.writeToFile("database/formats/" + formatObj.getId() + ".txt", formatObj);
             }
         } while (!inputOk);
         return format;

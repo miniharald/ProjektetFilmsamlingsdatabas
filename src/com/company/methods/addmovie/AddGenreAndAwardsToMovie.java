@@ -1,5 +1,6 @@
 package com.company.methods.addmovie;
 
+import com.company.FileManager;
 import com.company.objects.AcademyAward;
 import com.company.App;
 import com.company.objects.Genre;
@@ -12,6 +13,7 @@ public class AddGenreAndAwardsToMovie {
 
     private App app;
     private Check checker;
+    private FileManager fileManager = new FileManager();
     private Scanner scan = new Scanner(System.in);
     private boolean inputOk = false;
     private boolean isDuplicate;
@@ -60,15 +62,15 @@ public class AddGenreAndAwardsToMovie {
 
     private void addNewGenre() {
         inputNames("Genre");
-        do {
+        //do {
             Genre genre = new Genre();
             id = genre.getId();
-            File folderPath = new File("database/genre/");
-            isDuplicate = genre.checkForDuplicateFileNames(folderPath, id);
-        } while (isDuplicate);
+            //File folderPath = new File("database/genre/");
+            //isDuplicate = genre.checkForDuplicateFileNames(folderPath, id);
+        //} while (isDuplicate);
         app.getGenres().add(new Genre(input));
-        Genre genre = app.getGenres().get(app.getGenres().size() - 1);
-        genre.writeToFile("database/genres/" + id, genre);
+        genre = app.getGenres().get(app.getGenres().size() - 1);
+        fileManager.writeToFile("database/genres/" + id + ".txt", genre);
     }
 
     public void addAward() {
@@ -108,15 +110,24 @@ public class AddGenreAndAwardsToMovie {
 
     private void addNewAward() {
         inputNames("Oscar");
-        do {
+        //do {
             AcademyAward award = new AcademyAward();
             id = award.getId();
-            File folderPath = new File("database/awards/");
-            isDuplicate = award.checkForDuplicateFileNames(folderPath, id);
-        } while (isDuplicate);
+            //File folderPath = new File("database/awards/");
+            //isDuplicate = award.checkForDuplicateFileNames(folderPath, id);
+        //} while (isDuplicate);
         app.getAwards().add(new AcademyAward(input));
-        AcademyAward award = app.getAwards().get(app.getAwards().size() - 1);
-        award.writeToFile("database/awards/" + id, award);
+        award = app.getAwards().get(app.getAwards().size() - 1);
+        fileManager.writeToFile("database/awards/" + id + ".txt", award);
+    }
+
+    public void areYouAddingAward() {
+        System.out.println("Tryck 1 för att lägga till en Oscars. Annars valfri bokstav eller siffra!");
+        String input = scan.nextLine();
+        if(input.equals("1")) {
+            addAward();
+        }
+        return;
     }
 
     private void inputNames(String type) {
