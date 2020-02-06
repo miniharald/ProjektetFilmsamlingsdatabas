@@ -1,4 +1,4 @@
-package com.company;
+package com.company.dbmaker;
 
 public class BaseObject implements java.io.Serializable {
     private String id;

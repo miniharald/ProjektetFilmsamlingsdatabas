@@ -1,10 +1,8 @@
 package com.company.objects;
 
-import com.company.BaseObject;
-import com.company.FileManager;
+import com.company.dbmaker.BaseObject;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class Actor extends BaseObject {
     private String firstName;

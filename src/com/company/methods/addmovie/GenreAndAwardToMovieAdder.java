@@ -1,25 +1,25 @@
 package com.company.methods.addmovie;
 
 import com.company.App;
-import com.company.FileManager;
-import com.company.methods.Check;
+import com.company.dbmaker.FileManager;
+import com.company.methods.Checker;
 import com.company.objects.AcademyAward;
 import com.company.objects.Genre;
 import java.util.Scanner;
 
-public class AddGenreAndAwardsToMovie {
+public class GenreAndAwardToMovieAdder {
 
     private App app;
-    private Check checker;
+    private Checker checker;
     private FileManager fileManager = new FileManager();
     private Scanner scan = new Scanner(System.in);
     private boolean inputOk = false;
     private String id = "";
     private String input;
 
-    public AddGenreAndAwardsToMovie(App app) {
+    public GenreAndAwardToMovieAdder(App app) {
         this.app = app;
-        this.checker = new Check(app);
+        this.checker = new Checker(app);
     }
 
     public void addGenre() {

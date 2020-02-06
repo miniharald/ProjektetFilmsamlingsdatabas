@@ -1,4 +1,4 @@
-package com.company;
+package com.company.dbmaker;
 
 import java.io.*;
 import java.nio.file.Files;

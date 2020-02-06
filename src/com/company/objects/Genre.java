@@ -1,9 +1,6 @@
 package com.company.objects;
 
-import com.company.BaseObject;
-import com.company.FileManager;
-
-import java.util.List;
+import com.company.dbmaker.BaseObject;
 
 public class Genre extends BaseObject {
 

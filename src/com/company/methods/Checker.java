@@ -2,11 +2,11 @@ package com.company.methods;
 
 import com.company.App;
 
-public class Check {
+public class Checker {
 
     App app;
 
-    public Check(App app) {
+    public Checker(App app) {
         this.app = app;
     }
 

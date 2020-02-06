@@ -1,19 +1,18 @@
 package com.company.methods.addmovie;
 
 import com.company.App;
-import com.company.FileManager;
-import com.company.methods.Check;
+import com.company.dbmaker.FileManager;
+import com.company.methods.Checker;
 import com.company.objects.Actor;
 import com.company.objects.Director;
 
-import java.io.File;
 import java.nio.file.Paths;
 import java.util.Scanner;
 
 public class CrewToMovieAdder {
 
     private App app;
-    private Check checker;
+    private Checker checker;
     private FileManager fileManager = new FileManager();
     private Scanner scan = new Scanner(System.in);
     private boolean inputOk = false;
@@ -23,7 +22,7 @@ public class CrewToMovieAdder {
 
     public CrewToMovieAdder(App app) {
         this.app = app;
-        this.checker = new Check(app);
+        this.checker = new Checker(app);
     }
 
     public void addDirector() {

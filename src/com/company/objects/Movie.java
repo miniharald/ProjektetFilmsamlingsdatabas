@@ -1,7 +1,6 @@
 package com.company.objects;
 
-import com.company.BaseObject;
-import com.company.FileManager;
+import com.company.dbmaker.BaseObject;
 
 import java.util.ArrayList;
 import java.util.Arrays;

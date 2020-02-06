@@ -1,21 +1,20 @@
 package com.company.methods.addmovie;
 
 import com.company.App;
-import com.company.FileManager;
-import com.company.methods.Check;
+import com.company.dbmaker.FileManager;
+import com.company.methods.Checker;
 import com.company.objects.Format;
 import com.company.objects.Movie;
 
-import java.io.File;
 import java.util.Scanner;
 
 public class MovieAdder {
 
     private Scanner scan = new Scanner(System.in);
     private App app;
-    private Check checker;
+    private Checker checker;
     private CrewToMovieAdder addCrew;
-    private AddGenreAndAwardsToMovie addGenreAndAwardsToMovie;
+    private GenreAndAwardToMovieAdder addGenreAndAwardsToMovie;
     private FileManager fileManager = new FileManager();
     private boolean inputOk = false;
     private String fileName;
@@ -26,9 +25,9 @@ public class MovieAdder {
 
     public MovieAdder(App app) {
         this.app = app;
-        this.checker = new Check(app);
+        this.checker = new Checker(app);
         this.addCrew = new CrewToMovieAdder(app);
-        this.addGenreAndAwardsToMovie = new AddGenreAndAwardsToMovie(app);
+        this.addGenreAndAwardsToMovie = new GenreAndAwardToMovieAdder(app);
     }
 
     public void run() {

@@ -4,15 +4,15 @@ import com.company.App;
 
 import java.util.Scanner;
 
-public class Browse {
+public class DbViewer {
 
     private Scanner scan = new Scanner(System.in);
     App app;
-    Check checker;
+    Checker checker;
     private boolean inputOk = false;
 
-    public Browse(App app) {
+    public DbViewer(App app) {
         this.app = app;
-        this.checker = new Check(app);
+        this.checker = new Checker(app);
     }
 }
