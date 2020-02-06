@@ -1,12 +1,11 @@
 package com.company.methods.addmovie;
 
-import com.company.FileManager;
-import com.company.objects.AcademyAward;
 import com.company.App;
-import com.company.objects.Genre;
+import com.company.FileManager;
 import com.company.methods.Check;
+import com.company.objects.AcademyAward;
+import com.company.objects.Genre;
 
-import java.io.File;
 import java.util.Scanner;
 
 public class AddGenreAndAwardsToMovie {

@@ -1,15 +1,15 @@
 package com.company.methods.addmovie;
 
-import com.company.objects.Actor;
 import com.company.App;
-import com.company.objects.Director;
 import com.company.methods.Check;
+import com.company.objects.Actor;
+import com.company.objects.Director;
 
 import java.io.File;
 import java.nio.file.Paths;
 import java.util.Scanner;
 
-public class AddCrewToMovie {
+public class CrewToMovieAdder {
 
     private App app;
     private Check checker;
@@ -20,7 +20,7 @@ public class AddCrewToMovie {
     private String firstName;
     private String lastName;
 
-    public AddCrewToMovie(App app) {
+    public CrewToMovieAdder(App app) {
         this.app = app;
         this.checker = new Check(app);
     }

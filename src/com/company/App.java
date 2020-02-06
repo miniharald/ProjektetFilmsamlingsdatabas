@@ -1,6 +1,6 @@
 package com.company;
 
-import com.company.methods.addmovie.AddMovie;
+import com.company.methods.addmovie.MovieAdder;
 import com.company.objects.*;
 
 import java.util.ArrayList;
@@ -17,7 +17,7 @@ public class App {
     private FileManager fileManager = new FileManager();
 
     public App() {
-        AddMovie test = new AddMovie(this);
+        MovieAdder test = new MovieAdder(this);
         test.run();
     }
 
