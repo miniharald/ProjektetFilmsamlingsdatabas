@@ -5,7 +5,6 @@ import com.company.FileManager;
 import com.company.methods.Check;
 import com.company.objects.AcademyAward;
 import com.company.objects.Genre;
-
 import java.util.Scanner;
 
 public class AddGenreAndAwardsToMovie {
@@ -15,7 +14,6 @@ public class AddGenreAndAwardsToMovie {
     private FileManager fileManager = new FileManager();
     private Scanner scan = new Scanner(System.in);
     private boolean inputOk = false;
-    private boolean isDuplicate;
     private String id = "";
     private String input;
 
@@ -61,12 +59,8 @@ public class AddGenreAndAwardsToMovie {
 
     private void addNewGenre() {
         inputNames("Genre");
-        //do {
-            Genre genre = new Genre();
-            id = genre.getId();
-            //File folderPath = new File("database/genre/");
-            //isDuplicate = genre.checkForDuplicateFileNames(folderPath, id);
-        //} while (isDuplicate);
+        Genre genre = new Genre();
+        id = genre.getId();
         app.getGenres().add(new Genre(input));
         genre = app.getGenres().get(app.getGenres().size() - 1);
         fileManager.writeToFile("database/genres/" + id + ".txt", genre);
@@ -110,10 +104,10 @@ public class AddGenreAndAwardsToMovie {
     private void addNewAward() {
         inputNames("Oscar");
         //do {
-            AcademyAward award = new AcademyAward();
-            id = award.getId();
-            //File folderPath = new File("database/awards/");
-            //isDuplicate = award.checkForDuplicateFileNames(folderPath, id);
+        AcademyAward award = new AcademyAward();
+        id = award.getId();
+        //File folderPath = new File("database/awards/");
+        //isDuplicate = award.checkForDuplicateFileNames(folderPath, id);
         //} while (isDuplicate);
         app.getAwards().add(new AcademyAward(input));
         award = app.getAwards().get(app.getAwards().size() - 1);

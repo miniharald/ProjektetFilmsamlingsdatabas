@@ -1,14 +1,14 @@
 package com.company.objects;
 
+import com.company.BaseObject;
 import com.company.FileManager;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class Movie extends FileManager implements java.io.Serializable {
+public class Movie extends BaseObject {
 
-    private String id;
     private String title;
     private String year;
     private List<Genre> genre = new ArrayList<>();
@@ -22,8 +22,8 @@ public class Movie extends FileManager implements java.io.Serializable {
     public Movie() {
     }
 
-    public Movie(String id, String title, String year, String format, String lengthMinutes) {
-        this.id = id;
+    public Movie(String title, String year, String format, String lengthMinutes) {
+        super();
         this.title = title;
         this.year = year;
         this.genre = new ArrayList<>();
@@ -33,48 +33,6 @@ public class Movie extends FileManager implements java.io.Serializable {
         this.format = format;
         this.lengthMinutes = lengthMinutes;
 
-    }
-
-    public Movie(List<String> readFromFile, List<Genre> genres) {
-        int i = 0;
-        for (String content : readFromFile) {
-            String trim = content.substring(content.indexOf(":") + 1).trim();
-            stringsInfo[i] = trim;
-            i++;
-        }
-        this.id = stringsInfo[0];
-        this.title = stringsInfo[1];
-        this.year = stringsInfo[2];
-        String[] genreArray = stringsInfo[3].split(" ");
-        for (String genreId : genreArray) {
-            for (Genre genre : genres) {
-                String matchId = genre.getId();
-                if (matchId.equals(genreId)) {
-                    this.genre.add(genre);
-                }
-            }
-        }
-        String[] awardArray = stringsInfo[5].split(" ");
-        for (String genreId : genreArray) {
-            for (AcademyAward award : awards) {
-                String matchId = award.getId();
-                if (matchId.equals(genreId)) {
-                    this.awards.add(award);
-                }
-            }
-        }
-        this.director = new ArrayList<>();
-        this.cast = new ArrayList<>();
-        this.format = stringsInfo[8];
-        this.lengthMinutes = stringsInfo[6];
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
     }
 
     public String getTitle() {
@@ -199,13 +157,13 @@ public class Movie extends FileManager implements java.io.Serializable {
             movieAwards = movieAwards.concat(award.getId() + " ");
         }
         return String.format("Id: %s\nTitel: %s\nÅr: %s\nGenre: %s\nLängd: %s minuter\nOscars: %s\nRegissör: %s\nSkådespelare: %s\nFormat: %s",
-                id, title, year, movieGenre, lengthMinutes, movieAwards, movieDirector, movieCast, format);
+                getId(), title, year, movieGenre, lengthMinutes, movieAwards, movieDirector, movieCast, format);
     }
 
     @Override
     public String toString() {
         return "Movie{" +
-                "id='" + id + '\'' +
+                "id='" + getId() + '\'' +
                 ", title='" + title + '\'' +
                 ", year='" + year + '\'' +
                 ", genre=" + genre +

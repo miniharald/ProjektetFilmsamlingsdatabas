@@ -18,13 +18,11 @@ public class MovieAdder {
     private AddGenreAndAwardsToMovie addGenreAndAwardsToMovie;
     private FileManager fileManager = new FileManager();
     private boolean inputOk = false;
-    private boolean isDuplicate;
     private String fileName;
     private String title;
     private String year;
     private String format;
     private String lengthMinutes;
-    private Movie movieObj = new Movie();
 
     public MovieAdder(App app) {
         this.app = app;
@@ -34,12 +32,11 @@ public class MovieAdder {
     }
 
     public void run() {
-        fileName = fileName();
         title = title();
         year = year();
         lengthMinutes = lengthMinutes();
         format = format();
-        app.getMovies().add(new Movie(fileName, title, year, format, lengthMinutes));
+        app.getMovies().add(new Movie(title, year, format, lengthMinutes));
         addGenreAndAwardsToMovie.addGenre();
         addMore("genre");
         addGenreAndAwardsToMovie.areYouAddingAward();
@@ -49,18 +46,19 @@ public class MovieAdder {
         addCrew.addActor();
         addMore("skådespelare");
         Movie movie = app.getMovies().get(app.getMovies().size() - 1);
-        movie.writeToFile("database/movies/" + fileName + ".txt", movie);
+        fileName = app.getMovies().get(app.getMovies().size() - 1).getId();
+        fileManager.writeToFile("database/movies/" + fileName + ".txt", movie);
         System.out.println("Filmen är inlagd");
     }
 
-    private String fileName() {
+    /*private String fileName() {
         do {
-            fileName = movieObj.idGenerator();
+            fileName = movieObj.getId();
             File folderPath = new File("database/movies/");
             isDuplicate = fileManager.checkForDuplicateFileNames(folderPath, fileName);
         } while (isDuplicate);
         return fileName;
-    }
+    }*/
 
     private String title() {
         System.out.println("Titel: ");

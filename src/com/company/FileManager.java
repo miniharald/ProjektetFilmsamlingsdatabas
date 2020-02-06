@@ -3,9 +3,11 @@ package com.company;
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
-public class FileManager {
+public class FileManager<D> {
 
     public FileManager() {
     }
@@ -77,5 +79,17 @@ public class FileManager {
             System.out.println("Någon blev fel när filen skulle skapas!");
             i.printStackTrace();
         }
+    }
+
+    public List<D> load(List<D> list, String pathName) {
+        File folderPath = new File(pathName);
+        for (File file : readFromFolder(folderPath)) {
+            String path = String.valueOf(file);
+            list.add((D) readFromFile(path));
+        }
+        if(readFromFolder(folderPath).length < 1) {
+            list = new ArrayList<>();
+        }
+        return list;
     }
 }

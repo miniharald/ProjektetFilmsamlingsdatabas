@@ -1,6 +1,7 @@
 package com.company.methods.addmovie;
 
 import com.company.App;
+import com.company.FileManager;
 import com.company.methods.Check;
 import com.company.objects.Actor;
 import com.company.objects.Director;
@@ -13,9 +14,9 @@ public class CrewToMovieAdder {
 
     private App app;
     private Check checker;
+    private FileManager fileManager = new FileManager();
     private Scanner scan = new Scanner(System.in);
     private boolean inputOk = false;
-    private boolean isDuplicate;
     private String id ="";
     private String firstName;
     private String lastName;
@@ -54,8 +55,8 @@ public class CrewToMovieAdder {
                     if (director.getId().equals(id)) {
                         director.addToFilmography(app.getMovies().get(app.getMovies().size() - 1));
                         app.getMovies().get(app.getMovies().size() - 1).addToDirector(director);
-                        director.deleteFiles(Paths.get("database/directors/" + id + ".txt"));
-                        director.writeToFile("database/directors/" + id + ".txt", app.getDirectors().get(i));
+                        fileManager.deleteFiles(Paths.get("database/directors/" + id + ".txt"));
+                        fileManager.writeToFile("database/directors/" + id + ".txt", app.getDirectors().get(i));
                     }
                 }
             }
@@ -64,15 +65,11 @@ public class CrewToMovieAdder {
 
     private void addNewDirector() {
         inputName();
-        do {
-            Director directorObj = new Director();
-            id = directorObj.getId();
-            File folderPath = new File("database/directors/");
-            isDuplicate = directorObj.checkForDuplicateFileNames(folderPath, id);
-        } while (isDuplicate);
-        app.getDirectors().add(new Director(firstName, lastName, id, app.getMovies().get(app.getMovies().size() - 1)));
+
+        app.getDirectors().add(new Director(firstName, lastName, app.getMovies().get(app.getMovies().size() - 1)));
         Director directorObj = app.getDirectors().get(app.getDirectors().size() - 1);
-        directorObj.writeToFile("database/directors/" + id + ".txt", app.getDirectors().get(app.getDirectors().size() - 1));
+        id = app.getDirectors().get(app.getDirectors().size() - 1).getId();
+        fileManager.writeToFile("database/directors/" + id + ".txt", app.getDirectors().get(app.getDirectors().size() - 1));
         app.getMovies().get(app.getMovies().size() - 1).addToDirector(directorObj);
     }
 
@@ -105,8 +102,8 @@ public class CrewToMovieAdder {
                     if (actor.getId().equals(id)) {
                         actor.addToFilmography(app.getMovies().get(app.getMovies().size() - 1));
                         app.getMovies().get(app.getMovies().size() - 1).addToCast(actor);
-                        actor.deleteFiles(Paths.get("database/actors/" + id + ".txt"));
-                        actor.writeToFile("database/actors/" + id + ".txt", app.getActors().get(i));
+                        fileManager.deleteFiles(Paths.get("database/actors/" + id + ".txt"));
+                        fileManager.writeToFile("database/actors/" + id + ".txt", app.getActors().get(i));
                     }
                 }
             }
@@ -115,15 +112,10 @@ public class CrewToMovieAdder {
 
     private void addNewActor() {
         inputName();
-        do {
-            Actor actorObj = new Actor();
-            id = actorObj.getId();
-            File folderPath = new File("database/actors/");
-            isDuplicate = actorObj.checkForDuplicateFileNames(folderPath, id);
-        } while (isDuplicate);
-        app.getActors().add(new Actor(firstName, lastName, id, app.getMovies().get(app.getMovies().size() - 1)));
+        app.getActors().add(new Actor(firstName, lastName, app.getMovies().get(app.getMovies().size() - 1)));
         Actor actorObj = app.getActors().get(app.getActors().size() - 1);
-        actorObj.writeToFile("database/actors/" + id + ".txt", app.getActors().get(app.getActors().size() - 1));
+        id = app.getActors().get(app.getActors().size() - 1).getId();
+        fileManager.writeToFile("database/actors/" + id + ".txt", app.getActors().get(app.getActors().size() - 1));
         app.getMovies().get(app.getMovies().size() - 1).addToCast(actorObj);
     }
 

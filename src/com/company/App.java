@@ -8,15 +8,21 @@ import java.util.List;
 
 public class App {
 
-    private List<AcademyAward> awards = new ArrayList<>();
-    private List<Movie> movies = new ArrayList<>();
-    private List<Director> directors = new ArrayList<>();
-    private List<Actor> actors = new ArrayList<>();
-    private List<Genre> genres = new ArrayList<>();
-    private List<Format> formats = new ArrayList<>();
+    private List<AcademyAward> awards;
+    private List<Movie> movies;
+    private List<Director> directors;
+    private List<Actor> actors;
+    private List<Genre> genres;
+    private List<Format> formats;
     private FileManager fileManager = new FileManager();
 
     public App() {
+        this.awards = (List<AcademyAward>) fileManager.load(awards, "database/awards/");
+        this.genres = (List<Genre>) fileManager.load(genres, "database/genres/");
+        this.formats = (List<Format>) fileManager.load(formats, "database/formats/");
+        this.movies = (List<Movie>) fileManager.load(movies, "database/movies/");
+        this.directors = (List<Director>) fileManager.load(directors, "database/directors/");
+        this.actors = (List<Actor>) fileManager.load(actors, "database/actors/");
         MovieAdder test = new MovieAdder(this);
         test.run();
     }
