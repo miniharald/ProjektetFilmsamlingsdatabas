@@ -61,13 +61,32 @@ public class ObjectRemover {
         do {
             int counter = 1;
             for (Actor actor : app.getActors()) {
-                System.out.println("[" + counter + "]" + " " + actor.getName());
+                System.out.println("[" + counter + "]" + " " + actor.getWholeName());
                 counter++;
             }
             int goBack = app.getActors().size() + 1;
             int choice = getChoice(goBack);
             if (choice < counter) {
-                removeActorschoice);
+                removeActor(choice);
+                inputOk = true;
+            } else if (choice == counter) {
+                inputOk = true;
+                return;
+            }
+        } while (!inputOk);
+    }
+
+    private void listDriectorsToRemove() {
+        do {
+            int counter = 1;
+            for (Director director : app.getDirectors()) {
+                System.out.println("[" + counter + "]" + " " + director.getWholeName());
+                counter++;
+            }
+            int goBack = app.getActors().size() + 1;
+            int choice = getChoice(goBack);
+            if (choice < counter) {
+                removeActor(choice);
                 inputOk = true;
             } else if (choice == counter) {
                 inputOk = true;
@@ -105,7 +124,7 @@ public class ObjectRemover {
             int goBack = app.getFormats().size() + 1;
             int choice = getChoice(goBack);
             if (choice < counter) {
-                removeAward(choice);
+                removeFormat(choice);
                 inputOk = true;
             } else if (choice == counter) {
                 inputOk = true;
@@ -162,5 +181,10 @@ public class ObjectRemover {
     private void removeFormat(int choice) {
         app.getFormats().remove(app.getFormats().get(choice - 1));
         fileManager.deleteFiles(Paths.get("database/formats/" + app.getFormats().get(choice - 1).getId() + ".txt"));
+    }
+
+    private void removeActor(int choice) {
+        app.getActors().remove(app.getActors().get(choice - 1));
+        fileManager.deleteFiles(Paths.get("database/actors/" + app.getActors().get(choice - 1).getId() + ".txt"));
     }
 }
