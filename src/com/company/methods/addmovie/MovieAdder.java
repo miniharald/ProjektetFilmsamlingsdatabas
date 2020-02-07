@@ -2,7 +2,7 @@ package com.company.methods.addmovie;
 
 import com.company.App;
 import com.company.dbmaker.FileManager;
-import com.company.methods.Checker;
+import com.company.dbmaker.InputChecker;
 import com.company.objects.Format;
 import com.company.objects.Movie;
 
@@ -12,7 +12,7 @@ public class MovieAdder {
 
     private Scanner scan = new Scanner(System.in);
     private App app;
-    private Checker checker;
+    private InputChecker checker;
     private CrewToMovieAdder addCrew;
     private GenreAndAwardToMovieAdder addGenreAndAwardsToMovie;
     private FileManager fileManager = new FileManager();
@@ -25,7 +25,7 @@ public class MovieAdder {
 
     public MovieAdder(App app) {
         this.app = app;
-        this.checker = new Checker(app);
+        this.checker = new InputChecker(app);
         this.addCrew = new CrewToMovieAdder(app);
         this.addGenreAndAwardsToMovie = new GenreAndAwardToMovieAdder(app);
     }

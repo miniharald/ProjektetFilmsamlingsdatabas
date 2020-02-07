@@ -3,17 +3,17 @@ package com.company;
 import com.company.dbmaker.FileManager;
 import com.company.methods.addmovie.MovieAdder;
 import com.company.objects.*;
-
+import java.util.ArrayList;
 import java.util.List;
 
 public class App {
 
-    private List<AcademyAward> awards;
-    private List<Movie> movies;
-    private List<Director> directors;
-    private List<Actor> actors;
-    private List<Genre> genres;
-    private List<Format> formats;
+    private List<AcademyAward> awards = new ArrayList<>();
+    private List<Movie> movies = new ArrayList<>();
+    private List<Director> directors = new ArrayList<>();
+    private List<Actor> actors = new ArrayList<>();
+    private List<Genre> genres = new ArrayList<>();
+    private List<Format> formats = new ArrayList<>();
     private FileManager fileManager = new FileManager();
 
     public App() {

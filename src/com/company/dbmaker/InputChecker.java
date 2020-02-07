@@ -1,12 +1,12 @@
-package com.company.methods;
+package com.company.dbmaker;
 
 import com.company.App;
 
-public class Checker {
+public class InputChecker {
 
     App app;
 
-    public Checker(App app) {
+    public InputChecker(App app) {
         this.app = app;
     }
 

@@ -2,7 +2,7 @@ package com.company.methods.addmovie;
 
 import com.company.App;
 import com.company.dbmaker.FileManager;
-import com.company.methods.Checker;
+import com.company.dbmaker.InputChecker;
 import com.company.objects.Actor;
 import com.company.objects.Director;
 
@@ -12,7 +12,7 @@ import java.util.Scanner;
 public class CrewToMovieAdder {
 
     private App app;
-    private Checker checker;
+    private InputChecker checker;
     private FileManager fileManager = new FileManager();
     private Scanner scan = new Scanner(System.in);
     private boolean inputOk = false;
@@ -22,7 +22,7 @@ public class CrewToMovieAdder {
 
     public CrewToMovieAdder(App app) {
         this.app = app;
-        this.checker = new Checker(app);
+        this.checker = new InputChecker(app);
     }
 
     public void addDirector() {
