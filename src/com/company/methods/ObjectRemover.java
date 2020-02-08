@@ -87,15 +87,14 @@ public class ObjectRemover {
 
     private void listAwardToRemove() {
         do {
-            int counter = 1;
-            objectLister.listAwards(counter);
+            objectLister.listAwards();
             int goBack = app.getAwards().size() + 1;
             int choice = getChoice(goBack);
-            if (choice < counter) {
+            if (choice < goBack) {
                 removeAwardFromMovieAndCrew(choice);
                 removeAward(choice);
                 inputOk = true;
-            } else if (choice == counter) {
+            } else if (choice == goBack) {
                 inputOk = true;
                 return;
             }

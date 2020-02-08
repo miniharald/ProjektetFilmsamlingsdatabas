@@ -15,7 +15,7 @@ public class CrewToMovieAdder {
     private App app;
     private InputChecker checker;
     private FileManager fileManager = new FileManager();
-    private ObjectLister objectLister = new ObjectLister();
+    private ObjectLister objectLister;
     private Scanner scan = new Scanner(System.in);
     private boolean inputOk = false;
     private String id ="";
@@ -25,15 +25,13 @@ public class CrewToMovieAdder {
     public CrewToMovieAdder(App app) {
         this.app = app;
         this.checker = new InputChecker(app);
+        this.objectLister = new ObjectLister(app);
     }
 
     public void addDirector() {
         do {
             int counter = 1;
-            for (Director directorObj : app.getDirectors()) {
-                System.out.println("[" + counter + "]" + " " + directorObj.getFirstName() + " " + directorObj.getLastName());
-                counter++;
-            }
+            objectLister.listDirectors(counter);
             System.out.println("[" + counter + "] Lägg till regissör");
             System.out.println("Välj ett alternativ ovan!");
             String directorChoice = scan.nextLine();
