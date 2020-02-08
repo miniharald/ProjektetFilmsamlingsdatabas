@@ -3,15 +3,18 @@ package com.company.objects;
 import com.company.dbmaker.BaseObject;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class Actor extends BaseObject {
     private String firstName;
     private String lastName;
-    private ArrayList<Movie> filmography = new ArrayList<>();
+    private List<AcademyAward> awards;
+    private List<Movie> filmography;
 
     public Actor(String firstName, String lastName, Movie newMovie) {
         this.firstName = firstName;
         this.lastName = lastName;
+        this.awards = new ArrayList<>();
         this.filmography = new ArrayList<>();
         this.filmography.add(newMovie);
     }
@@ -27,7 +30,19 @@ public class Actor extends BaseObject {
         filmography.remove(movie);
     }
 
-    public ArrayList<Movie> getFilmography() {
+    public void addToAwards(AcademyAward newAward) {
+        awards.add(newAward);
+    }
+
+    public void removeFromAwards(AcademyAward newAward) {
+        awards.remove(newAward);
+    }
+
+    public List<AcademyAward> getAwards() {
+        return awards;
+    }
+
+    public List<Movie> getFilmography() {
         return this.filmography;
     }
 

@@ -67,6 +67,10 @@ public class Director extends BaseObject {
         awards.remove(newAward);
     }
 
+    public String getWholeName() {
+        return this.firstName + " " + this.lastName;
+    }
+
     public String WriteToString() {
         String movies = "";
         String awardsWon = "";

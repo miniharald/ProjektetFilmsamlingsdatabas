@@ -3,6 +3,7 @@ package com.company.methods.addmovie;
 import com.company.App;
 import com.company.dbmaker.FileManager;
 import com.company.dbmaker.InputChecker;
+import com.company.methods.ObjectLister;
 import com.company.objects.Actor;
 import com.company.objects.Director;
 
@@ -14,6 +15,7 @@ public class CrewToMovieAdder {
     private App app;
     private InputChecker checker;
     private FileManager fileManager = new FileManager();
+    private ObjectLister objectLister = new ObjectLister();
     private Scanner scan = new Scanner(System.in);
     private boolean inputOk = false;
     private String id ="";
