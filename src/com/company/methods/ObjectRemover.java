@@ -21,15 +21,14 @@ public class ObjectRemover {
 
     private void listMoviesToRemove() {
         do {
-            int counter = 1;
-            objectLister.listMovies(counter);
+            objectLister.listMovies();
             int goBack = app.getMovies().size() + 1;
             int choice = getChoice(goBack);
-            if (choice < counter) {
+            if (choice < goBack) {
                 removeMovieFromCrew(choice);
                 removeMovie(choice);
                 inputOk = true;
-            } else if (choice == counter) {
+            } else if (choice == goBack) {
                 inputOk = true;
                 return;
             }
@@ -38,15 +37,14 @@ public class ObjectRemover {
 
     private void listGenresToRemove() {
         do {
-            int counter = 1;
-            objectLister.listGenres(counter);
+            objectLister.listGenres();
             int goBack = app.getGenres().size() + 1;
             int choice = getChoice(goBack);
-            if (choice < counter) {
+            if (choice < goBack) {
                 removeGenreFromMovie(choice);
                 removeGenre(choice);
                 inputOk = true;
-            } else if (choice == counter) {
+            } else if (choice == goBack) {
                 inputOk = true;
                 return;
             }
@@ -55,14 +53,13 @@ public class ObjectRemover {
 
     private void listActorsToRemove() {
         do {
-            int counter = 1;
-            objectLister.listActors(counter);
+            objectLister.listActors();
             int goBack = app.getActors().size() + 1;
             int choice = getChoice(goBack);
-            if (choice < counter) {
+            if (choice < goBack) {
                 removeActor(choice);
                 inputOk = true;
-            } else if (choice == counter) {
+            } else if (choice == goBack) {
                 inputOk = true;
                 return;
             }
@@ -71,14 +68,13 @@ public class ObjectRemover {
 
     private void listDriectorsToRemove() {
         do {
-            int counter = 1;
-            objectLister.listDirectors(counter);
+            objectLister.listDirectors();
             int goBack = app.getDirectors().size() + 1;
             int choice = getChoice(goBack);
-            if (choice < counter) {
+            if (choice < goBack) {
                 removeDirector(choice);
                 inputOk = true;
-            } else if (choice == counter) {
+            } else if (choice == goBack) {
                 inputOk = true;
                 return;
             }

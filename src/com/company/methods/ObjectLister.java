@@ -12,6 +12,7 @@ public class ObjectLister {
     }
 
     public void listMovies() {
+        int counter = 1;
         for (Movie movie : app.getMovies()) {
             System.out.println("[" + counter + "]" + " " + movie.getTitle());
             counter++;
