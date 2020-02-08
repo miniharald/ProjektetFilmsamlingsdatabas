@@ -3,6 +3,7 @@ package com.company.methods.addmovie;
 import com.company.App;
 import com.company.dbmaker.FileManager;
 import com.company.dbmaker.InputChecker;
+import com.company.methods.ObjectLister;
 import com.company.objects.Format;
 import com.company.objects.Movie;
 
@@ -16,11 +17,13 @@ public class MovieAdder {
     private CrewToMovieAdder addCrew;
     private GenreAndAwardToMovieAdder addGenreAndAwardsToMovie;
     private FileManager fileManager = new FileManager();
+    private ObjectLister objectLister;
     private boolean inputOk = false;
     private String fileName;
+    private String input;
     private String title;
     private String year;
-    private String format;
+    private Format format;
     private String lengthMinutes;
 
     public MovieAdder(App app) {
@@ -28,6 +31,7 @@ public class MovieAdder {
         this.checker = new InputChecker(app);
         this.addCrew = new CrewToMovieAdder(app);
         this.addGenreAndAwardsToMovie = new GenreAndAwardToMovieAdder(app);
+        this.objectLister = new ObjectLister(app);
     }
 
     public void run() {
@@ -91,22 +95,18 @@ public class MovieAdder {
         return year;
     }
 
-    private String format() {
+    private Format format() {
         do {
-            int formatCounter = 1;
-            for (Format formatObj : app.getFormats()) {
-                System.out.println("[" + formatCounter + "]" + " " + formatObj.getName());
-                formatCounter++;
-            }
+            objectLister.listFormats();
             int newFormat = app.getFormats().size() + 1;
             System.out.println("[" + newFormat + "]" + " " + "Lägg till nytt format");
             System.out.println("Välj ett alternativ ovan!");
             String formatChoice = scan.nextLine();
             int choice = Integer.parseInt(formatChoice);
-            if (choice < formatCounter) {
+            if (choice < newFormat) {
                 format = addExistingFormat(choice);
                 inputOk = true;
-            } else if (choice == formatCounter) {
+            } else if (choice == newFormat) {
                 format = addNewFormat();
                 inputOk = true;
             }
@@ -114,28 +114,27 @@ public class MovieAdder {
         return format;
     }
 
-    private String addExistingFormat(int choice) {
+    private Format addExistingFormat(int choice) {
         for (int i = 0; i < app.getFormats().size(); i++) {
             if (choice - 1 == i) {
-                format = app.getFormats().get(i).getId();
+                format = app.getFormats().get(i);
             }
         }
         return format;
     }
 
-    private String addNewFormat() {
+    private Format addNewFormat() {
         do {
             System.out.println("Nytt Format:");
-            format = scan.nextLine();
-            inputOk = checker.checkIfStringOfLetters(format);
-            if (format.length() < 1 || format.isBlank()) {
+            input = scan.nextLine();
+            inputOk = checker.checkIfStringOfLetters(input);
+            if (input.length() < 1 || input.isBlank()) {
                 System.out.println("Formatet måste innehålla minst en bokstav!");
                 inputOk = false;
             } else {
-                app.getFormats().add(new Format(format));
-                Format formatObj = app.getFormats().get(app.getFormats().size() - 1);
-                format = app.getFormats().get(app.getFormats().size() - 1).getId();
-                fileManager.writeToFile("database/formats/" + formatObj.getId() + ".txt", formatObj);
+                app.getFormats().add(new Format(input));
+                Format format= app.getFormats().get(app.getFormats().size() - 1);
+                fileManager.writeToFile("database/formats/" + format.getId() + ".txt", format);
             }
         } while (!inputOk);
         return format;

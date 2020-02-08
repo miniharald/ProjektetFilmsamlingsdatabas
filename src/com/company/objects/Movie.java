@@ -14,14 +14,14 @@ public class Movie extends BaseObject {
     private List<Director> director = new ArrayList<>();
     private List<Actor> cast = new ArrayList<>();
     private List<AcademyAward> awards = new ArrayList<>();
-    private String format;
+    private Format format;
     private String lengthMinutes;
     String[] stringsInfo = new String[9];
 
     public Movie() {
     }
 
-    public Movie(String title, String year, String format, String lengthMinutes) {
+    public Movie(String title, String year, Format format, String lengthMinutes) {
         super();
         this.title = title;
         this.year = year;
@@ -82,11 +82,11 @@ public class Movie extends BaseObject {
         this.awards = awards;
     }
 
-    public String getFormat() {
+    public Format getFormat() {
         return format;
     }
 
-    public void setFormat(String format) {
+    public void setFormat(Format format) {
         this.format = format;
     }
 

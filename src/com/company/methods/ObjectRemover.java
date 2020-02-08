@@ -99,17 +99,13 @@ public class ObjectRemover {
 
     private void listFormatToRemove() {
         do {
-            int counter = 1;
-            for (Format format : app.getFormats()) {
-                System.out.println("[" + counter + "]" + " " + format.getName());
-                counter++;
-            }
+
             int goBack = app.getFormats().size() + 1;
             int choice = getChoice(goBack);
-            if (choice < counter) {
+            if (choice < goBack) {
                 removeFormat(choice);
                 inputOk = true;
-            } else if (choice == counter) {
+            } else if (choice == goBack) {
                 inputOk = true;
                 return;
             }

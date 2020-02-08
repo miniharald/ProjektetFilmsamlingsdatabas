@@ -3,6 +3,7 @@ package com.company.methods.addmovie;
 import com.company.App;
 import com.company.dbmaker.FileManager;
 import com.company.dbmaker.InputChecker;
+import com.company.methods.ObjectLister;
 import com.company.objects.AcademyAward;
 import com.company.objects.Genre;
 import java.util.Scanner;
@@ -12,6 +13,7 @@ public class GenreAndAwardToMovieAdder {
     private App app;
     private InputChecker checker;
     private FileManager fileManager = new FileManager();
+    private ObjectLister objectLister;
     private Scanner scan = new Scanner(System.in);
     private boolean inputOk = false;
     private String id = "";
@@ -20,24 +22,21 @@ public class GenreAndAwardToMovieAdder {
     public GenreAndAwardToMovieAdder(App app) {
         this.app = app;
         this.checker = new InputChecker(app);
+        this.objectLister = new ObjectLister(app);
     }
 
     public void addGenre() {
         do {
-            int genreCounter = 1;
-            for (Genre genreObj : app.getGenres()) {
-                System.out.println("[" + genreCounter + "]" + " " + genreObj.getName());
-                genreCounter++;
-            }
+            objectLister.listGenres();
             int newGenre = app.getGenres().size() + 1;
             System.out.println("[" + newGenre + "]" + " " + "Lägg till genre");
             System.out.println("Välj ett alternativ ovan!");
             String genreChoice = scan.nextLine();
             int choice = Integer.parseInt(genreChoice);
-            if (choice < genreCounter) {
+            if (choice < newGenre) {
                 addExistingGenre(choice);
                 inputOk = true;
-            } else if (choice == genreCounter) {
+            } else if (choice == newGenre) {
                 addNewGenre();
                 inputOk = true;
             }
@@ -68,20 +67,16 @@ public class GenreAndAwardToMovieAdder {
 
     public void addAward() {
         do {
-            int awardCounter = 1;
-            for (AcademyAward awardObj : app.getAwards()) {
-                System.out.println("[" + awardCounter + "]" + " " + awardObj.getName());
-                awardCounter++;
-            }
+            objectLister.listAwards();
             int newAward = app.getAwards().size() + 1;
             System.out.println("[" + newAward + "]" + " " + "Lägg till Oscar");
             System.out.println("Välj ett alternativ ovan!");
             String awardChoice = scan.nextLine();
             int choice = Integer.parseInt(awardChoice);
-            if (choice < awardCounter) {
+            if (choice < newAward) {
                 addExistingAward(choice);
                 inputOk = true;
-            } else if (choice == awardCounter) {
+            } else if (choice == newAward) {
                 addNewAward();
                 inputOk = true;
             }

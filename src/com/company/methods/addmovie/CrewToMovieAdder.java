@@ -30,16 +30,16 @@ public class CrewToMovieAdder {
 
     public void addDirector() {
         do {
-            int counter = 1;
-            objectLister.listDirectors(counter);
-            System.out.println("[" + counter + "] Lägg till regissör");
+            objectLister.listDirectors();
+            int newDirector = app.getDirectors().size() + 1;
+            System.out.println("[" + newDirector + "] Lägg till regissör");
             System.out.println("Välj ett alternativ ovan!");
             String directorChoice = scan.nextLine();
             int choice = Integer.parseInt(directorChoice);
-            if (choice < counter) {
+            if (choice < newDirector) {
                 addExistingDirector(choice);
                 inputOk = true;
-            } else if (choice == counter) {
+            } else if (choice == newDirector) {
                 addNewDirector();
                 inputOk = true;
             }
@@ -74,19 +74,16 @@ public class CrewToMovieAdder {
 
     public void addActor() {
         do {
-            int counter = 1;
-            for (Actor actor : app.getActors()) {
-                System.out.println("[" + counter + "]" + " " + actor.getFirstName() + " " + actor.getLastName());
-                counter++;
-            }
-            System.out.println("[" + counter + "] Lägg till skådespelare");
+            objectLister.listActors();
+            int newActor = app.getActors().size() + 1;
+            System.out.println("[" + newActor + "] Lägg till skådespelare");
             System.out.println("Välj ett alternativ ovan!:");
             String actorChoice = scan.nextLine();
             int choice = Integer.parseInt(actorChoice);
-            if (choice < counter) {
+            if (choice < newActor) {
                 addExistingActor(choice);
                 inputOk = true;
-            } else if (choice == counter) {
+            } else if (choice == newActor) {
                 addNewActor();
                 inputOk = true;
             }

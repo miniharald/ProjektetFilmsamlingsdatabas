@@ -51,5 +51,11 @@ public class ObjectLister {
         }
     }
 
-    public void listFormats(int counter) {}
+    public void listFormats() {
+        int counter = 1;
+        for (Format format : app.getFormats()) {
+            System.out.println("[" + counter + "]" + " " + format.getName());
+            counter++;
+        }
+    }
 }
