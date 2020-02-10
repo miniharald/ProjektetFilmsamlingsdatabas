@@ -1,4 +1,4 @@
-package com.company.methods.addmovie;
+package com.company.methods;
 
 import com.company.App;
 import com.company.dbmaker.FileManager;
@@ -10,7 +10,7 @@ import com.company.objects.Director;
 import java.nio.file.Paths;
 import java.util.Scanner;
 
-public class CrewToMovieAdder {
+public class CrewAdder {
 
     private App app;
     private InputChecker checker;
@@ -22,13 +22,13 @@ public class CrewToMovieAdder {
     private String firstName;
     private String lastName;
 
-    public CrewToMovieAdder(App app) {
+    public CrewAdder(App app) {
         this.app = app;
         this.checker = new InputChecker(app);
         this.objectLister = new ObjectLister(app);
     }
 
-    public void addDirector() {
+    public void addDirectorToMovie() {
         do {
             objectLister.listDirectors();
             int newDirector = app.getDirectors().size() + 1;
@@ -37,16 +37,16 @@ public class CrewToMovieAdder {
             String directorChoice = scan.nextLine();
             int choice = Integer.parseInt(directorChoice);
             if (choice < newDirector) {
-                addExistingDirector(choice);
+                addExistingDirectorToMovie(choice);
                 inputOk = true;
             } else if (choice == newDirector) {
-                addNewDirector();
+                addNewDirectorToMovie();
                 inputOk = true;
             }
         } while (!inputOk);
     }
 
-    private void addExistingDirector(int choice) {
+    private void addExistingDirectorToMovie(int choice) {
         for (int i = 0; i < app.getDirectors().size(); i++) {
             if (choice - 1 == i) {
                 id = app.getDirectors().get(i).getId();
@@ -62,7 +62,7 @@ public class CrewToMovieAdder {
         }
     }
 
-    private void addNewDirector() {
+    private void addNewDirectorToMovie() {
         inputName();
 
         app.getDirectors().add(new Director(firstName, lastName, app.getMovies().get(app.getMovies().size() - 1)));
@@ -72,7 +72,7 @@ public class CrewToMovieAdder {
         app.getMovies().get(app.getMovies().size() - 1).addToDirector(directorObj);
     }
 
-    public void addActor() {
+    public void addActorToMovie() {
         do {
             objectLister.listActors();
             int newActor = app.getActors().size() + 1;
@@ -81,16 +81,16 @@ public class CrewToMovieAdder {
             String actorChoice = scan.nextLine();
             int choice = Integer.parseInt(actorChoice);
             if (choice < newActor) {
-                addExistingActor(choice);
+                addExistingActorToMovie(choice);
                 inputOk = true;
             } else if (choice == newActor) {
-                addNewActor();
+                addNewActorToMovie();
                 inputOk = true;
             }
         } while (!inputOk);
     }
 
-    private void addExistingActor(int choice) {
+    private void addExistingActorToMovie(int choice) {
         for (int i = 0; i < app.getActors().size(); i++) {
             if (choice - 1 == i) {
                 id = app.getActors().get(i).getId();
@@ -106,7 +106,7 @@ public class CrewToMovieAdder {
         }
     }
 
-    private void addNewActor() {
+    private void addNewActorToMovie() {
         inputName();
         app.getActors().add(new Actor(firstName, lastName, app.getMovies().get(app.getMovies().size() - 1)));
         Actor actorObj = app.getActors().get(app.getActors().size() - 1);

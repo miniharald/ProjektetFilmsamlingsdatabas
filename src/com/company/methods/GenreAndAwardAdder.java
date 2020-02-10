@@ -1,4 +1,4 @@
-package com.company.methods.addmovie;
+package com.company.methods;
 
 import com.company.App;
 import com.company.dbmaker.FileManager;
@@ -8,7 +8,7 @@ import com.company.objects.AcademyAward;
 import com.company.objects.Genre;
 import java.util.Scanner;
 
-public class GenreAndAwardToMovieAdder {
+public class GenreAndAwardAdder {
 
     private App app;
     private InputChecker checker;
@@ -19,13 +19,13 @@ public class GenreAndAwardToMovieAdder {
     private String id = "";
     private String input;
 
-    public GenreAndAwardToMovieAdder(App app) {
+    public GenreAndAwardAdder(App app) {
         this.app = app;
         this.checker = new InputChecker(app);
         this.objectLister = new ObjectLister(app);
     }
 
-    public void addGenre() {
+    public void addGenreToMovie() {
         do {
             objectLister.listGenres();
             int newGenre = app.getGenres().size() + 1;
@@ -34,7 +34,7 @@ public class GenreAndAwardToMovieAdder {
             String genreChoice = scan.nextLine();
             int choice = Integer.parseInt(genreChoice);
             if (choice < newGenre) {
-                addExistingGenre(choice);
+                addExistingGenreToMovie(choice);
                 inputOk = true;
             } else if (choice == newGenre) {
                 addNewGenre();
@@ -43,7 +43,7 @@ public class GenreAndAwardToMovieAdder {
         } while (!inputOk);
     }
 
-    private void addExistingGenre(int choice) {
+    private void addExistingGenreToMovie(int choice) {
         for (int i = 0; i < app.getGenres().size(); i++) {
             if (choice - 1 == i) {
                 id = app.getGenres().get(i).getId();
@@ -56,16 +56,16 @@ public class GenreAndAwardToMovieAdder {
         }
     }
 
-    private void addNewGenre() {
+    public void addNewGenre() {
         inputNames("Genre");
-        Genre genre = new Genre();
-        id = genre.getId();
         app.getGenres().add(new Genre(input));
-        genre = app.getGenres().get(app.getGenres().size() - 1);
+        Genre genre = app.getGenres().get(app.getGenres().size() - 1);
+        id = app.getGenres().get(app.getGenres().size() - 1).getId();
         fileManager.writeToFile("database/genres/" + id + ".txt", genre);
+        app.getMovies().get(app.getMovies().size() - 1).addToGenre(genre);
     }
 
-    public void addAward() {
+    public void addAwardToMovie() {
         do {
             objectLister.listAwards();
             int newAward = app.getAwards().size() + 1;
@@ -74,7 +74,7 @@ public class GenreAndAwardToMovieAdder {
             String awardChoice = scan.nextLine();
             int choice = Integer.parseInt(awardChoice);
             if (choice < newAward) {
-                addExistingAward(choice);
+                addExistingAwardToMovie(choice);
                 inputOk = true;
             } else if (choice == newAward) {
                 addNewAward();
@@ -83,7 +83,7 @@ public class GenreAndAwardToMovieAdder {
         } while (!inputOk);
     }
 
-    private void addExistingAward(int choice) {
+    private void addExistingAwardToMovie(int choice) {
         for (int i = 0; i < app.getAwards().size(); i++) {
             if (choice - 1 == i) {
                 id = app.getAwards().get(i).getId();
@@ -96,16 +96,11 @@ public class GenreAndAwardToMovieAdder {
         }
     }
 
-    private void addNewAward() {
+    public void addNewAward() {
         inputNames("Oscar");
-        //do {
-        AcademyAward award = new AcademyAward();
-        id = award.getId();
-        //File folderPath = new File("database/awards/");
-        //isDuplicate = award.checkForDuplicateFileNames(folderPath, id);
-        //} while (isDuplicate);
         app.getAwards().add(new AcademyAward(input));
-        award = app.getAwards().get(app.getAwards().size() - 1);
+        AcademyAward award = app.getAwards().get(app.getAwards().size() - 1);
+        id = app.getAwards().get(app.getAwards().size() - 1).getId();
         fileManager.writeToFile("database/awards/" + id + ".txt", award);
     }
 
@@ -113,7 +108,7 @@ public class GenreAndAwardToMovieAdder {
         System.out.println("Tryck 1 för att lägga till en Oscars. Annars valfri bokstav eller siffra!");
         String input = scan.nextLine();
         if(input.equals("1")) {
-            addAward();
+            addAwardToMovie();
         }
         return;
     }

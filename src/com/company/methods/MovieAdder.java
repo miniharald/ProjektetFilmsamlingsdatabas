@@ -1,8 +1,10 @@
-package com.company.methods.addmovie;
+package com.company.methods;
 
 import com.company.App;
 import com.company.dbmaker.FileManager;
 import com.company.dbmaker.InputChecker;
+import com.company.methods.CrewAdder;
+import com.company.methods.GenreAndAwardAdder;
 import com.company.methods.ObjectLister;
 import com.company.objects.Format;
 import com.company.objects.Movie;
@@ -14,8 +16,8 @@ public class MovieAdder {
     private Scanner scan = new Scanner(System.in);
     private App app;
     private InputChecker checker;
-    private CrewToMovieAdder addCrew;
-    private GenreAndAwardToMovieAdder addGenreAndAwardsToMovie;
+    private CrewAdder addCrew;
+    private GenreAndAwardAdder addGenreAndAwardsToMovie;
     private FileManager fileManager = new FileManager();
     private ObjectLister objectLister;
     private boolean inputOk = false;
@@ -29,24 +31,24 @@ public class MovieAdder {
     public MovieAdder(App app) {
         this.app = app;
         this.checker = new InputChecker(app);
-        this.addCrew = new CrewToMovieAdder(app);
-        this.addGenreAndAwardsToMovie = new GenreAndAwardToMovieAdder(app);
+        this.addCrew = new CrewAdder(app);
+        this.addGenreAndAwardsToMovie = new GenreAndAwardAdder(app);
         this.objectLister = new ObjectLister(app);
     }
 
-    public void run() {
+    public void run(Object o) {
         title = title();
         year = year();
         lengthMinutes = lengthMinutes();
         format = format();
         app.getMovies().add(new Movie(title, year, format, lengthMinutes));
-        addGenreAndAwardsToMovie.addGenre();
+        addGenreAndAwardsToMovie.addGenreToMovie();
         addMore("genre");
         addGenreAndAwardsToMovie.areYouAddingAward();
         addMore("Oscar");
-        addCrew.addDirector();
+        addCrew.addDirectorToMovie();
         addMore("regissör");
-        addCrew.addActor();
+        addCrew.addActorToMovie();
         addMore("skådespelare");
         Movie movie = app.getMovies().get(app.getMovies().size() - 1);
         fileName = app.getMovies().get(app.getMovies().size() - 1).getId();
@@ -85,14 +87,14 @@ public class MovieAdder {
     private String lengthMinutes() {
         do {
             System.out.println("Filmens längd: ");
-            year = scan.nextLine();
-            inputOk = checker.checkIfStringOfNumbers(year);
-            if (year.length() < 2 || year.isBlank()) {
+            lengthMinutes = scan.nextLine();
+            inputOk = checker.checkIfStringOfNumbers(lengthMinutes);
+            if (lengthMinutes.length() < 2 || lengthMinutes.isBlank()) {
                 System.out.println("Filmen måste vara minst 10 minuter lång!");
                 inputOk = false;
             }
         } while (!inputOk);
-        return year;
+        return lengthMinutes;
     }
 
     private Format format() {
@@ -124,6 +126,7 @@ public class MovieAdder {
     }
 
     private Format addNewFormat() {
+        Format format = null;
         do {
             System.out.println("Nytt Format:");
             input = scan.nextLine();
@@ -133,7 +136,7 @@ public class MovieAdder {
                 inputOk = false;
             } else {
                 app.getFormats().add(new Format(input));
-                Format format= app.getFormats().get(app.getFormats().size() - 1);
+                format = app.getFormats().get(app.getFormats().size() - 1);
                 fileManager.writeToFile("database/formats/" + format.getId() + ".txt", format);
             }
         } while (!inputOk);
@@ -147,16 +150,16 @@ public class MovieAdder {
             System.out.printf("Tryck 1 för att lägga till en till %s, tryck annars valfri siffra eller bokstav!", choice);
             input = scan.nextLine();
             if(input.equals("1") && choice.equals("regissör")) {
-                addCrew.addDirector();
+                addCrew.addDirectorToMovie();
             }
             else if(input.equals("1") && choice.equals("genre")) {
-                addGenreAndAwardsToMovie.addGenre();
+                addGenreAndAwardsToMovie.addGenreToMovie();
             }
             else if(input.equals("1") && choice.equals("skådespelare")) {
-                addCrew.addActor();
+                addCrew.addActorToMovie();
             }
             else if(input.equals("1") && choice.equals("Oscar")) {
-                addGenreAndAwardsToMovie.addAward();
+                addGenreAndAwardsToMovie.addAwardToMovie();
             } else {
                 addMore = false;
             }

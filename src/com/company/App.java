@@ -1,7 +1,8 @@
 package com.company;
 
 import com.company.dbmaker.FileManager;
-import com.company.methods.addmovie.MovieAdder;
+
+import com.company.menu.Menu;
 import com.company.objects.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -23,8 +24,8 @@ public class App {
         this.movies = (List<Movie>) fileManager.load(movies, "database/movies/");
         this.directors = (List<Director>) fileManager.load(directors, "database/directors/");
         this.actors = (List<Actor>) fileManager.load(actors, "database/actors/");
-        MovieAdder test = new MovieAdder(this);
-        test.run();
+        Menu menu = new Menu(this);
+        menu.handleMenu();
     }
 
     public List<AcademyAward> getAwards() {

@@ -4,7 +4,11 @@ import com.company.dbmaker.BaseObject;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
+
+import static java.util.stream.Collectors.groupingBy;
 
 public class Movie extends BaseObject {
 
@@ -16,7 +20,6 @@ public class Movie extends BaseObject {
     private List<AcademyAward> awards = new ArrayList<>();
     private Format format;
     private String lengthMinutes;
-    String[] stringsInfo = new String[9];
 
     public Movie() {
     }
@@ -98,14 +101,6 @@ public class Movie extends BaseObject {
         this.lengthMinutes = lengthMinutes;
     }
 
-    public String[] getStringsInfo() {
-        return stringsInfo;
-    }
-
-    public void setStringsInfo(String[] stringsInfo) {
-        this.stringsInfo = stringsInfo;
-    }
-
     public void addToGenre(Genre newGenre) {
         genre.add(newGenre);
     }
@@ -159,19 +154,49 @@ public class Movie extends BaseObject {
                 getId(), title, year, movieGenre, lengthMinutes, movieAwards, movieDirector, movieCast, format);
     }
 
+    public String listToString() {
+        if(director.size() > 1) {
+            return String.format("%s (%s) regisserad av %s", title, year, director.stream().map(Director::getWholeName).collect(Collectors.joining(" & ")));
+        }
+        return String.format("%s (%s) regisserad av %s %s", title, year, director.get(0).getFirstName(), director.get(0).getLastName());
+    }
+
     @Override
     public String toString() {
-        return "Movie{" +
-                "id='" + getId() + '\'' +
-                ", title='" + title + '\'' +
-                ", year='" + year + '\'' +
-                ", genre=" + genre +
-                ", director=" + director +
-                ", cast=" + cast +
-                ", awards=" + awards +
-                ", format='" + format + '\'' +
-                ", lengthMinutes='" + lengthMinutes + '\'' +
-                ", stringsInfo=" + Arrays.toString(stringsInfo) +
-                '}';
+        String time;
+        /*int hours;
+        int minutes;
+
+        hours = Integer.parseInt(lengthMinutes) / 60;
+        minutes = Integer.parseInt(lengthMinutes) % 60;*/
+        time = String.format("%d timmar och %d minuter", Integer.parseInt(lengthMinutes) / 60, Integer.parseInt(lengthMinutes) % 60);
+
+        if (awards.size() < 1) {
+            return String.format("%s\nUtgiven: %s\nGenre: %s\nLängd: %s\nRegissör: %s\nSkådespelare: %s\nOscars: %s\nFormat: %s",
+                    title, year, genre.stream()
+                            .sorted(Comparator.comparing(Genre::getName))
+                            .map(genre -> genre.getName()).collect(Collectors.joining(", "))
+                    , time, director.stream()
+                            .sorted(Comparator.comparing(Director::getWholeName))
+                            .map(director -> director.getWholeName()).collect(Collectors.joining(" & "))
+                    , cast.stream()
+                            .sorted(Comparator.comparing(Actor::getWholeName))
+                            .map(actor -> actor.getWholeName()).collect(Collectors.joining(", "))
+                    , awards.size(), format);
+        } else {
+            return String.format("%s\nUtgiven: %s\nGenre: %s\nLängd: %s\nRegissör: %s\nSkådespelare: %s\nOscars: %s (%s)\nFormat: %s",
+                    title, year, genre.stream()
+                            .sorted(Comparator.comparing(Genre::getName))
+                            .map(genre -> genre.getName()).collect(Collectors.joining(", "))
+                    , time, director.stream()
+                            .sorted(Comparator.comparing(Director::getWholeName))
+                            .map(director -> director.getWholeName()).collect(Collectors.joining(" & "))
+                    , cast.stream()
+                            .sorted(Comparator.comparing(Actor::getWholeName))
+                            .map(actor -> actor.getWholeName()).collect(Collectors.joining(", "))
+                    , awards.size(), awards.stream()
+                            .sorted(Comparator.comparing(AcademyAward::getName))
+                            .map(award -> award.getName()).collect(Collectors.joining(", ")), format);
+        }
     }
 }
