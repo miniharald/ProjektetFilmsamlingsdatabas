@@ -1,6 +1,8 @@
 package com.company.dbmaker;
 
-public class BaseObject implements java.io.Serializable {
+import java.io.Serializable;
+
+public class BaseObject implements Serializable {
     private String id;
 
     public BaseObject() {
@@ -12,7 +14,6 @@ public class BaseObject implements java.io.Serializable {
     }
 
     private String generateId() {
-        String newId = String.valueOf(System.currentTimeMillis());
-        return newId;
+        return String.valueOf(System.currentTimeMillis());
     }
 }
