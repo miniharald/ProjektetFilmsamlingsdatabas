@@ -23,7 +23,13 @@ public class Genre extends BaseObject {
         this.name = name;
     }
 
+    public String getPrimary() {
+        return this.name;
+    }
 
+    public String listToString() {
+        return name;
+    }
 
     public String writeToString() {
         return "Id: " + getId() + "\nGenre: " + this.name;

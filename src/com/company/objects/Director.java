@@ -71,6 +71,14 @@ public class Director extends BaseObject {
         return this.firstName + " " + this.lastName;
     }
 
+    public String getPrimary() {
+        return this.firstName + " " + this.lastName;
+    }
+
+    public String listToString() {
+        return this.firstName + " " + this.lastName;
+    }
+
     public String WriteToString() {
         String movies = "";
         String awardsWon = "";

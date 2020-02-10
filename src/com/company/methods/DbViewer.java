@@ -1,21 +1,26 @@
 package com.company.methods;
 
 import com.company.App;
+import com.company.dbmaker.BaseObject;
 import com.company.dbmaker.InputChecker;
 import com.company.objects.Format;
 import com.company.objects.Genre;
 import com.company.objects.Movie;
 
+import java.util.Collections;
 import java.util.Comparator;
+import java.util.List;
 import java.util.Scanner;
+import java.util.function.Function;
 
-public class DbViewer {
+public class DbViewer<D> {
 
     private Scanner scan = new Scanner(System.in);
     App app;
     ObjectLister objectLister;
     InputChecker checker;
     private boolean inputOk = false;
+    private int counter;
 
     public DbViewer(App app) {
         this.app = app;
@@ -24,12 +29,32 @@ public class DbViewer {
     }
 
     public void browseByMovies(Object o) {
-        int counter = 1;
         app.getMovies().sort(Comparator.comparing(Movie::getTitle));
-        for (Movie movie : app.getMovies()) {
-            System.out.println("[" + counter + "] " + movie.listToString());
+        showListOfOptions(Collections.unmodifiableList(app.getMovies()));
+        printMovieChoice();
+    }
+
+    public void browseByGenre(Object o) {
+        app.getGenres().sort(Comparator.comparing(Genre::getName));
+        showListOfOptions(Collections.unmodifiableList(app.getGenres()));
+        printMovieChoiceFromOtherObject();
+    }
+
+    public void browseByFormat(Object o) {
+        app.getFormats().sort(Comparator.comparing(Format::getName));
+        showListOfOptions(Collections.unmodifiableList(app.getFormats()));
+        printMovieChoiceFromOtherObject();
+    }
+
+    public void showListOfOptions(List<BaseObject> list) {
+        counter = 1;
+        for (BaseObject baseObject : list) {
+            System.out.println("[" + counter + "] " + baseObject.listToString());
             counter++;
-            }
+        }
+    }
+
+    public void printMovieChoice() {
         String input = scan.nextLine();
         int choice = Integer.parseInt(input) - 1;
         if (choice < counter) {
@@ -37,13 +62,7 @@ public class DbViewer {
         }
     }
 
-    public void browseByGenre(Object o) {
-        int counter = 1;
-        app.getGenres().sort(Comparator.comparing(Genre::getName));
-        for (Genre genre : app.getGenres()) {
-            System.out.println("[" + counter + "] " + genre.getName());
-            counter++;
-        }
+    private void printMovieChoiceFromOtherObject() {
         String input = scan.nextLine();
         int choice = Integer.parseInt(input) - 1;
         if (choice < counter) {
@@ -57,37 +76,7 @@ public class DbViewer {
                     }
                 }
             }
-            input = scan.nextLine();
-            choice = Integer.parseInt(input) - 1;
-            if (choice < counter) {
-                System.out.println(app.getMovies().get(choice).toString());
-            }
-        }
-    }
-
-    public void browseByFormat(Object o) {
-        int counter = 1;
-        app.getFormats().sort(Comparator.comparing(Format::getName));
-        for (Format format : app.getFormats()) {
-            System.out.println("[" + counter + "] " + format.getName());
-            counter++;
-        }
-        String input = scan.nextLine();
-        int choice = Integer.parseInt(input) - 1;
-        if (choice < counter) {
-            app.getMovies().sort(Comparator.comparing(Movie::getTitle));
-            counter = 1;
-            for (Movie movie : app.getMovies()) {
-                    if (movie.getFormat().getId().equals(app.getFormats().get(choice).getId())) {
-                        System.out.println("[" + counter + "] " + movie.listToString());
-                        counter++;
-                    }
-            }
-            input = scan.nextLine();
-            choice = Integer.parseInt(input) - 1;
-            if (choice < counter) {
-                System.out.println(app.getMovies().get(choice).toString());
-            }
+            printMovieChoice();
         }
     }
 }

@@ -23,6 +23,14 @@ public class Format extends BaseObject {
         this.name = name;
     }
 
+    public String getPrimary() {
+        return this.name;
+    }
+
+    public String listToString() {
+        return name;
+    }
+
     public String writeToString() {
         return "Id: " + getId() + "\nFormat: " + this.name;
     }

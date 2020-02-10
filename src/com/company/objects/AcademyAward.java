@@ -23,6 +23,13 @@ public class AcademyAward extends BaseObject {
         this.name = name;
     }
 
+    public String getPrimary() {
+        return this.name;
+    }
+
+    public String listToString() {
+        return name;
+    }
 
     public String writeToString() {
         return "Id: " + this.getId() + "\nOscar: " + this.name;

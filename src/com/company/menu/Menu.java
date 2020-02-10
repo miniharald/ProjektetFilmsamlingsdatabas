@@ -36,8 +36,9 @@ public class Menu {
 
         editDbMenu = new ArrayList<MenuPicker>();
         editDbMenu.add(new MenuPicker("Skapa ny film", '1', movieAdder::run));
-        editDbMenu.add(new MenuPicker("Skapa ny Genre", '2', objectAdder::addNewGenre));;
-        editDbMenu.add(new MenuPicker("Skapa ny Oscar", '3', objectAdder::addNewAward));;
+        editDbMenu.add(new MenuPicker("Skapa ny genre", '2', objectAdder::addNewGenre));
+        editDbMenu.add(new MenuPicker("Skapa ny Oscar", '3', objectAdder::addNewAward));
+        editDbMenu.add(new MenuPicker("Skapa nytt format", '4', objectAdder::addNewFormat));
         editDbMenu.add(new MenuPicker("Tillbaka till huvudmeny", '0', this::showMainMenu));
 
         displayDbMenu = new ArrayList<MenuPicker>();

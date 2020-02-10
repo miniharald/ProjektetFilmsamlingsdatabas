@@ -58,6 +58,14 @@ public class Actor extends BaseObject {
         return this.firstName + " " + this.lastName;
     }
 
+    public String getPrimary() {
+        return this.firstName + " " + this.lastName;
+    }
+
+    public String listToString() {
+        return this.firstName + " " + this.lastName;
+    }
+
     public String toString() {
         String movies = "";
         for (Movie movie : this.filmography) {

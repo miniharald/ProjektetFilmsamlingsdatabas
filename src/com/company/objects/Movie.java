@@ -133,6 +133,10 @@ public class Movie extends BaseObject {
         awards.remove(newAward);
     }
 
+    public String getPrimary() {
+        return this.title;
+    }
+
     public String writeToString() {
         String movieCast = "";
         String movieGenre = "";

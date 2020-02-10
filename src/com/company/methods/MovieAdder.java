@@ -125,7 +125,7 @@ public class MovieAdder {
         return format;
     }
 
-    private Format addNewFormat() {
+    Format addNewFormat() {
         Format format = null;
         do {
             System.out.println("Nytt Format:");
