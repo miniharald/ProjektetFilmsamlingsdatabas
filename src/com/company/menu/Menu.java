@@ -44,7 +44,9 @@ public class Menu {
         displayDbMenu = new ArrayList<MenuPicker>();
         displayDbMenu.add(new MenuPicker("Alla filmer", '1', dbViewer::browseByMovies));
         displayDbMenu.add(new MenuPicker("Alla Genre", '2', dbViewer::browseByGenre));
-        displayDbMenu.add(new MenuPicker("Alla Format", '3', dbViewer::browseByFormat));
+        displayDbMenu.add(new MenuPicker("Alla regissörer", '3', dbViewer::browseByDirector));
+        displayDbMenu.add(new MenuPicker("Alla skådespelare", '4', dbViewer::browseByActor));
+        displayDbMenu.add(new MenuPicker("Alla Format", '5', dbViewer::browseByFormat));
         displayDbMenu.add(new MenuPicker("Tillbaka till huvudmeny", '0', this::showMainMenu));
     }
 
