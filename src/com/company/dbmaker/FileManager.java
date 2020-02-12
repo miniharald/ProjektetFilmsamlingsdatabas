@@ -73,4 +73,13 @@ public class FileManager<D> {
         }
         return list;
     }
+
+    public int showListOfOptions(List<BaseObject> list) {
+        int counter = 1;
+        for (BaseObject baseObject : list) {
+            System.out.println("[" + counter + "] " + baseObject.listToString());
+            counter++;
+        }
+        return counter;
+    }
 }

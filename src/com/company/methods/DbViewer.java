@@ -2,6 +2,7 @@ package com.company.methods;
 
 import com.company.App;
 import com.company.dbmaker.BaseObject;
+import com.company.dbmaker.FileManager;
 import com.company.dbmaker.InputChecker;
 import com.company.objects.*;
 
@@ -17,6 +18,7 @@ public class DbViewer<D> {
     private boolean inputOk = false;
     private int counter;
     private List<Movie> newMovieList = new ArrayList<>();
+    private FileManager fileManager = new FileManager();
 
     public DbViewer(App app) {
         this.app = app;
@@ -27,21 +29,21 @@ public class DbViewer<D> {
     public void browseByMovies(Object o) {
         newMovieList.clear();
         app.getMovies().sort(Comparator.comparing(Movie::getTitle));
-        showListOfOptions(Collections.unmodifiableList(app.getMovies()));
+        counter = fileManager.showListOfOptions(Collections.unmodifiableList(app.getMovies()));
         printMovieChoice(true);
     }
 
     public void browseByGenre(Object o) {
         newMovieList.clear();
         app.getGenres().sort(Comparator.comparing(Genre::getName));
-        showListOfOptions(Collections.unmodifiableList(app.getGenres()));
+        counter = fileManager.showListOfOptions(Collections.unmodifiableList(app.getGenres()));
         printMovieChoiceFromOtherObject("Genre");
     }
 
     public void browseByFormat(Object o) {
         newMovieList.clear();
         app.getFormats().sort(Comparator.comparing(Format::getName));
-        showListOfOptions(Collections.unmodifiableList(app.getFormats()));
+        counter = fileManager.showListOfOptions(Collections.unmodifiableList(app.getFormats()));
         String input = scan.nextLine();
         int choice = Integer.parseInt(input) - 1;
         if (choice < counter) {
@@ -58,23 +60,15 @@ public class DbViewer<D> {
     public void browseByDirector(Object o) {
         newMovieList.clear();
         app.getDirectors().sort(Comparator.comparing(Director::getLastName));
-        showListOfOptions(Collections.unmodifiableList(app.getDirectors()));
+        counter = fileManager.showListOfOptions(Collections.unmodifiableList(app.getDirectors()));
         printMovieChoiceFromOtherObject("Director");
     }
 
     public void browseByActor(Object o) {
         newMovieList.clear();
         app.getActors().sort(Comparator.comparing(Actor::getLastName));
-        showListOfOptions(Collections.unmodifiableList(app.getActors()));
+        counter = fileManager.showListOfOptions(Collections.unmodifiableList(app.getActors()));
         printMovieChoiceFromOtherObject("Actor");
-    }
-
-    public void showListOfOptions(List<BaseObject> list) {
-        counter = 1;
-        for (BaseObject baseObject : list) {
-            System.out.println("[" + counter + "] " + baseObject.listToString());
-            counter++;
-        }
     }
 
     public void printMovieChoice(boolean isMovie) {
