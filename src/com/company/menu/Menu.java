@@ -50,6 +50,8 @@ public class Menu {
         addToMovieMenu.add(new MenuPicker("Lägg till regissör i film", '1', movieUpdater::addDirectorToMovie));
         addToMovieMenu.add(new MenuPicker("Lägg till skådespelare i film", '2', movieUpdater::addActorToMovie));
         addToMovieMenu.add(new MenuPicker("Lägg till genre i film", '3', movieUpdater::addGenreToMovie));
+        addToMovieMenu.add(new MenuPicker("Lägg till Oscar i film", '4', movieUpdater::addAwardToMovie));
+        addToMovieMenu.add(new MenuPicker("Ändra format i film", '5', movieUpdater::changeFormatToMovie));
         addToMovieMenu.add(new MenuPicker("Tillbaka till huvudmeny", '0', this::showMainMenu));
 
         displayDbMenu = new ArrayList<MenuPicker>();
@@ -84,7 +86,6 @@ public class Menu {
         }
         System.out.println("Ange ditt val: ");
     }
-
 
     private MenuPicker getMenuChoice() {
         String choice;

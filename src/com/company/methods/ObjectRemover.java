@@ -21,7 +21,7 @@ public class ObjectRemover {
 
     private void listMoviesToRemove() {
         do {
-            objectLister.listMovies();
+            fileManager.showListOfOptions(app.getMovies());
             int goBack = app.getMovies().size() + 1;
             int choice = getChoice(goBack);
             if (choice < goBack) {
@@ -66,7 +66,7 @@ public class ObjectRemover {
         } while (!inputOk);
     }
 
-    private void listDriectorsToRemove() {
+    private void listDirectorToRemove() {
         do {
             objectLister.listDirectors();
             int goBack = app.getDirectors().size() + 1;

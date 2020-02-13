@@ -102,6 +102,7 @@ public class GenreAndAwardAdder {
         AcademyAward award = app.getAwards().get(app.getAwards().size() - 1);
         id = app.getAwards().get(app.getAwards().size() - 1).getId();
         fileManager.writeToFile("database/awards/" + id + ".txt", award);
+        app.getMovies().get(app.getMovies().size() - 1).addToAwards(award);
     }
 
     public void areYouAddingAward() {

@@ -4,9 +4,7 @@ import com.company.App;
 import com.company.dbmaker.FileManager;
 import com.company.dbmaker.InputChecker;
 import com.company.methods.CrewAdder;
-import com.company.objects.Actor;
-import com.company.objects.Director;
-import com.company.objects.Genre;
+import com.company.objects.*;
 
 import java.nio.file.Paths;
 import java.util.Scanner;
@@ -212,5 +210,88 @@ public class MovieUpdater {
                 inputOk = false;
             }
         } while (!inputOk);
+    }
+
+    public void changeFormatToMovie(Object o) {
+        int movieChoice = chooseMovie();
+        do {
+            fileManager.showListOfOptions(app.getFormats());
+            int newFormat = app.getFormats().size() + 1;
+            System.out.println("[" + newFormat + "]" + " " + "Lägg till nytt format");
+            System.out.println("Välj ett alternativ ovan!");
+            String formatChoice = scan.nextLine();
+            int choice = Integer.parseInt(formatChoice);
+            if (choice < newFormat) {
+                addExistingFormat(choice, movieChoice);
+                inputOk = true;
+            } else if (choice == newFormat) {
+                addNewFormat(movieChoice);
+                inputOk = true;
+            }
+        } while (!inputOk);
+    }
+
+    private void addExistingFormat(int choice, int movieChoice) {
+        Format format =  null;
+        for (int i = 0; i < app.getFormats().size(); i++) {
+            if (choice - 1 == i) {
+                format = app.getFormats().get(i);
+                app.getMovies().get(movieChoice).setFormat(format);
+                updateMovieFile(movieChoice);
+            }
+        }
+    }
+
+    private void addNewFormat(int movieChoice) {
+        Format format = null;
+        inputNames("Format");
+        app.getFormats().add(new Format(input));
+        format = app.getFormats().get(app.getFormats().size() - 1);
+        fileManager.writeToFile("database/formats/" + format.getId() + ".txt", format);
+        app.getMovies().get(movieChoice).setFormat(format);
+        updateMovieFile(movieChoice);
+    }
+
+    public void addAwardToMovie(Object o) {
+        int movieChoice = chooseMovie();
+        do {
+            fileManager.showListOfOptions(app.getAwards());
+            int newAward = app.getAwards().size() + 1;
+            System.out.println("[" + newAward + "]" + " " + "Lägg till Oscar");
+            System.out.println("Välj ett alternativ ovan!");
+            String awardChoice = scan.nextLine();
+            int choice = Integer.parseInt(awardChoice);
+            if (choice < newAward) {
+                addExistingAwardToMovie(choice, movieChoice);
+                inputOk = true;
+            } else if (choice == newAward) {
+                addNewAward(movieChoice);
+                inputOk = true;
+            }
+        } while (!inputOk);
+    }
+
+    private void addExistingAwardToMovie(int choice, int movieChoice) {
+        for (int i = 0; i < app.getAwards().size(); i++) {
+            if (choice - 1 == i) {
+                id = app.getAwards().get(i).getId();
+                for (AcademyAward award : app.getAwards()) {
+                    if (award.getId().equals(id)) {
+                        app.getMovies().get(movieChoice).addToAwards(award);
+                        updateMovieFile(movieChoice);
+                    }
+                }
+            }
+        }
+    }
+
+    public void addNewAward(int movieChoice) {
+        inputNames("Oscar");
+        app.getAwards().add(new AcademyAward(input));
+        AcademyAward award = app.getAwards().get(app.getAwards().size() - 1);
+        id = app.getAwards().get(app.getAwards().size() - 1).getId();
+        fileManager.writeToFile("database/awards/" + id + ".txt", award);
+        app.getMovies().get(movieChoice).addToAwards(award);
+        updateMovieFile(movieChoice);
     }
 }

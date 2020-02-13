@@ -20,8 +20,6 @@ public abstract class BaseObject implements Serializable {
         return id;
     }
 
-
-
     private String generateId() {
         return String.valueOf(System.currentTimeMillis());
     }
