@@ -1,10 +1,12 @@
-package com.company.methods;
+package com.company.methods.update;
 
 import com.company.App;
 import com.company.dbmaker.FileManager;
 import com.company.dbmaker.InputChecker;
+import com.company.methods.CrewAdder;
 import com.company.objects.Actor;
 import com.company.objects.Director;
+import com.company.objects.Genre;
 
 import java.nio.file.Paths;
 import java.util.Scanner;
@@ -20,6 +22,7 @@ public class MovieUpdater {
     private String id ="";
     private String firstName;
     private String lastName;
+    private String input;
 
     public MovieUpdater(App app) {
         this.app = app;
@@ -27,14 +30,24 @@ public class MovieUpdater {
         this.checker = new InputChecker(app);
     }
 
-    public void addDirectorToMovie(Object o) {
+    private int chooseMovie() {
         fileManager.showListOfOptions(app.getMovies());
         String input = scan.nextLine();
         int movieChoice = Integer.parseInt(input) - 1;
+        return movieChoice;
+    }
+
+    private void updateMovieFile(int movieChoice) {
+        fileManager.deleteFiles(Paths.get("database/movies/" + app.getMovies().get(movieChoice).getId() + ".txt"));
+        fileManager.writeToFile("database/movies/" + app.getMovies().get(movieChoice).getId() + ".txt", app.getMovies().get(movieChoice));
+    }
+
+    public void addDirectorToMovie(Object o) {
+        int movieChoice = chooseMovie();
         do {
             fileManager.showListOfOptions(app.getDirectors());
             int newDirector = app.getDirectors().size() + 1;
-            System.out.println("[" + newDirector + "] Lägg till regissör");
+            System.out.println(newDirector + ". Lägg till regissör");
             System.out.println("Välj ett alternativ ovan!");
             String directorChoice = scan.nextLine();
             int choice = Integer.parseInt(directorChoice);
@@ -58,8 +71,7 @@ public class MovieUpdater {
                         app.getMovies().get(movieChoice).addToDirector(director);
                         fileManager.deleteFiles(Paths.get("database/directors/" + id + ".txt"));
                         fileManager.writeToFile("database/directors/" + id + ".txt", app.getDirectors().get(i));
-                        fileManager.deleteFiles(Paths.get("database/movies/" + app.getMovies().get(movieChoice).getId() + ".txt"));
-                        fileManager.writeToFile("database/movies/" + app.getMovies().get(movieChoice).getId() + ".txt", app.getMovies().get(movieChoice));
+                        updateMovieFile(movieChoice);
                     }
                 }
             }
@@ -74,18 +86,15 @@ public class MovieUpdater {
         id = app.getDirectors().get(app.getDirectors().size() - 1).getId();
         fileManager.writeToFile("database/directors/" + id + ".txt", app.getDirectors().get(app.getDirectors().size() - 1));
         app.getMovies().get(movieChoice).addToDirector(directorObj);
-        fileManager.deleteFiles(Paths.get("database/movies/" + app.getMovies().get(movieChoice).getId() + ".txt"));
-        fileManager.writeToFile("database/movies/" + app.getMovies().get(movieChoice).getId() + ".txt", app.getMovies().get(movieChoice));
+        updateMovieFile(movieChoice);
     }
 
     public void addActorToMovie(Object o) {
-        fileManager.showListOfOptions(app.getMovies());
-        String input = scan.nextLine();
-        int movieChoice = Integer.parseInt(input) - 1;
+        int movieChoice = chooseMovie();
         do {
             fileManager.showListOfOptions(app.getActors());
             int newActor = app.getActors().size() + 1;
-            System.out.println("[" + newActor + "] Lägg till skådespelare");
+            System.out.println(newActor + ". Lägg till skådespelare");
             System.out.println("Välj ett alternativ ovan!:");
             String actorChoice = scan.nextLine();
             int choice = Integer.parseInt(actorChoice);
@@ -109,9 +118,7 @@ public class MovieUpdater {
                         app.getMovies().get(movieChoice).addToCast(actor);
                         fileManager.deleteFiles(Paths.get("database/actors/" + id + ".txt"));
                         fileManager.writeToFile("database/actors/" + id + ".txt", app.getActors().get(i));
-                        fileManager.deleteFiles(Paths.get("database/movies/" + app.getMovies().get(movieChoice).getId() + ".txt"));
-                        fileManager.writeToFile("database/movies/" + app.getMovies().get(movieChoice).getId() + ".txt", app.getMovies().get(movieChoice));
-
+                        updateMovieFile(movieChoice);
                     }
                 }
             }
@@ -125,8 +132,7 @@ public class MovieUpdater {
         id = app.getActors().get(app.getActors().size() - 1).getId();
         fileManager.writeToFile("database/actors/" + id + ".txt", app.getActors().get(app.getActors().size() - 1));
         app.getMovies().get(movieChoice).addToCast(actorObj);
-        fileManager.deleteFiles(Paths.get("database/movies/" + app.getMovies().get(movieChoice).getId() + ".txt"));
-        fileManager.writeToFile("database/movies/" + app.getMovies().get(movieChoice).getId() + ".txt", app.getMovies().get(movieChoice));
+        updateMovieFile(movieChoice);
     }
 
     private void inputName() {
@@ -150,5 +156,61 @@ public class MovieUpdater {
                 inputOk = false;
             }
         }while (!inputOk);
+    }
+
+    public void addGenreToMovie(Object o) {
+        int movieChoice = chooseMovie();
+        do {
+            fileManager.showListOfOptions(app.getGenres());
+            int newGenre = app.getGenres().size() + 1;
+            System.out.println("[" + newGenre + "]" + " " + "Lägg till genre");
+            System.out.println("Välj ett alternativ ovan!");
+            String genreChoice = scan.nextLine();
+            int choice = Integer.parseInt(genreChoice);
+            if (choice < newGenre) {
+                addExistingGenreToMovie(choice, movieChoice);
+                inputOk = true;
+            } else if (choice == newGenre) {
+                addNewGenre(movieChoice);
+                inputOk = true;
+            }
+        } while (!inputOk);
+    }
+
+    private void addExistingGenreToMovie(int choice, int movieChoice) {
+        for (int i = 0; i < app.getGenres().size(); i++) {
+            if (choice - 1 == i) {
+                id = app.getGenres().get(i).getId();
+                for (Genre genre : app.getGenres()) {
+                    if (genre.getId().equals(id)) {
+                        app.getMovies().get(movieChoice).addToGenre(genre);
+                        updateMovieFile(movieChoice);
+                    }
+                }
+            }
+        }
+    }
+
+    public void addNewGenre(int movieChoice) {
+        inputNames("Genre");
+        app.getGenres().add(new Genre(input));
+        Genre genre = app.getGenres().get(app.getGenres().size() - 1);
+        id = app.getGenres().get(app.getGenres().size() - 1).getId();
+        fileManager.writeToFile("database/genres/" + id + ".txt", genre);
+        app.getMovies().get(movieChoice).addToGenre(genre);
+        updateMovieFile(movieChoice);
+    }
+
+    private void inputNames(String type) {
+        input = "";
+        do {
+            System.out.println("Ny " + type + ":");
+            input = scan.nextLine();
+            inputOk = checker.checkIfStringOfLetters(input);
+            if (input.length() < 1 || input.isBlank()) {
+                System.out.println(type + " måste innehålla minst en bokstav!");
+                inputOk = false;
+            }
+        } while (!inputOk);
     }
 }

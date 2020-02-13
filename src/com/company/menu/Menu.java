@@ -3,7 +3,7 @@ package com.company.menu;
 import com.company.App;
 import com.company.methods.DbViewer;
 import com.company.methods.MovieAdder;
-import com.company.methods.MovieUpdater;
+import com.company.methods.update.MovieUpdater;
 import com.company.methods.ObjectAdder;
 
 import java.util.ArrayList;
@@ -14,6 +14,7 @@ public class Menu {
     private ArrayList<MenuPicker> mainMenu;
     private ArrayList<MenuPicker> editDbMenu;
     private ArrayList<MenuPicker> displayDbMenu;
+    private ArrayList<MenuPicker> addToMovieMenu;
     private ArrayList<MenuPicker> currentMenu;
     private MovieAdder movieAdder;
     private ObjectAdder objectAdder;
@@ -42,9 +43,14 @@ public class Menu {
         editDbMenu.add(new MenuPicker("Skapa ny genre", '2', objectAdder::addNewGenre));
         editDbMenu.add(new MenuPicker("Skapa ny Oscar", '3', objectAdder::addNewAward));
         editDbMenu.add(new MenuPicker("Skapa nytt format", '4', objectAdder::addNewFormat));
-        editDbMenu.add(new MenuPicker("Lägg till regissör i film", '5', movieUpdater::addDirectorToMovie));
-        editDbMenu.add(new MenuPicker("Lägg till skådespelare i film", '6', movieUpdater::addActorToMovie));
+        editDbMenu.add(new MenuPicker("Lägg till i film", '5', this::showAddToMovieMenu));
         editDbMenu.add(new MenuPicker("Tillbaka till huvudmeny", '0', this::showMainMenu));
+
+        addToMovieMenu = new ArrayList<MenuPicker>();
+        addToMovieMenu.add(new MenuPicker("Lägg till regissör i film", '1', movieUpdater::addDirectorToMovie));
+        addToMovieMenu.add(new MenuPicker("Lägg till skådespelare i film", '2', movieUpdater::addActorToMovie));
+        addToMovieMenu.add(new MenuPicker("Lägg till genre i film", '3', movieUpdater::addGenreToMovie));
+        addToMovieMenu.add(new MenuPicker("Tillbaka till huvudmeny", '0', this::showMainMenu));
 
         displayDbMenu = new ArrayList<MenuPicker>();
         displayDbMenu.add(new MenuPicker("Alla filmer", '1', dbViewer::browseByMovies));
@@ -61,6 +67,10 @@ public class Menu {
 
     private void showEditDbMenu(Object o) {
         currentMenu = editDbMenu;
+    }
+
+    private void showAddToMovieMenu(Object o) {
+        currentMenu = addToMovieMenu;
     }
 
     private void showDisplayDbMenu(Object o) {
