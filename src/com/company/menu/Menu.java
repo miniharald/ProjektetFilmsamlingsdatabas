@@ -3,6 +3,7 @@ package com.company.menu;
 import com.company.App;
 import com.company.methods.DbViewer;
 import com.company.methods.MovieAdder;
+import com.company.methods.MovieUpdater;
 import com.company.methods.ObjectAdder;
 
 import java.util.ArrayList;
@@ -17,11 +18,13 @@ public class Menu {
     private MovieAdder movieAdder;
     private ObjectAdder objectAdder;
     private DbViewer dbViewer;
+    private MovieUpdater movieUpdater;
 
     public Menu(App app){
         movieAdder = new MovieAdder(app);
         dbViewer = new DbViewer(app);
         objectAdder = new ObjectAdder(app);
+        movieUpdater = new MovieUpdater(app);
 
         loadMenus();
 
@@ -39,6 +42,8 @@ public class Menu {
         editDbMenu.add(new MenuPicker("Skapa ny genre", '2', objectAdder::addNewGenre));
         editDbMenu.add(new MenuPicker("Skapa ny Oscar", '3', objectAdder::addNewAward));
         editDbMenu.add(new MenuPicker("Skapa nytt format", '4', objectAdder::addNewFormat));
+        editDbMenu.add(new MenuPicker("Lägg till regissör i film", '5', movieUpdater::addDirectorToMovie));
+        editDbMenu.add(new MenuPicker("Lägg till skådespelare i film", '6', movieUpdater::addActorToMovie));
         editDbMenu.add(new MenuPicker("Tillbaka till huvudmeny", '0', this::showMainMenu));
 
         displayDbMenu = new ArrayList<MenuPicker>();
