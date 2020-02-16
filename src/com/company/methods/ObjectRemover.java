@@ -126,8 +126,8 @@ public class ObjectRemover {
             for (Movie movie : actor.getFilmography()) {
                 if (movie.getId().equals(id)) {
                     actor.getFilmography().remove(movie);
-                    fileManager.deleteFiles(Paths.get("database/actors/" + actor.getId() + ".txt"));
-                    fileManager.writeToFile("database/actors/" + actor.getId() + ".txt", actor);
+                    fileManager.deleteFiles(Paths.get(App.ACTORFOLDER + actor.getId() + ".txt"));
+                    fileManager.writeToFile(App.ACTORFOLDER + actor.getId() + ".txt", actor);
                 }
             }
         }
@@ -135,8 +135,8 @@ public class ObjectRemover {
             for (Movie movie : director.getFilmography()) {
                 if (movie.getId().equals(id)) {
                     director.getFilmography().remove(movie);
-                    fileManager.deleteFiles(Paths.get("database/directors/" + director.getId() + ".txt"));
-                    fileManager.writeToFile("database/directors/" + director.getId() + ".txt", director);
+                    fileManager.deleteFiles(Paths.get(App.DIRECTORFOLDER + director.getId() + ".txt"));
+                    fileManager.writeToFile(App.DIRECTORFOLDER + director.getId() + ".txt", director);
                 }
             }
         }
@@ -148,8 +148,8 @@ public class ObjectRemover {
             for (AcademyAward award : movie.getAwards()) {
                 if (award.getId().equals(id)) {
                     movie.getAwards().remove(award);
-                    fileManager.deleteFiles(Paths.get("database/movies/" + movie.getId() + ".txt"));
-                    fileManager.writeToFile("database/movies/" + movie.getId() + ".txt", movie);
+                    fileManager.deleteFiles(Paths.get(App.MOVIEFOLDER + movie.getId() + ".txt"));
+                    fileManager.writeToFile(App.MOVIEFOLDER + movie.getId() + ".txt", movie);
                 }
             }
         }
@@ -157,8 +157,8 @@ public class ObjectRemover {
             for (AcademyAward award : director.getAwards()) {
                 if (award.getId().equals(id)) {
                     director.getFilmography().remove(award);
-                    fileManager.deleteFiles(Paths.get("database/directors/" + director.getId() + ".txt"));
-                    fileManager.writeToFile("database/directors/" + director.getId() + ".txt", director);
+                    fileManager.deleteFiles(Paths.get(App.DIRECTORFOLDER + director.getId() + ".txt"));
+                    fileManager.writeToFile(App.DIRECTORFOLDER + director.getId() + ".txt", director);
                 }
             }
         }
@@ -166,8 +166,8 @@ public class ObjectRemover {
             for (AcademyAward award : actor.getAwards()) {
                 if (award.getId().equals(id)) {
                     actor.getFilmography().remove(award);
-                    fileManager.deleteFiles(Paths.get("database/actors/" + actor.getId() + ".txt"));
-                    fileManager.writeToFile("database/actors/" + actor.getId() + ".txt", actor);
+                    fileManager.deleteFiles(Paths.get(App.ACTORFOLDER + actor.getId() + ".txt"));
+                    fileManager.writeToFile(App.ACTORFOLDER + actor.getId() + ".txt", actor);
                 }
             }
         }
@@ -179,8 +179,8 @@ public class ObjectRemover {
             for (Genre genre : movie.getGenre()) {
                 if (genre.getId().equals(id)) {
                     movie.getGenre().remove(genre);
-                    fileManager.deleteFiles(Paths.get("database/movies/" + movie.getId() + ".txt"));
-                    fileManager.writeToFile("database/movies/" + movie.getId() + ".txt", movie);
+                    fileManager.deleteFiles(Paths.get(App.MOVIEFOLDER + movie.getId() + ".txt"));
+                    fileManager.writeToFile(App.MOVIEFOLDER + movie.getId() + ".txt", movie);
                 }
             }
         }
@@ -188,7 +188,7 @@ public class ObjectRemover {
 
     private void removeMovie(int choice) {
         app.getMovies().remove(app.getMovies().get(choice - 1));
-        fileManager.deleteFiles(Paths.get("database/movies/" + app.getMovies().get(choice - 1).getId() + ".txt"));
+        fileManager.deleteFiles(Paths.get(App.MOVIEFOLDER + app.getMovies().get(choice - 1).getId() + ".txt"));
     }
 
     private void removeGenre(int choice) {
@@ -203,16 +203,16 @@ public class ObjectRemover {
 
     private void removeFormat(int choice) {
         app.getFormats().remove(app.getFormats().get(choice - 1));
-        fileManager.deleteFiles(Paths.get("database/formats/" + app.getFormats().get(choice - 1).getId() + ".txt"));
+        fileManager.deleteFiles(Paths.get(App.FORMATFOLDER + app.getFormats().get(choice - 1).getId() + ".txt"));
     }
 
     private void removeActor(int choice) {
         app.getActors().remove(app.getActors().get(choice - 1));
-        fileManager.deleteFiles(Paths.get("database/actors/" + app.getActors().get(choice - 1).getId() + ".txt"));
+        fileManager.deleteFiles(Paths.get(App.ACTORFOLDER + app.getActors().get(choice - 1).getId() + ".txt"));
     }
 
     private void removeDirector(int choice) {
         app.getActors().remove(app.getActors().get(choice - 1));
-        fileManager.deleteFiles(Paths.get("database/actors/" + app.getActors().get(choice - 1).getId() + ".txt"));
+        fileManager.deleteFiles(Paths.get(App.ACTORFOLDER + app.getActors().get(choice - 1).getId() + ".txt"));
     }
 }

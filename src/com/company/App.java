@@ -16,14 +16,20 @@ public class App {
     private List<Genre> genres = new ArrayList<>();
     private List<Format> formats = new ArrayList<>();
     private FileManager fileManager = new FileManager();
+    public static final String DIRECTORFOLDER = "database/directors/";
+    public static final String ACTORFOLDER = "database/actors/";
+    public static final String MOVIEFOLDER = "database/movies/";
+    public static final String GENREFOLDER = "database/genres/";
+    public static final String AWARDFOLDER = "database/awards/";
+    public static final String FORMATFOLDER = "database/formats/";
 
     public App() {
-        this.awards = (List<AcademyAward>) fileManager.load(awards, "database/awards/");
-        this.genres = (List<Genre>) fileManager.load(genres, "database/genres/");
-        this.formats = (List<Format>) fileManager.load(formats, "database/formats/");
-        this.movies = (List<Movie>) fileManager.load(movies, "database/movies/");
-        this.directors = (List<Director>) fileManager.load(directors, "database/directors/");
-        this.actors = (List<Actor>) fileManager.load(actors, "database/actors/");
+        this.awards = (List<AcademyAward>) fileManager.load(awards, AWARDFOLDER);
+        this.genres = (List<Genre>) fileManager.load(genres, GENREFOLDER);
+        this.formats = (List<Format>) fileManager.load(formats, FORMATFOLDER);
+        this.movies = (List<Movie>) fileManager.load(movies, MOVIEFOLDER);
+        this.directors = (List<Director>) fileManager.load(directors, DIRECTORFOLDER);
+        this.actors = (List<Actor>) fileManager.load(actors, ACTORFOLDER);
         Menu menu = new Menu(this);
         menu.handleMenu();
     }

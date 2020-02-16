@@ -1,10 +1,8 @@
-package com.company.methods;
+package com.company.methods.add;
 
 import com.company.App;
 import com.company.dbmaker.FileManager;
 import com.company.dbmaker.InputChecker;
-import com.company.methods.CrewAdder;
-import com.company.methods.GenreAndAwardAdder;
 import com.company.methods.ObjectLister;
 import com.company.objects.Format;
 import com.company.objects.Movie;
@@ -52,14 +50,14 @@ public class MovieAdder {
         addMore("skådespelare");
         Movie movie = app.getMovies().get(app.getMovies().size() - 1);
         fileName = app.getMovies().get(app.getMovies().size() - 1).getId();
-        fileManager.writeToFile("database/movies/" + fileName + ".txt", movie);
+        fileManager.writeToFile(App.MOVIEFOLDER + fileName + ".txt", movie);
         System.out.println("Filmen är inlagd");
     }
 
     /*private String fileName() {
         do {
             fileName = movieObj.getId();
-            File folderPath = new File("database/movies/");
+            File folderPath = new File(App.MOVIEFOLDER);
             isDuplicate = fileManager.checkForDuplicateFileNames(folderPath, fileName);
         } while (isDuplicate);
         return fileName;
@@ -137,7 +135,7 @@ public class MovieAdder {
             } else {
                 app.getFormats().add(new Format(input));
                 format = app.getFormats().get(app.getFormats().size() - 1);
-                fileManager.writeToFile("database/formats/" + format.getId() + ".txt", format);
+                fileManager.writeToFile(App.FORMATFOLDER + format.getId() + ".txt", format);
             }
         } while (!inputOk);
         return format;

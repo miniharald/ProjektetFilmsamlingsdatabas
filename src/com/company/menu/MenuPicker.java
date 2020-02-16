@@ -26,6 +26,6 @@ public class MenuPicker {
     }
 
     protected String getKeyAndTitle() {
-        return getKey() + ". " + getTitle();
+        return getKey() + ".) " + getTitle();
     }
 }

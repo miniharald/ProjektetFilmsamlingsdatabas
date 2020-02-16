@@ -2,9 +2,9 @@ package com.company.menu;
 
 import com.company.App;
 import com.company.methods.DbViewer;
-import com.company.methods.MovieAdder;
+import com.company.methods.add.MovieAdder;
 import com.company.methods.update.MovieUpdater;
-import com.company.methods.ObjectAdder;
+import com.company.methods.add.ObjectAdder;
 
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -47,11 +47,11 @@ public class Menu {
         editDbMenu.add(new MenuPicker("Tillbaka till huvudmeny", '0', this::showMainMenu));
 
         addToMovieMenu = new ArrayList<MenuPicker>();
-        addToMovieMenu.add(new MenuPicker("Lägg till regissör i film", '1', movieUpdater::addDirectorToMovie));
-        addToMovieMenu.add(new MenuPicker("Lägg till skådespelare i film", '2', movieUpdater::addActorToMovie));
-        addToMovieMenu.add(new MenuPicker("Lägg till genre i film", '3', movieUpdater::addGenreToMovie));
-        addToMovieMenu.add(new MenuPicker("Lägg till Oscar i film", '4', movieUpdater::addAwardToMovie));
-        addToMovieMenu.add(new MenuPicker("Ändra format i film", '5', movieUpdater::changeFormatToMovie));
+        addToMovieMenu.add(new MenuPicker("Lägg till regissör i film", '1', movieUpdater::addDirector));
+        addToMovieMenu.add(new MenuPicker("Lägg till skådespelare i film", '2', movieUpdater::addActor));
+        addToMovieMenu.add(new MenuPicker("Lägg till genre i film", '3', movieUpdater::addGenre));
+        addToMovieMenu.add(new MenuPicker("Lägg till Oscar i film", '4', movieUpdater::addAward));
+        addToMovieMenu.add(new MenuPicker("Ändra format i film", '5', movieUpdater::changeFormat));
         addToMovieMenu.add(new MenuPicker("Tillbaka till huvudmeny", '0', this::showMainMenu));
 
         displayDbMenu = new ArrayList<MenuPicker>();
