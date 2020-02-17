@@ -8,13 +8,14 @@ public class ObjectAdder {
     private App app;
     private FileManager fileManager = new FileManager();
     private GenreAndAwardAdder genreAndAwardAdder;
+    private CrewAdder crewAdder;
     private MovieAdder movieAdder;
-    String input;
 
     public ObjectAdder(App app) {
         this.app = app;
         this.genreAndAwardAdder = new GenreAndAwardAdder(app);
         this.movieAdder = new MovieAdder(app);
+        this.crewAdder = new CrewAdder(app);
     }
 
     public void addNewGenre(Object o) {
@@ -28,4 +29,8 @@ public class ObjectAdder {
     public void addNewFormat(Object o) {
         movieAdder.addNewFormat();
     }
+
+    public void addNewActor(Object o) { crewAdder.addNewActor(); }
+
+    public void addNewDirector(Object o) { crewAdder.addNewDirector(); }
 }
