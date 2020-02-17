@@ -19,6 +19,13 @@ public class Actor extends BaseObject {
         this.filmography.add(newMovie);
     }
 
+    public Actor(String firstName, String lastName) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.awards = new ArrayList<>();
+        this.filmography = new ArrayList<>();
+    }
+
     public void addToFilmography(Movie newMovie) {
         filmography.add(newMovie);
     }

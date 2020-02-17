@@ -15,8 +15,16 @@ public class Director extends BaseObject {
     public Director(String firstName, String lastName, Movie newMovie) {
         this.firstName = firstName;
         this.lastName = lastName;
+        this.awards = new ArrayList<>();;
         this.filmography = new ArrayList<>();
         this.filmography.add(newMovie);
+    }
+
+    public Director(String firstName, String lastName) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.awards = new ArrayList<>();;
+        this.filmography = new ArrayList<>();;
     }
 
     public String getFirstName() {

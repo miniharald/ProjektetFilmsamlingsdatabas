@@ -64,6 +64,8 @@ public class Menu {
         createDbObjectsMenu.add(new MenuPicker("Skapa ny genre", '2', objectAdder::addNewGenre));
         createDbObjectsMenu.add(new MenuPicker("Skapa ny Oscar", '3', objectAdder::addNewAward));
         createDbObjectsMenu.add(new MenuPicker("Skapa nytt format", '4', objectAdder::addNewFormat));
+        createDbObjectsMenu.add(new MenuPicker("Skapa ny Skådespelare", '5', objectAdder::addNewActor));
+        createDbObjectsMenu.add(new MenuPicker("Skapa ny Regissör", '6', objectAdder::addNewDirector));
         createDbObjectsMenu.add(new MenuPicker("Tillbaka till huvudmeny", '0', this::showMainMenu));
 
         addToMovieMenu = new ArrayList<MenuPicker>();

@@ -114,6 +114,18 @@ public class CrewAdder {
         app.getMovies().get(app.getMovies().size() - 1).addToCast(actorObj);
     }
 
+    public void addNewDirector() {
+        inputName();
+        app.getDirectors().add(new Director(firstName, lastName));
+        fileManager.writeToFile(App.DIRECTORFOLDER + id + ".txt", app.getDirectors().get(app.getDirectors().size() - 1));
+    }
+
+    public void addNewActor() {
+        inputName();
+        app.getActors().add(new Actor(firstName, lastName));
+        fileManager.writeToFile(App.ACTORFOLDER + id + ".txt", app.getActors().get(app.getActors().size() - 1));
+    }
+
     private void inputName() {
         firstName = "";
         do {
