@@ -1,15 +1,21 @@
 package com.company.objects;
 
 import com.company.dbmaker.BaseObject;
+import com.company.dbmaker.annotations.Entity;
+import com.company.dbmaker.annotations.ManyToMany;
+import com.company.dbmaker.annotations.Table;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@Entity
+@Table(name="DIRECTORS")
 public class Director extends BaseObject {
 
     private String firstName;
     private String lastName;
     private List<AcademyAward> awards = new ArrayList<>();
+    @ManyToMany(mappedBy = "director")
     private List<Movie> filmography = new ArrayList<>();
 
     public Director(String firstName, String lastName, Movie newMovie) {

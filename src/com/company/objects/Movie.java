@@ -1,24 +1,34 @@
 package com.company.objects;
 
 import com.company.dbmaker.BaseObject;
+import com.company.dbmaker.annotations.*;
 
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
+@Entity
+@Table(name="MOVIES")
 public class Movie extends BaseObject {
 
+    @Column(name="TITLE")
     private String title;
+    @Column(name="YEAR")
     private String year;
     private List<Genre> genre = new ArrayList<>();
-    private List<Director> director = new ArrayList<>();
+    @ManyToMany
+    @JoinTable(name = "MOVIES_DIRECTORS",
+            joinColumns = @JoinColumn(name = "MOVIE_ID"),
+            inverseJoinColumns = @JoinColumn(name = "DIRECTOR_ID"))
+    private List<Director> director;
     private List<Actor> cast = new ArrayList<>();
     private List<AcademyAward> awards = new ArrayList<>();
+    @Column(name="FORMAT")
     private Format format;
+    @Column(name="LENGTH_MINUTES")
     private String lengthMinutes;
 
     public Movie() {
+        director = new ArrayList<>();
     }
 
     public Movie(String title, String year, Format format, String lengthMinutes) {
@@ -26,6 +36,7 @@ public class Movie extends BaseObject {
         this.title = title;
         this.year = year;
         this.genre = new ArrayList<>();
+        director = new ArrayList<>();
         this.director = new ArrayList<>();
         this.cast = new ArrayList<>();
         this.awards = new ArrayList<>();
