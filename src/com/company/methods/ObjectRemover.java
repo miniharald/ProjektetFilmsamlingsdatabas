@@ -113,7 +113,7 @@ public class ObjectRemover {
     }
 
     private int getChoice(int goBack) {
-        System.out.println("[" + goBack + "]" + " " + "Gå tillbaka");
+        System.out.println(goBack + ".) Gå tillbaka");
         System.out.println("Välj ett alternativ ovan!");
         String inputChoice = scan.nextLine();
         int choice = Integer.parseInt(inputChoice);

@@ -254,7 +254,7 @@ public class MovieUpdater {
     private int addOption(List<BaseObject> list, String movieObject) {
         fileManager.showListOfOptions(list);
         int addOption = list.size() + 1;
-        System.out.println("[" + addOption + "]" + " " + "Lägg till " + movieObject);
+        System.out.println(addOption + ".) Lägg till " + movieObject);
         System.out.println("Välj ett alternativ ovan!");
         return addOption;
     }

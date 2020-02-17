@@ -5,6 +5,7 @@ import com.company.dbmaker.BaseObject;
 import com.company.dbmaker.FileManager;
 import com.company.objects.Actor;
 import com.company.objects.Director;
+import com.company.objects.Genre;
 import com.company.objects.Movie;
 import java.util.Collections;
 import java.util.List;
@@ -16,6 +17,7 @@ public class MovieObjectsUpdater {
     Scanner scan = new Scanner (System.in);
     String firstName = "";
     String lastName = "";
+    String name = "";
     int counter = 0;
     int choice = 0;
 
@@ -24,7 +26,7 @@ public class MovieObjectsUpdater {
     }
 
     public void updateActor(Object o) {
-        chooseCrew(Collections.unmodifiableList(app.getActors()));
+        chooseObject(Collections.unmodifiableList(app.getActors()));
         if (choice < counter) {
             inputCrewsName();
             app.getActors().get(choice).setFirstName(firstName);
@@ -42,7 +44,7 @@ public class MovieObjectsUpdater {
     }
 
     public void updateDirector(Object o) {
-        chooseCrew(Collections.unmodifiableList(app.getDirectors()));
+        chooseObject(Collections.unmodifiableList(app.getDirectors()));
         if (choice < counter) {
             inputCrewsName();
             app.getDirectors().get(choice).setFirstName(firstName);
@@ -59,7 +61,39 @@ public class MovieObjectsUpdater {
         }
     }
 
-    public void chooseCrew(List<BaseObject> list) {
+    public void updateGenre(Object o) {
+        chooseObject(Collections.unmodifiableList(app.getGenres()));
+        if (choice < counter) {
+            inputNameOfObject();
+            app.getGenres().get(choice).setName(name);
+            fileManager.writeToFile(App.GENREFOLDER + app.getGenres().get(choice).getId() + ".txt", app.getGenres().get(choice));
+            for (Movie movie : app.getMovies()) {
+                for (Genre genre : movie.getGenre())
+                    if (genre.getId().equals(app.getActors().get(choice).getId())) {
+                        movie.removeFromGenre(genre);
+                        movie.addToGenre(app.getGenres().get(choice));
+                        fileManager.writeToFile(App.MOVIEFOLDER + movie.getId() + ".txt", movie);
+                    }
+            }
+        }
+    }
+
+    public void updateFormat(Object o) {
+        chooseObject(Collections.unmodifiableList(app.getFormats()));
+        if (choice < counter) {
+            inputNameOfObject();
+            app.getFormats().get(choice).setName(name);
+            fileManager.writeToFile(App.FORMATFOLDER + app.getFormats().get(choice).getId() + ".txt", app.getFormats().get(choice));
+            for (Movie movie : app.getMovies()) {
+                    if (movie.getFormat().getId().equals(app.getFormats().get(choice).getId())) {
+                        movie.setFormat(app.getFormats().get(choice));
+                        fileManager.writeToFile(App.MOVIEFOLDER + movie.getId() + ".txt", movie);
+                    }
+            }
+        }
+    }
+
+    public void chooseObject(List<BaseObject> list) {
         counter = fileManager.showListOfOptions(list);
         String input = scan.nextLine();
         choice = Integer.parseInt(input) - 1;
@@ -70,5 +104,10 @@ public class MovieObjectsUpdater {
         firstName = scan.nextLine();
         System.out.println("Efternamn:");
         lastName = scan.nextLine();
+    }
+
+    public void inputNameOfObject() {
+        System.out.println("Namn:");
+        name = scan.nextLine();
     }
 }

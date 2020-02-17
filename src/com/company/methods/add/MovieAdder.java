@@ -99,7 +99,7 @@ public class MovieAdder {
         do {
             objectLister.listFormats();
             int newFormat = app.getFormats().size() + 1;
-            System.out.println("[" + newFormat + "]" + " " + "Lägg till nytt format");
+            System.out.println(newFormat + ".) Lägg till nytt format");
             System.out.println("Välj ett alternativ ovan!");
             String formatChoice = scan.nextLine();
             int choice = Integer.parseInt(formatChoice);

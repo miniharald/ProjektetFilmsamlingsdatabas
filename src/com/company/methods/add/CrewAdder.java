@@ -36,7 +36,7 @@ public class CrewAdder {
         do {
             objectLister.listDirectors();
             int newDirector = app.getDirectors().size() + 1;
-            System.out.println("[" + newDirector + "] Lägg till regissör");
+            System.out.println(newDirector + ".) Lägg till regissör");
             System.out.println("Välj ett alternativ ovan!");
             String directorChoice = scan.nextLine();
             int choice = Integer.parseInt(directorChoice);
@@ -91,7 +91,7 @@ public class CrewAdder {
         do {
             objectLister.listActors();
             int newActor = app.getActors().size() + 1;
-            System.out.println("[" + newActor + "] Lägg till skådespelare");
+            System.out.println(newActor + ".) Lägg till skådespelare");
             System.out.println("Välj ett alternativ ovan!:");
             String actorChoice = scan.nextLine();
             int choice = Integer.parseInt(actorChoice);

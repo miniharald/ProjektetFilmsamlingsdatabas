@@ -29,7 +29,7 @@ public class GenreAndAwardAdder {
         do {
             objectLister.listGenres();
             int newGenre = app.getGenres().size() + 1;
-            System.out.println("[" + newGenre + "]" + " " + "Lägg till genre");
+            System.out.println(newGenre + ".) Lägg till genre");
             System.out.println("Välj ett alternativ ovan!");
             String genreChoice = scan.nextLine();
             int choice = Integer.parseInt(genreChoice);
@@ -69,7 +69,7 @@ public class GenreAndAwardAdder {
         do {
             objectLister.listAwards();
             int newAward = app.getAwards().size() + 1;
-            System.out.println("[" + newAward + "]" + " " + "Lägg till Oscar");
+            System.out.println(newAward + ".) Lägg till Oscar");
             System.out.println("Välj ett alternativ ovan!");
             String awardChoice = scan.nextLine();
             int choice = Integer.parseInt(awardChoice);

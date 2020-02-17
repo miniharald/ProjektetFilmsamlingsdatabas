@@ -14,7 +14,7 @@ public class ObjectLister {
     public void listMovies() {
         int counter = 1;
         for (Movie movie : app.getMovies()) {
-            System.out.println("[" + counter + "]" + " " + movie.getTitle());
+            System.out.println(counter + ".) " + movie.getTitle());
             counter++;
         }
     }
@@ -22,7 +22,7 @@ public class ObjectLister {
     public void listActors() {
         int counter = 1;
         for (Actor actor : app.getActors()) {
-            System.out.println("[" + counter + "]" + " " + actor.getWholeName());
+            System.out.println(counter + ".) " + actor.getWholeName());
             counter++;
         }
     }
@@ -30,7 +30,7 @@ public class ObjectLister {
     public void listDirectors() {
         int counter = 1;
         for (Director director : app.getDirectors()) {
-            System.out.println("[" + counter + "]" + " " + director.getWholeName());
+            System.out.println(counter + ".) " + director.getWholeName());
             counter++;
         }
     }
@@ -38,7 +38,7 @@ public class ObjectLister {
     public void listAwards() {
         int counter = 1;
         for (AcademyAward award : app.getAwards()) {
-            System.out.println("[" + counter + "]" + " " + award.getName());
+            System.out.println(counter + ".) " + award.getName());
             counter++;
         }
     }
@@ -46,7 +46,7 @@ public class ObjectLister {
     public void listGenres() {
         int counter = 1;
         for (Genre genre : app.getGenres()) {
-            System.out.println("[" + counter + "]" + " " + genre.getName());
+            System.out.println(counter + ".) " + genre.getName());
             counter++;
         }
     }
@@ -54,7 +54,7 @@ public class ObjectLister {
     public void listFormats() {
         int counter = 1;
         for (Format format : app.getFormats()) {
-            System.out.println("[" + counter + "]" + " " + format.getName());
+            System.out.println(counter + ".) " + format.getName());
             counter++;
         }
     }

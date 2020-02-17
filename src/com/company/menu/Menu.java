@@ -14,6 +14,8 @@ public class Menu {
 
     private ArrayList<MenuPicker> mainMenu;
     private ArrayList<MenuPicker> editDbMenu;
+    private ArrayList<MenuPicker> updateObjectsMenu;
+    private ArrayList<MenuPicker> createDbObjectsMenu;
     private ArrayList<MenuPicker> displayDbMenu;
     private ArrayList<MenuPicker> addToMovieMenu;
     private ArrayList<MenuPicker> currentMenu;
@@ -42,14 +44,24 @@ public class Menu {
         mainMenu.add(new MenuPicker("Avsluta", '0', null));
 
         editDbMenu = new ArrayList<MenuPicker>();
-        editDbMenu.add(new MenuPicker("Skapa ny film", '1', movieAdder::run));
-        editDbMenu.add(new MenuPicker("Skapa ny genre", '2', objectAdder::addNewGenre));
-        editDbMenu.add(new MenuPicker("Skapa ny Oscar", '3', objectAdder::addNewAward));
-        editDbMenu.add(new MenuPicker("Skapa nytt format", '4', objectAdder::addNewFormat));
-        editDbMenu.add(new MenuPicker("Ändra Skådespelares namn", '5', movieObjectsUpdater::updateActor));
-        editDbMenu.add(new MenuPicker("Ändra Regissörs namn", '6', movieObjectsUpdater::updateDirector));
-        editDbMenu.add(new MenuPicker("Lägg till i film", '7', this::showAddToMovieMenu));
+        editDbMenu.add(new MenuPicker("Skapa nya filmobjekt", '1', this::showCreateDbObjectsMenu));
+        editDbMenu.add(new MenuPicker("Uppdatera filmobjekt", '2', this::showUpdateObjectsMenu));
+        editDbMenu.add(new MenuPicker("Lägg till i film", '3', this::showAddToMovieMenu));
         editDbMenu.add(new MenuPicker("Tillbaka till huvudmeny", '0', this::showMainMenu));
+
+        updateObjectsMenu = new ArrayList<MenuPicker>();
+        updateObjectsMenu.add(new MenuPicker("Ändra Skådespelares namn", '1', movieObjectsUpdater::updateActor));
+        updateObjectsMenu.add(new MenuPicker("Ändra Regissörs namn", '2', movieObjectsUpdater::updateDirector));
+        updateObjectsMenu.add(new MenuPicker("Ändra namn på genre", '3', movieObjectsUpdater::updateGenre));
+        updateObjectsMenu.add(new MenuPicker("Ändra namn på format", '4', movieObjectsUpdater::updateFormat));
+        updateObjectsMenu.add(new MenuPicker("Tillbaka till huvudmeny", '0', this::showMainMenu));
+
+        createDbObjectsMenu = new ArrayList<MenuPicker>();
+        createDbObjectsMenu.add(new MenuPicker("Skapa ny film", '1', movieAdder::run));
+        createDbObjectsMenu.add(new MenuPicker("Skapa ny genre", '2', objectAdder::addNewGenre));
+        createDbObjectsMenu.add(new MenuPicker("Skapa ny Oscar", '3', objectAdder::addNewAward));
+        createDbObjectsMenu.add(new MenuPicker("Skapa nytt format", '4', objectAdder::addNewFormat));
+        createDbObjectsMenu.add(new MenuPicker("Tillbaka till huvudmeny", '0', this::showMainMenu));
 
         addToMovieMenu = new ArrayList<MenuPicker>();
         addToMovieMenu.add(new MenuPicker("Lägg till regissör i film", '1', movieUpdater::addDirector));
@@ -74,6 +86,14 @@ public class Menu {
 
     private void showEditDbMenu(Object o) {
         currentMenu = editDbMenu;
+    }
+
+    private void showCreateDbObjectsMenu(Object o) {
+        currentMenu = createDbObjectsMenu;
+    }
+
+    private void showUpdateObjectsMenu(Object o) {
+        currentMenu = updateObjectsMenu;
     }
 
     private void showAddToMovieMenu(Object o) {

@@ -100,7 +100,7 @@ public class DbViewer<D> {
         app.getFormats().sort(Comparator.comparing(Format::getPrimary));
         if (movie.getFormat().getId().equals(chosenFormat.getId())) {
             newMovieList.add(movie);
-            System.out.println("[" + counter + "] " + movie.listToString());
+            System.out.println(counter + ".) " + movie.listToString());
             counter++;
         }
     }
@@ -111,7 +111,7 @@ public class DbViewer<D> {
             for (Genre genre : movie.getGenre()) {
                 if (genre.getId().equals(app.getGenres().get(choice).getId())) {
                     newMovieList.add(movie);
-                    System.out.println("[" + counter + "] " + movie.listToString());
+                    System.out.println(counter + ".) " + movie.listToString());
                     counter++;
                 }
             }
@@ -133,7 +133,7 @@ public class DbViewer<D> {
     private void printCrewIfMatch(List<BaseObject> list, int choice, BaseObject baseObject, Movie movie) {
             if (baseObject.getId().equals(list.get(choice).getId())) {
                 newMovieList.add(movie);
-                System.out.println("[" + counter + "] " + movie.listToString());
+                System.out.println(counter + ".) " + movie.listToString());
                 counter++;
             }
     }
