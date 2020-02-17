@@ -79,19 +79,6 @@ public class Director extends BaseObject {
         return this.firstName + " " + this.lastName;
     }
 
-    public String WriteToString() {
-        String movies = "";
-        String awardsWon = "";
-        for (Movie movie : this.filmography) {
-            movies = movies.concat(movie.getId() + " ");
-        }
-        for (AcademyAward award : this.awards) {
-            awardsWon = awardsWon.concat(award.getId() + " ");
-        }
-        return String.format("Id: %s\nTilltalsnamn: %s\nEfternamn: %s\nOscars: %s\nFilmer: %s",
-                getId(), this.firstName, this.lastName, awardsWon, movies);
-    }
-
     @Override
     public String toString() {
         return firstName + " " + lastName;

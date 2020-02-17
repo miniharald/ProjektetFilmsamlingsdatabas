@@ -31,10 +31,6 @@ public class Genre extends BaseObject {
         return name;
     }
 
-    public String writeToString() {
-        return "Id: " + getId() + "\nGenre: " + this.name;
-    }
-
     @Override
     public String toString() {
         return name;

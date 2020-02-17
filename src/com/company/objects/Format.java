@@ -31,10 +31,6 @@ public class Format extends BaseObject {
         return name;
     }
 
-    public String writeToString() {
-        return "Id: " + getId() + "\nFormat: " + this.name;
-    }
-
     @Override
     public String toString() {
         return name;

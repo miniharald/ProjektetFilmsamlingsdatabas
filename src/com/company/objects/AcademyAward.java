@@ -31,10 +31,6 @@ public class AcademyAward extends BaseObject {
         return name;
     }
 
-    public String writeToString() {
-        return "Id: " + this.getId() + "\nOscar: " + this.name;
-    }
-
     @Override
     public String toString() {
         return name;

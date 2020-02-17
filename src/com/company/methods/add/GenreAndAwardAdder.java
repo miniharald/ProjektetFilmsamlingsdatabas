@@ -61,7 +61,7 @@ public class GenreAndAwardAdder {
         app.getGenres().add(new Genre(input));
         Genre genre = app.getGenres().get(app.getGenres().size() - 1);
         id = app.getGenres().get(app.getGenres().size() - 1).getId();
-        fileManager.writeToFile("database/genres/" + id + ".txt", genre);
+        fileManager.writeToFile(App.GENREFOLDER + id + ".txt", genre);
         app.getMovies().get(app.getMovies().size() - 1).addToGenre(genre);
     }
 
@@ -101,7 +101,7 @@ public class GenreAndAwardAdder {
         app.getAwards().add(new AcademyAward(input));
         AcademyAward award = app.getAwards().get(app.getAwards().size() - 1);
         id = app.getAwards().get(app.getAwards().size() - 1).getId();
-        fileManager.writeToFile("database/awards/" + id + ".txt", award);
+        fileManager.writeToFile(App.AWARDFOLDER + id + ".txt", award);
         app.getMovies().get(app.getMovies().size() - 1).addToAwards(award);
     }
 

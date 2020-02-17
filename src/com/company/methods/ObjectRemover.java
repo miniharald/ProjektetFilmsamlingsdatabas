@@ -193,12 +193,12 @@ public class ObjectRemover {
 
     private void removeGenre(int choice) {
         app.getGenres().remove(app.getGenres().get(choice - 1));
-        fileManager.deleteFiles(Paths.get("database/genres/" + app.getGenres().get(choice - 1).getId() + ".txt"));
+        fileManager.deleteFiles(Paths.get(App.GENREFOLDER + app.getGenres().get(choice - 1).getId() + ".txt"));
     }
 
     private void removeAward(int choice) {
         app.getAwards().remove(app.getAwards().get(choice - 1));
-        fileManager.deleteFiles(Paths.get("database/awards/" + app.getAwards().get(choice - 1).getId() + ".txt"));
+        fileManager.deleteFiles(Paths.get(App.AWARDFOLDER + app.getAwards().get(choice - 1).getId() + ".txt"));
     }
 
     private void removeFormat(int choice) {

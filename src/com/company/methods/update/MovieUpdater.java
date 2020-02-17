@@ -105,7 +105,7 @@ public class MovieUpdater {
         app.getGenres().add(new Genre(input));
         Genre genre = app.getGenres().get(app.getGenres().size() - 1);
         id = app.getGenres().get(app.getGenres().size() - 1).getId();
-        fileManager.writeToFile("database/genres/" + id + ".txt", genre);
+        fileManager.writeToFile(App.GENREFOLDER + id + ".txt", genre);
         app.getMovies().get(movieChoice).addToGenre(genre);
         updateMovieFile(movieChoice);
     }
@@ -131,7 +131,7 @@ public class MovieUpdater {
         app.getAwards().add(new AcademyAward(input));
         AcademyAward award = app.getAwards().get(app.getAwards().size() - 1);
         id = app.getAwards().get(app.getAwards().size() - 1).getId();
-        fileManager.writeToFile("database/awards/" + id + ".txt", award);
+        fileManager.writeToFile(App.AWARDFOLDER + id + ".txt", award);
         app.getMovies().get(movieChoice).addToAwards(award);
         updateMovieFile(movieChoice);
     }
@@ -261,6 +261,6 @@ public class MovieUpdater {
 
     private void updateMovieFile(int movieChoice) {
         fileManager.deleteFiles(Paths.get(App.MOVIEFOLDER + app.getMovies().get(movieChoice).getId() + ".txt"));
-        fileManager.writeToFile("database/movies/" + app.getMovies().get(movieChoice).getId() + ".txt", app.getMovies().get(movieChoice));
+        fileManager.writeToFile(App.MOVIEFOLDER + app.getMovies().get(movieChoice).getId() + ".txt", app.getMovies().get(movieChoice));
     }
 }

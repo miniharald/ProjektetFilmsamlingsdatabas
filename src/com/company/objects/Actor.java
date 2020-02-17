@@ -19,9 +19,6 @@ public class Actor extends BaseObject {
         this.filmography.add(newMovie);
     }
 
-
-
-
     public void addToFilmography(Movie newMovie) {
         filmography.add(newMovie);
     }
@@ -60,6 +57,14 @@ public class Actor extends BaseObject {
 
     public String getPrimary() {
         return this.firstName + " " + this.lastName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 
     public String listToString() {

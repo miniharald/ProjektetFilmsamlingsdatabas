@@ -3,6 +3,7 @@ package com.company.menu;
 import com.company.App;
 import com.company.methods.DbViewer;
 import com.company.methods.add.MovieAdder;
+import com.company.methods.update.MovieObjectsUpdater;
 import com.company.methods.update.MovieUpdater;
 import com.company.methods.add.ObjectAdder;
 
@@ -20,12 +21,14 @@ public class Menu {
     private ObjectAdder objectAdder;
     private DbViewer dbViewer;
     private MovieUpdater movieUpdater;
+    private MovieObjectsUpdater movieObjectsUpdater;
 
     public Menu(App app){
         movieAdder = new MovieAdder(app);
         dbViewer = new DbViewer(app);
         objectAdder = new ObjectAdder(app);
         movieUpdater = new MovieUpdater(app);
+        movieObjectsUpdater = new MovieObjectsUpdater(app);
 
         loadMenus();
 
@@ -43,7 +46,8 @@ public class Menu {
         editDbMenu.add(new MenuPicker("Skapa ny genre", '2', objectAdder::addNewGenre));
         editDbMenu.add(new MenuPicker("Skapa ny Oscar", '3', objectAdder::addNewAward));
         editDbMenu.add(new MenuPicker("Skapa nytt format", '4', objectAdder::addNewFormat));
-        editDbMenu.add(new MenuPicker("Lägg till i film", '5', this::showAddToMovieMenu));
+        editDbMenu.add(new MenuPicker("Ändra Skådespelares namn", '5', movieObjectsUpdater::updateActor));
+        editDbMenu.add(new MenuPicker("Lägg till i film", '6', this::showAddToMovieMenu));
         editDbMenu.add(new MenuPicker("Tillbaka till huvudmeny", '0', this::showMainMenu));
 
         addToMovieMenu = new ArrayList<MenuPicker>();
