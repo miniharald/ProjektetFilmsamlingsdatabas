@@ -98,11 +98,31 @@ public class MovieObjectsUpdater {
             app.getFormats().get(choice).setName(name);
             fileManager.writeToFile(App.FORMATFOLDER + app.getFormats().get(choice).getId() + ".txt", app.getFormats().get(choice));
             for (Movie movie : app.getMovies()) {
-                    if (movie.getFormat().getId().equals(app.getFormats().get(choice).getId())) {
-                        movie.setFormat(app.getFormats().get(choice));
-                        fileManager.writeToFile(App.MOVIEFOLDER + movie.getId() + ".txt", movie);
-                    }
+                if (movie.getFormat().getId().equals(app.getFormats().get(choice).getId())) {
+                    movie.setFormat(app.getFormats().get(choice));
+                    fileManager.writeToFile(App.MOVIEFOLDER + movie.getId() + ".txt", movie);
+                }
             }
+        }
+    }
+
+    public void updateTitleOfMovie(Object o) {
+        chooseObject(Collections.unmodifiableList(app.getMovies()));
+        if (choice < counter) {
+            System.out.println("Titel:");
+            String title = scan.nextLine();
+            app.getMovies().get(choice).setTitle(title);
+            fileManager.writeToFile(App.MOVIEFOLDER + app.getMovies().get(choice).getId() + ".txt", app.getMovies().get(choice));
+        }
+    }
+
+    public void updateYearOfMovie(Object o) {
+        chooseObject(Collections.unmodifiableList(app.getMovies()));
+        if (choice < counter) {
+            System.out.println("År:");
+            String year = scan.nextLine();
+            app.getMovies().get(choice).setYear(year);
+            fileManager.writeToFile(App.MOVIEFOLDER + app.getMovies().get(choice).getId() + ".txt", app.getMovies().get(choice));
         }
     }
 

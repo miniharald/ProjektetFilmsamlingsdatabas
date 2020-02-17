@@ -54,6 +54,9 @@ public class Menu {
         updateObjectsMenu.add(new MenuPicker("Ändra Regissörs namn", '2', movieObjectsUpdater::updateDirector));
         updateObjectsMenu.add(new MenuPicker("Ändra namn på genre", '3', movieObjectsUpdater::updateGenre));
         updateObjectsMenu.add(new MenuPicker("Ändra namn på format", '4', movieObjectsUpdater::updateFormat));
+        updateObjectsMenu.add(new MenuPicker("Ändra namn på Oscars", '5', movieObjectsUpdater::updateAward));
+        updateObjectsMenu.add(new MenuPicker("Ändra titel på film", '6', movieObjectsUpdater::updateTitleOfMovie));
+        updateObjectsMenu.add(new MenuPicker("Ändra årtal på film", '7', movieObjectsUpdater::updateYearOfMovie));
         updateObjectsMenu.add(new MenuPicker("Tillbaka till huvudmeny", '0', this::showMainMenu));
 
         createDbObjectsMenu = new ArrayList<MenuPicker>();
