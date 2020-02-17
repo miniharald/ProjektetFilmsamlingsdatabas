@@ -4,6 +4,7 @@ import com.company.App;
 import com.company.dbmaker.BaseObject;
 import com.company.dbmaker.FileManager;
 import com.company.objects.Actor;
+import com.company.objects.Director;
 import com.company.objects.Movie;
 import java.util.Collections;
 import java.util.List;
@@ -31,11 +32,29 @@ public class MovieObjectsUpdater {
             fileManager.writeToFile(App.ACTORFOLDER + app.getActors().get(choice).getId() + ".txt", app.getActors().get(choice));
             for (Movie movie : app.getMovies()) {
                 for (Actor actor : movie.getCast())
-                if (actor.getId().equals(app.getActors().get(choice).getId())) {
-                    movie.removeFromCast(actor);
-                    movie.addToCast(app.getActors().get(choice));
-                    fileManager.writeToFile(App.MOVIEFOLDER + movie.getId() + ".txt", movie);
-                }
+                    if (actor.getId().equals(app.getActors().get(choice).getId())) {
+                        movie.removeFromCast(actor);
+                        movie.addToCast(app.getActors().get(choice));
+                        fileManager.writeToFile(App.MOVIEFOLDER + movie.getId() + ".txt", movie);
+                    }
+            }
+        }
+    }
+
+    public void updateDirector(Object o) {
+        chooseCrew(Collections.unmodifiableList(app.getDirectors()));
+        if (choice < counter) {
+            inputCrewsName();
+            app.getDirectors().get(choice).setFirstName(firstName);
+            app.getDirectors().get(choice).setLastName(lastName);
+            fileManager.writeToFile(App.DIRECTORFOLDER + app.getDirectors().get(choice).getId() + ".txt", app.getDirectors().get(choice));
+            for (Movie movie : app.getMovies()) {
+                for (Director director : movie.getDirector())
+                    if (director.getId().equals(app.getDirectors().get(choice).getId())) {
+                        movie.removeFromDirector(director);
+                        movie.addToDirector(app.getDirectors().get(choice));
+                        fileManager.writeToFile(App.MOVIEFOLDER + movie.getId() + ".txt", movie);
+                    }
             }
         }
     }
