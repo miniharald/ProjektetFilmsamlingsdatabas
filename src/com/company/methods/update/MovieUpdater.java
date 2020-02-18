@@ -260,7 +260,6 @@ public class MovieUpdater {
     }
 
     private void updateMovieFile(int movieChoice) {
-        fileManager.deleteFiles(Paths.get(App.MOVIEFOLDER + app.getMovies().get(movieChoice).getId() + ".txt"));
         fileManager.writeToFile(App.MOVIEFOLDER + app.getMovies().get(movieChoice).getId() + ".txt", app.getMovies().get(movieChoice));
     }
 }

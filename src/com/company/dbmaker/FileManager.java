@@ -3,6 +3,7 @@ package com.company.dbmaker;
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -72,5 +73,10 @@ public class FileManager<D> {
             counter++;
         }
         return counter;
+    }
+
+    public void removeDbObject(int choice, List<BaseObject> list, String folder) {
+        list.remove(list.get(choice));
+        deleteFiles(Paths.get(folder + list.get(choice).getId() + ".txt"));
     }
 }

@@ -2,6 +2,8 @@ package com.company.menu;
 
 import com.company.App;
 import com.company.methods.DbViewer;
+import com.company.methods.ObjectRemover;
+import com.company.methods.ObjectsInMovieRemover;
 import com.company.methods.add.MovieAdder;
 import com.company.methods.update.MovieObjectsUpdater;
 import com.company.methods.update.MovieUpdater;
@@ -15,6 +17,8 @@ public class Menu {
     private ArrayList<MenuPicker> mainMenu;
     private ArrayList<MenuPicker> editDbMenu;
     private ArrayList<MenuPicker> updateObjectsMenu;
+    private ArrayList<MenuPicker> removeDbObjectsMenu;
+    private ArrayList<MenuPicker> removeFromMovieMenu;
     private ArrayList<MenuPicker> createDbObjectsMenu;
     private ArrayList<MenuPicker> displayDbMenu;
     private ArrayList<MenuPicker> addToMovieMenu;
@@ -24,6 +28,8 @@ public class Menu {
     private DbViewer dbViewer;
     private MovieUpdater movieUpdater;
     private MovieObjectsUpdater movieObjectsUpdater;
+    private ObjectRemover objectRemover;
+    private ObjectsInMovieRemover objectsInMovieRemover;
 
     public Menu(App app){
         movieAdder = new MovieAdder(app);
@@ -31,6 +37,8 @@ public class Menu {
         objectAdder = new ObjectAdder(app);
         movieUpdater = new MovieUpdater(app);
         movieObjectsUpdater = new MovieObjectsUpdater(app);
+        objectRemover = new ObjectRemover(app);
+        objectsInMovieRemover = new ObjectsInMovieRemover(app);
 
         loadMenus();
 
@@ -38,18 +46,20 @@ public class Menu {
     }
 
     private void loadMenus() {
-        mainMenu = new ArrayList<MenuPicker>();
+        mainMenu = new ArrayList<>();
         mainMenu.add(new MenuPicker("Editera Databas", '1', this::showEditDbMenu));
         mainMenu.add(new MenuPicker("Titta på databasen", '2', this::showDisplayDbMenu));
         mainMenu.add(new MenuPicker("Avsluta", '0', null));
 
-        editDbMenu = new ArrayList<MenuPicker>();
+        editDbMenu = new ArrayList<>();
         editDbMenu.add(new MenuPicker("Skapa nya filmobjekt", '1', this::showCreateDbObjectsMenu));
         editDbMenu.add(new MenuPicker("Uppdatera filmobjekt", '2', this::showUpdateObjectsMenu));
-        editDbMenu.add(new MenuPicker("Lägg till i film", '3', this::showAddToMovieMenu));
+        editDbMenu.add(new MenuPicker("Ta bort filmobjekt", '3', this::showRemoveDbObjectsMenu));
+        editDbMenu.add(new MenuPicker("Lägg till i film", '4', this::showAddToMovieMenu));
+        editDbMenu.add(new MenuPicker("Ta bort från film", '5', this::showRemoveFromMovieMenu));
         editDbMenu.add(new MenuPicker("Tillbaka till huvudmeny", '0', this::showMainMenu));
 
-        updateObjectsMenu = new ArrayList<MenuPicker>();
+        updateObjectsMenu = new ArrayList<>();
         updateObjectsMenu.add(new MenuPicker("Ändra Skådespelares namn", '1', movieObjectsUpdater::updateActor));
         updateObjectsMenu.add(new MenuPicker("Ändra Regissörs namn", '2', movieObjectsUpdater::updateDirector));
         updateObjectsMenu.add(new MenuPicker("Ändra namn på genre", '3', movieObjectsUpdater::updateGenre));
@@ -59,7 +69,21 @@ public class Menu {
         updateObjectsMenu.add(new MenuPicker("Ändra årtal på film", '7', movieObjectsUpdater::updateYearOfMovie));
         updateObjectsMenu.add(new MenuPicker("Tillbaka till huvudmeny", '0', this::showMainMenu));
 
-        createDbObjectsMenu = new ArrayList<MenuPicker>();
+        removeDbObjectsMenu = new ArrayList<>();
+        removeDbObjectsMenu.add(new MenuPicker("Ta bort film", '1', objectRemover::removeMovie));
+        removeDbObjectsMenu.add(new MenuPicker("Ta bort genre", '2', objectRemover::removeGenre));
+        removeDbObjectsMenu.add(new MenuPicker("Ta bort skådespelare", '3', objectRemover::removeActor));
+        removeDbObjectsMenu.add(new MenuPicker("Ta bort regissör", '4', objectRemover::removeDirector));
+        removeDbObjectsMenu.add(new MenuPicker("Ta bort Oscars", '5', objectRemover::removeAward));
+        removeDbObjectsMenu.add(new MenuPicker("Ta bort format", '6', objectRemover::removeFormat));
+        removeDbObjectsMenu.add(new MenuPicker("Tillbaka till huvudmeny", '0', this::showMainMenu));
+
+        removeFromMovieMenu = new ArrayList<>();
+        removeFromMovieMenu.add(new MenuPicker("Ta skådespelare från film", '1', objectsInMovieRemover::removeActorFromMovie));
+        removeFromMovieMenu.add(new MenuPicker("Ta regissör från film", '2', objectsInMovieRemover::removeDirectorFromMovie));
+        removeFromMovieMenu.add(new MenuPicker("Tillbaka till huvudmeny", '0', this::showMainMenu));
+
+        createDbObjectsMenu = new ArrayList<>();
         createDbObjectsMenu.add(new MenuPicker("Skapa ny film", '1', movieAdder::run));
         createDbObjectsMenu.add(new MenuPicker("Skapa ny genre", '2', objectAdder::addNewGenre));
         createDbObjectsMenu.add(new MenuPicker("Skapa ny Oscar", '3', objectAdder::addNewAward));
@@ -99,6 +123,14 @@ public class Menu {
 
     private void showUpdateObjectsMenu(Object o) {
         currentMenu = updateObjectsMenu;
+    }
+
+    private void showRemoveDbObjectsMenu(Object o) {
+        currentMenu = removeDbObjectsMenu;
+    }
+
+    private void showRemoveFromMovieMenu(Object o) {
+        currentMenu = removeFromMovieMenu;
     }
 
     private void showAddToMovieMenu(Object o) {

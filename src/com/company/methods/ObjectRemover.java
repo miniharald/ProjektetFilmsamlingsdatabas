@@ -1,17 +1,17 @@
 package com.company.methods;
 
 import com.company.App;
+import com.company.dbmaker.BaseObject;
 import com.company.dbmaker.FileManager;
 import com.company.objects.*;
-
-import java.nio.file.Paths;
+import java.util.Collections;
+import java.util.List;
 import java.util.Scanner;
 
 public class ObjectRemover {
 
     private App app;
     private FileManager fileManager = new FileManager();
-    private ObjectLister objectLister = new ObjectLister(app);
     private Scanner scan = new Scanner(System.in);
     private boolean inputOk = false;
 
@@ -19,14 +19,14 @@ public class ObjectRemover {
         this.app = app;
     }
 
-    private void listMoviesToRemove() {
+    public void removeMovie(Object o) {
         do {
             fileManager.showListOfOptions(app.getMovies());
             int goBack = app.getMovies().size() + 1;
             int choice = getChoice(goBack);
             if (choice < goBack) {
                 removeMovieFromCrew(choice);
-                removeMovie(choice);
+                fileManager.removeDbObject(choice, app.getMovies(), App.MOVIEFOLDER);
                 inputOk = true;
             } else if (choice == goBack) {
                 inputOk = true;
@@ -35,14 +35,14 @@ public class ObjectRemover {
         } while (!inputOk);
     }
 
-    private void listGenresToRemove() {
+    public void removeGenre(Object o) {
         do {
-            objectLister.listGenres();
+            fileManager.showListOfOptions(app.getGenres());
             int goBack = app.getGenres().size() + 1;
             int choice = getChoice(goBack);
             if (choice < goBack) {
                 removeGenreFromMovie(choice);
-                removeGenre(choice);
+                fileManager.removeDbObject(choice, app.getGenres(), App.GENREFOLDER);
                 inputOk = true;
             } else if (choice == goBack) {
                 inputOk = true;
@@ -51,13 +51,14 @@ public class ObjectRemover {
         } while (!inputOk);
     }
 
-    private void listActorsToRemove() {
+    public void removeActor(Object o) {
         do {
-            objectLister.listActors();
+            fileManager.showListOfOptions(app.getActors());
             int goBack = app.getActors().size() + 1;
             int choice = getChoice(goBack);
             if (choice < goBack) {
-                removeActor(choice);
+                removeCrewFromMovie(choice, Collections.unmodifiableList(app.getActors()), MovieObjects.actor);
+                fileManager.removeDbObject(choice, app.getActors(), App.ACTORFOLDER);
                 inputOk = true;
             } else if (choice == goBack) {
                 inputOk = true;
@@ -66,13 +67,14 @@ public class ObjectRemover {
         } while (!inputOk);
     }
 
-    private void listDirectorToRemove() {
+    public void removeDirector(Object o) {
         do {
-            objectLister.listDirectors();
+            fileManager.showListOfOptions(app.getDirectors());
             int goBack = app.getDirectors().size() + 1;
             int choice = getChoice(goBack);
             if (choice < goBack) {
-                removeDirector(choice);
+                removeCrewFromMovie(choice, Collections.unmodifiableList(app.getDirectors()), MovieObjects.director);
+                fileManager.removeDbObject(choice, app.getDirectors(), App.DIRECTORFOLDER);
                 inputOk = true;
             } else if (choice == goBack) {
                 inputOk = true;
@@ -81,14 +83,14 @@ public class ObjectRemover {
         } while (!inputOk);
     }
 
-    private void listAwardToRemove() {
+    public void removeAward(Object o) {
         do {
-            objectLister.listAwards();
+            fileManager.showListOfOptions(app.getAwards());
             int goBack = app.getAwards().size() + 1;
             int choice = getChoice(goBack);
             if (choice < goBack) {
                 removeAwardFromMovieAndCrew(choice);
-                removeAward(choice);
+                fileManager.removeDbObject(choice, app.getAwards(), App.AWARDFOLDER);
                 inputOk = true;
             } else if (choice == goBack) {
                 inputOk = true;
@@ -97,13 +99,12 @@ public class ObjectRemover {
         } while (!inputOk);
     }
 
-    private void listFormatToRemove() {
+    public void removeFormat(Object o) {
         do {
-
             int goBack = app.getFormats().size() + 1;
             int choice = getChoice(goBack);
             if (choice < goBack) {
-                removeFormat(choice);
+                fileManager.removeDbObject(choice, app.getFormats(), App.FORMATFOLDER);
                 inputOk = true;
             } else if (choice == goBack) {
                 inputOk = true;
@@ -116,7 +117,7 @@ public class ObjectRemover {
         System.out.println(goBack + ".) Gå tillbaka");
         System.out.println("Välj ett alternativ ovan!");
         String inputChoice = scan.nextLine();
-        int choice = Integer.parseInt(inputChoice);
+        int choice = Integer.parseInt(inputChoice) - 1;
         return choice;
     }
 
@@ -126,7 +127,6 @@ public class ObjectRemover {
             for (Movie movie : actor.getFilmography()) {
                 if (movie.getId().equals(id)) {
                     actor.getFilmography().remove(movie);
-                    fileManager.deleteFiles(Paths.get(App.ACTORFOLDER + actor.getId() + ".txt"));
                     fileManager.writeToFile(App.ACTORFOLDER + actor.getId() + ".txt", actor);
                 }
             }
@@ -135,7 +135,6 @@ public class ObjectRemover {
             for (Movie movie : director.getFilmography()) {
                 if (movie.getId().equals(id)) {
                     director.getFilmography().remove(movie);
-                    fileManager.deleteFiles(Paths.get(App.DIRECTORFOLDER + director.getId() + ".txt"));
                     fileManager.writeToFile(App.DIRECTORFOLDER + director.getId() + ".txt", director);
                 }
             }
@@ -148,7 +147,6 @@ public class ObjectRemover {
             for (AcademyAward award : movie.getAwards()) {
                 if (award.getId().equals(id)) {
                     movie.getAwards().remove(award);
-                    fileManager.deleteFiles(Paths.get(App.MOVIEFOLDER + movie.getId() + ".txt"));
                     fileManager.writeToFile(App.MOVIEFOLDER + movie.getId() + ".txt", movie);
                 }
             }
@@ -157,7 +155,6 @@ public class ObjectRemover {
             for (AcademyAward award : director.getAwards()) {
                 if (award.getId().equals(id)) {
                     director.getFilmography().remove(award);
-                    fileManager.deleteFiles(Paths.get(App.DIRECTORFOLDER + director.getId() + ".txt"));
                     fileManager.writeToFile(App.DIRECTORFOLDER + director.getId() + ".txt", director);
                 }
             }
@@ -166,7 +163,6 @@ public class ObjectRemover {
             for (AcademyAward award : actor.getAwards()) {
                 if (award.getId().equals(id)) {
                     actor.getFilmography().remove(award);
-                    fileManager.deleteFiles(Paths.get(App.ACTORFOLDER + actor.getId() + ".txt"));
                     fileManager.writeToFile(App.ACTORFOLDER + actor.getId() + ".txt", actor);
                 }
             }
@@ -179,40 +175,31 @@ public class ObjectRemover {
             for (Genre genre : movie.getGenre()) {
                 if (genre.getId().equals(id)) {
                     movie.getGenre().remove(genre);
-                    fileManager.deleteFiles(Paths.get(App.MOVIEFOLDER + movie.getId() + ".txt"));
                     fileManager.writeToFile(App.MOVIEFOLDER + movie.getId() + ".txt", movie);
                 }
             }
         }
     }
 
-    private void removeMovie(int choice) {
-        app.getMovies().remove(app.getMovies().get(choice - 1));
-        fileManager.deleteFiles(Paths.get(App.MOVIEFOLDER + app.getMovies().get(choice - 1).getId() + ".txt"));
-    }
-
-    private void removeGenre(int choice) {
-        app.getGenres().remove(app.getGenres().get(choice - 1));
-        fileManager.deleteFiles(Paths.get(App.GENREFOLDER + app.getGenres().get(choice - 1).getId() + ".txt"));
-    }
-
-    private void removeAward(int choice) {
-        app.getAwards().remove(app.getAwards().get(choice - 1));
-        fileManager.deleteFiles(Paths.get(App.AWARDFOLDER + app.getAwards().get(choice - 1).getId() + ".txt"));
-    }
-
-    private void removeFormat(int choice) {
-        app.getFormats().remove(app.getFormats().get(choice - 1));
-        fileManager.deleteFiles(Paths.get(App.FORMATFOLDER + app.getFormats().get(choice - 1).getId() + ".txt"));
-    }
-
-    private void removeActor(int choice) {
-        app.getActors().remove(app.getActors().get(choice - 1));
-        fileManager.deleteFiles(Paths.get(App.ACTORFOLDER + app.getActors().get(choice - 1).getId() + ".txt"));
-    }
-
-    private void removeDirector(int choice) {
-        app.getActors().remove(app.getActors().get(choice - 1));
-        fileManager.deleteFiles(Paths.get(App.ACTORFOLDER + app.getActors().get(choice - 1).getId() + ".txt"));
+    private void removeCrewFromMovie(int choice, List<BaseObject> list, MovieObjects job) {
+        String id = list.get(choice - 1).getId();
+        for (Movie movie : app.getMovies()) {
+            switch (job) {
+                case actor:
+                    for (Actor actor : movie.getCast()) {
+                        if (actor.getId().equals(id)) {
+                            movie.getCast().remove(actor);
+                            fileManager.writeToFile(App.MOVIEFOLDER + movie.getId() + ".txt", movie);
+                        }
+                    }
+                case director:
+                    for (Director director : movie.getDirector()) {
+                        if (director.getId().equals(id)) {
+                            movie.getDirector().remove(director);
+                            fileManager.writeToFile(App.MOVIEFOLDER + movie.getId() + ".txt", movie);
+                        }
+                    }
+            }
+        }
     }
 }

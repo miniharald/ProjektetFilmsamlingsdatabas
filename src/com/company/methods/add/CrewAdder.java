@@ -34,7 +34,7 @@ public class CrewAdder {
 
     public void addDirectorToMovie() {
         do {
-            objectLister.listDirectors();
+            fileManager.showListOfOptions(app.getDirectors());
             int newDirector = app.getDirectors().size() + 1;
             System.out.println(newDirector + ".) Lägg till regissör");
             System.out.println("Välj ett alternativ ovan!");
@@ -89,7 +89,7 @@ public class CrewAdder {
 
     public void addActorToMovie() {
         do {
-            objectLister.listActors();
+            fileManager.showListOfOptions(app.getActors());
             int newActor = app.getActors().size() + 1;
             System.out.println(newActor + ".) Lägg till skådespelare");
             System.out.println("Välj ett alternativ ovan!:");
