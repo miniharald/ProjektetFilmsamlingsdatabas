@@ -83,6 +83,12 @@ public class Director extends BaseObject {
         return this.firstName + " " + this.lastName;
     }
 
+    @Override
+    public String getAll() {
+        String info = this.firstName + " " + lastName;
+        return info;
+    }
+
     public String listToString() {
         return this.firstName + " " + this.lastName;
     }

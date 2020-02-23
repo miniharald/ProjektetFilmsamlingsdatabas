@@ -134,6 +134,24 @@ public class Movie extends BaseObject {
         return this.title;
     }
 
+    @Override
+    public String getAll() {
+        String info = String.format("%s %s %s %s", title, year, lengthMinutes, format.getAll());
+        for (Genre genreObj : this.genre) {
+            info += " " + genreObj.getAll();
+        }
+        for (Director directorObj : this.director) {
+            info += " " + directorObj.getAll();
+        }
+        for (Actor actor : this.cast) {
+            info += " " + actor.getAll();
+        }
+        for (AcademyAward award : this.awards) {
+            info += " " + award.getAll();
+        }
+        return info;
+    }
+
 
     public String listToString() {
         if(director.size() > 1) {

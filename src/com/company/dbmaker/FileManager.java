@@ -6,6 +6,8 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class FileManager<D> {
 
@@ -78,5 +80,12 @@ public class FileManager<D> {
     public void removeDbObject(int choice, List<BaseObject> list, String folder) {
         list.remove(list.get(choice));
         deleteFiles(Paths.get(folder + list.get(choice).getId() + ".txt"));
+    }
+
+    public List<BaseObject> search(String input, List<BaseObject> list) {
+        List<BaseObject> newList = list.stream()
+                .filter(o -> o.getAll().toLowerCase().contains(input.toLowerCase()))
+                .collect(Collectors.toList());
+        return newList;
     }
 }

@@ -66,6 +66,12 @@ public class Actor extends BaseObject {
         return this.firstName + " " + this.lastName;
     }
 
+    @Override
+    public String getAll() {
+        String info = this.firstName + " " + lastName;
+        return info;
+    }
+
     public void setFirstName(String firstName) {
         this.firstName = firstName;
     }

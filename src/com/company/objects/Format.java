@@ -27,6 +27,11 @@ public class Format extends BaseObject {
         return this.name;
     }
 
+    @Override
+    public String getAll() {
+        return this.name;
+    }
+
     public String listToString() {
         return name;
     }

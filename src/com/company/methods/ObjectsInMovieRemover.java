@@ -26,6 +26,10 @@ public class ObjectsInMovieRemover {
         removeObjectsFromMovie(MovieObjects.actor);
     }
 
+    public void removeAwardFromMovie(Object o) {
+        removeObjectsFromMovie(MovieObjects.Oscars);
+    }
+
     public void removeObjectsFromMovie(MovieObjects movieObjects) {
         fileManager.showListOfOptions(app.getMovies());
         int goBack = app.getMovies().size() + 1;
@@ -59,6 +63,8 @@ public class ObjectsInMovieRemover {
                 fileManager.showListOfOptions(app.getMovies().get(movieChoice).getDirector());
             case actor:
                 fileManager.showListOfOptions(app.getMovies().get(movieChoice).getCast());
+            case Oscars:
+                fileManager.showListOfOptions(app.getMovies().get(movieChoice).getAwards());
         }
     }
 
@@ -68,6 +74,8 @@ public class ObjectsInMovieRemover {
                 app.getMovies().get(movieChoice).removeFromDirector(app.getMovies().get(movieChoice).getDirector().get(choice));
             case actor:
                 app.getMovies().get(movieChoice).removeFromCast(app.getMovies().get(movieChoice).getCast().get(choice));
+            case Oscars:
+                app.getMovies().get(movieChoice).removeFromAwards(app.getMovies().get(movieChoice).getAwards().get(choice));
         }
     }
 }
