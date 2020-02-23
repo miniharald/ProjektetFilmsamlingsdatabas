@@ -9,13 +9,13 @@ public class Director extends BaseObject {
 
     private String firstName;
     private String lastName;
-    private List<AcademyAward> awards = new ArrayList<>();
-    private List<Movie> filmography = new ArrayList<>();
+    private List<AcademyAward> awards;
+    private List<Movie> filmography;
 
     public Director(String firstName, String lastName, Movie newMovie) {
         this.firstName = firstName;
         this.lastName = lastName;
-        this.awards = new ArrayList<>();;
+        this.awards = new ArrayList<>();
         this.filmography = new ArrayList<>();
         this.filmography.add(newMovie);
     }
@@ -23,8 +23,8 @@ public class Director extends BaseObject {
     public Director(String firstName, String lastName) {
         this.firstName = firstName;
         this.lastName = lastName;
-        this.awards = new ArrayList<>();;
-        this.filmography = new ArrayList<>();;
+        this.awards = new ArrayList<>();
+        this.filmography = new ArrayList<>();
     }
 
     public String getFirstName() {
@@ -47,16 +47,8 @@ public class Director extends BaseObject {
         return awards;
     }
 
-    public void setAwards(List<AcademyAward> awards) {
-        this.awards = awards;
-    }
-
     public List<Movie> getFilmography() {
         return filmography;
-    }
-
-    public void setFilmography(List<Movie> filmography) {
-        this.filmography = filmography;
     }
 
     public void addToFilmography(Movie newMovie) {
@@ -84,9 +76,15 @@ public class Director extends BaseObject {
     }
 
     @Override
-    public String getAll() {
-        String info = this.firstName + " " + lastName;
-        return info;
+    public String getKeyWords() {
+        StringBuilder info = new StringBuilder(this.firstName + " " + lastName);
+        for (AcademyAward award : this.awards) {
+            info.append(" ").append(award.getName());
+        }
+        for (Movie movie : this.filmography) {
+            info.append(movie.getKeyWords());
+        }
+        return info.toString();
     }
 
     public String listToString() {

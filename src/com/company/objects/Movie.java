@@ -42,9 +42,6 @@ public class Movie extends BaseObject {
         this.title = title;
     }
 
-    public String getYear() {
-        return year;
-    }
 
     public void setYear(String year) {
         this.year = year;
@@ -70,17 +67,11 @@ public class Movie extends BaseObject {
         return cast;
     }
 
-    public void setCast(List<Actor> cast) {
-        this.cast = cast;
-    }
 
     public List<AcademyAward> getAwards() {
         return awards;
     }
 
-    public void setAwards(ArrayList<AcademyAward> awards) {
-        this.awards = awards;
-    }
 
     public Format getFormat() {
         return format;
@@ -88,10 +79,6 @@ public class Movie extends BaseObject {
 
     public void setFormat(Format format) {
         this.format = format;
-    }
-
-    public String getLengthMinutes() {
-        return lengthMinutes;
     }
 
     public void setLengthMinutes(String lengthMinutes) {
@@ -135,21 +122,21 @@ public class Movie extends BaseObject {
     }
 
     @Override
-    public String getAll() {
-        String info = String.format("%s %s %s %s", title, year, lengthMinutes, format.getAll());
+    public String getKeyWords() {
+        StringBuilder info = new StringBuilder(String.format("%s %s %s %s", title, year, lengthMinutes, format.getName()));
         for (Genre genreObj : this.genre) {
-            info += " " + genreObj.getAll();
+            info.append(" ").append(genreObj.getName());
         }
         for (Director directorObj : this.director) {
-            info += " " + directorObj.getAll();
+            info.append(" ").append(directorObj.getWholeName());
         }
         for (Actor actor : this.cast) {
-            info += " " + actor.getAll();
+            info.append(" ").append(actor.getWholeName());
         }
         for (AcademyAward award : this.awards) {
-            info += " " + award.getAll();
+            info.append(" ").append(award.getName());
         }
-        return info;
+        return info.toString();
     }
 
 
@@ -181,13 +168,13 @@ public class Movie extends BaseObject {
         return String.format("%s\nUtgiven: %s\nGenre: %s\nLängd: %s\nRegissör: %s\nSkådespelare: %s\nOscars: %s\nFormat: %s",
                 title, year, genre.stream()
                         .sorted(Comparator.comparing(Genre::getName))
-                        .map(genre -> genre.getName()).collect(Collectors.joining(", "))
+                        .map(Genre::getName).collect(Collectors.joining(", "))
                 , time, director.stream()
                         .sorted(Comparator.comparing(Director::getWholeName))
-                        .map(director -> director.getWholeName()).collect(Collectors.joining(" & "))
+                        .map(Director::getWholeName).collect(Collectors.joining(" & "))
                 , cast.stream()
                         .sorted(Comparator.comparing(Actor::getWholeName))
-                        .map(actor -> actor.getWholeName()).collect(Collectors.joining(", "))
+                        .map(Actor::getWholeName).collect(Collectors.joining(", "))
                 , awards.size(), format);
     }
 
@@ -195,15 +182,15 @@ public class Movie extends BaseObject {
         return String.format("%s\nUtgiven: %s\nGenre: %s\nLängd: %s\nRegissör: %s\nSkådespelare: %s\nOscars: %s (%s)\nFormat: %s",
                 title, year, genre.stream()
                         .sorted(Comparator.comparing(Genre::getName))
-                        .map(genre -> genre.getName()).collect(Collectors.joining(", "))
+                        .map(Genre::getName).collect(Collectors.joining(", "))
                 , time, director.stream()
                         .sorted(Comparator.comparing(Director::getWholeName))
-                        .map(director -> director.getWholeName()).collect(Collectors.joining(" & "))
+                        .map(Director::getWholeName).collect(Collectors.joining(" & "))
                 , cast.stream()
                         .sorted(Comparator.comparing(Actor::getWholeName))
-                        .map(actor -> actor.getWholeName()).collect(Collectors.joining(", "))
+                        .map(Actor::getWholeName).collect(Collectors.joining(", "))
                 , awards.size(), awards.stream()
                         .sorted(Comparator.comparing(AcademyAward::getName))
-                        .map(award -> award.getName()).collect(Collectors.joining(", ")), format);
+                        .map(AcademyAward::getName).collect(Collectors.joining(", ")), format);
     }
 }

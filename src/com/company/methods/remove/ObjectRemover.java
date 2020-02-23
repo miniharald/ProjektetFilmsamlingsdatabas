@@ -1,4 +1,4 @@
-package com.company.methods;
+package com.company.methods.remove;
 
 import com.company.App;
 import com.company.dbmaker.BaseObject;

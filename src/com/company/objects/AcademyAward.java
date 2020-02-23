@@ -11,10 +11,6 @@ public class AcademyAward extends BaseObject {
         this.name = name;
     }
 
-    public AcademyAward() {
-        super();
-    }
-
     public String getName() {
         return name;
     }
@@ -28,7 +24,7 @@ public class AcademyAward extends BaseObject {
     }
 
     @Override
-    public String getAll() {
+    public String getKeyWords() {
         return this.name;
     }
 

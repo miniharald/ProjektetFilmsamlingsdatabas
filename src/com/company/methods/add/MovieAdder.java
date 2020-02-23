@@ -3,7 +3,6 @@ package com.company.methods.add;
 import com.company.App;
 import com.company.dbmaker.FileManager;
 import com.company.dbmaker.InputChecker;
-import com.company.methods.ObjectLister;
 import com.company.objects.Format;
 import com.company.objects.Movie;
 
@@ -17,7 +16,6 @@ public class MovieAdder {
     private CrewAdder addCrew;
     private GenreAndAwardAdder addGenreAndAwardsToMovie;
     private FileManager fileManager = new FileManager();
-    private ObjectLister objectLister;
     private boolean inputOk = false;
     private String fileName;
     private String input;
@@ -31,7 +29,6 @@ public class MovieAdder {
         this.checker = new InputChecker(app);
         this.addCrew = new CrewAdder(app);
         this.addGenreAndAwardsToMovie = new GenreAndAwardAdder(app);
-        this.objectLister = new ObjectLister(app);
     }
 
     public void run(Object o) {
@@ -97,7 +94,7 @@ public class MovieAdder {
 
     private Format format() {
         do {
-            objectLister.listFormats();
+            fileManager.showListOfOptions(app.getFormats());
             int newFormat = app.getFormats().size() + 1;
             System.out.println(newFormat + ".) Lägg till nytt format");
             System.out.println("Välj ett alternativ ovan!");

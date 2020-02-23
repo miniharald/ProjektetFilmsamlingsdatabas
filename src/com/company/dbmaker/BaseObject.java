@@ -1,7 +1,6 @@
 package com.company.dbmaker;
 
 import java.io.Serializable;
-import java.time.Instant;
 
 public abstract class BaseObject implements Serializable {
     private String id;
@@ -15,7 +14,7 @@ public abstract class BaseObject implements Serializable {
 
     abstract public String getPrimary();
 
-    abstract public String getAll();
+    abstract public String getKeyWords();
 
     abstract public String listToString();
 

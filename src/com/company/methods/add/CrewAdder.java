@@ -4,7 +4,6 @@ import com.company.App;
 import com.company.dbmaker.BaseObject;
 import com.company.dbmaker.FileManager;
 import com.company.dbmaker.InputChecker;
-import com.company.methods.ObjectLister;
 import com.company.objects.Actor;
 import com.company.objects.Director;
 import com.company.objects.MovieObjects;
@@ -19,7 +18,6 @@ public class CrewAdder {
     private App app;
     private InputChecker checker;
     private FileManager fileManager = new FileManager();
-    private ObjectLister objectLister;
     private Scanner scan = new Scanner(System.in);
     private boolean inputOk = false;
     private String id ="";
@@ -29,7 +27,6 @@ public class CrewAdder {
     public CrewAdder(App app) {
         this.app = app;
         this.checker = new InputChecker(app);
-        this.objectLister = new ObjectLister(app);
     }
 
     public void addDirectorToMovie() {

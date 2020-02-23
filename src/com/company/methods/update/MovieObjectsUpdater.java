@@ -126,6 +126,16 @@ public class MovieObjectsUpdater {
         }
     }
 
+    public void updateLengthOfMovie(Object o) {
+        chooseObject(Collections.unmodifiableList(app.getMovies()));
+        if (choice < counter) {
+            System.out.println("Filmens längd i minuter:");
+            String length = scan.nextLine();
+            app.getMovies().get(choice).setLengthMinutes(length);
+            fileManager.writeToFile(App.MOVIEFOLDER + app.getMovies().get(choice).getId() + ".txt", app.getMovies().get(choice));
+        }
+    }
+
     public void chooseObject(List<BaseObject> list) {
         counter = fileManager.showListOfOptions(list);
         String input = scan.nextLine();

@@ -7,7 +7,6 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 public class FileManager<D> {
 
@@ -84,7 +83,7 @@ public class FileManager<D> {
 
     public List<BaseObject> search(String input, List<BaseObject> list) {
         List<BaseObject> newList = list.stream()
-                .filter(o -> o.getAll().toLowerCase().contains(input.toLowerCase()))
+                .filter(o -> o.getKeyWords().toLowerCase().contains(input.toLowerCase()))
                 .collect(Collectors.toList());
         return newList;
     }

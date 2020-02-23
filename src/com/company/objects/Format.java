@@ -28,7 +28,7 @@ public class Format extends BaseObject {
     }
 
     @Override
-    public String getAll() {
+    public String getKeyWords() {
         return this.name;
     }
 

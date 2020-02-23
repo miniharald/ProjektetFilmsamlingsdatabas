@@ -2,8 +2,10 @@ package com.company.menu;
 
 import com.company.App;
 import com.company.methods.DbViewer;
-import com.company.methods.ObjectRemover;
-import com.company.methods.ObjectsInMovieRemover;
+import com.company.methods.add.CrewsAwardAdder;
+import com.company.methods.remove.CrewsAwardRemover;
+import com.company.methods.remove.ObjectRemover;
+import com.company.methods.remove.ObjectsInMovieRemover;
 import com.company.methods.SearchFinder;
 import com.company.methods.add.MovieAdder;
 import com.company.methods.add.ObjectAdder;
@@ -23,6 +25,7 @@ public class MenuFactory {
     private List<MenuPicker> createDbObjectsMenu;
     private List<MenuPicker> displayDbMenu;
     private List<MenuPicker> addToMovieMenu;
+    private List<MenuPicker> removeAwardFromCrewMenu;
     private List<MenuPicker> currentMenu;
     private MovieAdder movieAdder;
     private ObjectAdder objectAdder;
@@ -32,6 +35,8 @@ public class MenuFactory {
     private ObjectRemover objectRemover;
     private ObjectsInMovieRemover objectsInMovieRemover;
     private SearchFinder searchFinder;
+    private CrewsAwardRemover crewsAwardRemover;
+    private CrewsAwardAdder crewsAwardAdder;
 
     public MenuFactory(App app) {
         movieAdder = new MovieAdder(app);
@@ -42,6 +47,8 @@ public class MenuFactory {
         objectRemover = new ObjectRemover(app);
         objectsInMovieRemover = new ObjectsInMovieRemover(app);
         searchFinder = new SearchFinder(app);
+        crewsAwardRemover = new CrewsAwardRemover(app);
+        crewsAwardAdder = new CrewsAwardAdder(app);
         createAllMenus();
         currentMenu = mainMenu;
     }
@@ -55,6 +62,7 @@ public class MenuFactory {
         createRemoveDbObjectsMenu();
         createRemoveFromMovieMenu();
         createUpdateObjectsMenu();
+        createRemoveAwardFromCrewMenu();
     }
 
     private void createMainMenu() {
@@ -71,6 +79,7 @@ public class MenuFactory {
         editDbMenu.add(new MenuPicker("Ta bort filmobjekt", '3', this::showRemoveDbObjectsMenu));
         editDbMenu.add(new MenuPicker("Lägg till i film", '4', this::showAddToMovieMenu));
         editDbMenu.add(new MenuPicker("Ta bort från film", '5', this::showRemoveFromMovieMenu));
+        editDbMenu.add(new MenuPicker("Lägg till/Ta bort Oscars från medarbetare", '6', this::showRemoveAwardFromCrewMenu));
         editDbMenu.add(new MenuPicker("Tillbaka till huvudmeny", '0', this::showMainMenu));
     }
 
@@ -83,6 +92,7 @@ public class MenuFactory {
         updateObjectsMenu.add(new MenuPicker("Ändra namn på Oscars", '5', movieObjectsUpdater::updateAward));
         updateObjectsMenu.add(new MenuPicker("Ändra titel på film", '6', movieObjectsUpdater::updateTitleOfMovie));
         updateObjectsMenu.add(new MenuPicker("Ändra årtal på film", '7', movieObjectsUpdater::updateYearOfMovie));
+        updateObjectsMenu.add(new MenuPicker("Ändra längden på film", '8', movieObjectsUpdater::updateLengthOfMovie));
         updateObjectsMenu.add(new MenuPicker("Tillbaka till huvudmeny", '0', this::showMainMenu));
     }
 
@@ -103,6 +113,15 @@ public class MenuFactory {
         removeFromMovieMenu.add(new MenuPicker("Ta bort regissör från film", '2', objectsInMovieRemover::removeDirectorFromMovie));
         removeFromMovieMenu.add(new MenuPicker("Ta bort Oscars från film", '3', objectsInMovieRemover::removeAwardFromMovie));
         removeFromMovieMenu.add(new MenuPicker("Tillbaka till huvudmeny", '0', this::showMainMenu));
+    }
+
+    private void createRemoveAwardFromCrewMenu() {
+        removeAwardFromCrewMenu = new ArrayList<>();
+        removeAwardFromCrewMenu.add(new MenuPicker("Ta bort Oscars från skådespelare", '1', crewsAwardRemover::removeAwardFromActor));
+        removeAwardFromCrewMenu.add(new MenuPicker("Ta bort Oscars från regissör", '2', crewsAwardRemover::removeAwardFromDirector));
+        removeAwardFromCrewMenu.add(new MenuPicker("Lägg till Oscars till skådespelare", '3', crewsAwardAdder::addAwardToActor));
+        removeAwardFromCrewMenu.add(new MenuPicker("Lägg till Oscars till regissör", '4', crewsAwardAdder::addAwardFromDirector));
+        removeAwardFromCrewMenu.add(new MenuPicker("Tillbaka till huvudmeny", '0', this::showMainMenu));
     }
 
     private void createACreateDbObjectsMenu() {
@@ -159,6 +178,10 @@ public class MenuFactory {
 
     private void showRemoveFromMovieMenu(Object o) {
         currentMenu = removeFromMovieMenu;
+    }
+
+    private void showRemoveAwardFromCrewMenu(Object o) {
+        currentMenu = removeAwardFromCrewMenu;
     }
 
     private void showAddToMovieMenu(Object o) {

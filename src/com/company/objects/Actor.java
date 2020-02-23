@@ -67,9 +67,15 @@ public class Actor extends BaseObject {
     }
 
     @Override
-    public String getAll() {
-        String info = this.firstName + " " + lastName;
-        return info;
+    public String getKeyWords() {
+        StringBuilder info = new StringBuilder(this.firstName + " " + lastName);
+        for (AcademyAward award : this.awards) {
+            info.append(" ").append(award.getName());
+        }
+        for (Movie movie : this.filmography) {
+            info.append(movie.getKeyWords());
+        }
+        return info.toString();
     }
 
     public void setFirstName(String firstName) {

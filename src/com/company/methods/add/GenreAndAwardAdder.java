@@ -3,7 +3,6 @@ package com.company.methods.add;
 import com.company.App;
 import com.company.dbmaker.FileManager;
 import com.company.dbmaker.InputChecker;
-import com.company.methods.ObjectLister;
 import com.company.objects.AcademyAward;
 import com.company.objects.Genre;
 import java.util.Scanner;
@@ -13,7 +12,6 @@ public class GenreAndAwardAdder {
     private App app;
     private InputChecker checker;
     private FileManager fileManager = new FileManager();
-    private ObjectLister objectLister;
     private Scanner scan = new Scanner(System.in);
     private boolean inputOk = false;
     private String id = "";
@@ -22,12 +20,11 @@ public class GenreAndAwardAdder {
     public GenreAndAwardAdder(App app) {
         this.app = app;
         this.checker = new InputChecker(app);
-        this.objectLister = new ObjectLister(app);
     }
 
     public void addGenreToMovie() {
         do {
-            objectLister.listGenres();
+            fileManager.showListOfOptions(app.getGenres());
             int newGenre = app.getGenres().size() + 1;
             System.out.println(newGenre + ".) Lägg till genre");
             System.out.println("Välj ett alternativ ovan!");
@@ -67,7 +64,7 @@ public class GenreAndAwardAdder {
 
     public void addAwardToMovie() {
         do {
-            objectLister.listAwards();
+            fileManager.showListOfOptions(app.getAwards());
             int newAward = app.getAwards().size() + 1;
             System.out.println(newAward + ".) Lägg till Oscar");
             System.out.println("Välj ett alternativ ovan!");
