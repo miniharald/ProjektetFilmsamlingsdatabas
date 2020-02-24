@@ -33,11 +33,11 @@ public class ObjectsInMovieRemover {
     public void removeObjectsFromMovie(MovieObjects movieObjects) {
         fileManager.showListOfOptions(app.getMovies());
         int goBack = app.getMovies().size() + 1;
-        int movieChoice = getChoice(goBack) - 1;
+        int movieChoice = getChoice(goBack);
         if (movieChoice < goBack) {
             showObjects(movieObjects, movieChoice);
             goBack = app.getMovies().size() + 1;
-            int choice = getChoice(goBack) - 1;
+            int choice = getChoice(goBack);
             if (choice < goBack) {
                 removeObjectFromMovie(movieObjects, movieChoice, choice);
                 fileManager.writeToFile(App.MOVIEFOLDER + app.getMovies().get(movieChoice).getId() + ".txt", app.getMovies().get(movieChoice));
@@ -61,10 +61,13 @@ public class ObjectsInMovieRemover {
         switch (movieObjects) {
             case director:
                 fileManager.showListOfOptions(app.getMovies().get(movieChoice).getDirector());
+                break;
             case actor:
                 fileManager.showListOfOptions(app.getMovies().get(movieChoice).getCast());
+                break;
             case Oscars:
                 fileManager.showListOfOptions(app.getMovies().get(movieChoice).getAwards());
+                break;
         }
     }
 
@@ -72,10 +75,13 @@ public class ObjectsInMovieRemover {
         switch (movieObjects) {
             case director:
                 app.getMovies().get(movieChoice).removeFromDirector(app.getMovies().get(movieChoice).getDirector().get(choice));
+                break;
             case actor:
                 app.getMovies().get(movieChoice).removeFromCast(app.getMovies().get(movieChoice).getCast().get(choice));
+                break;
             case Oscars:
                 app.getMovies().get(movieChoice).removeFromAwards(app.getMovies().get(movieChoice).getAwards().get(choice));
+                break;
         }
     }
 }

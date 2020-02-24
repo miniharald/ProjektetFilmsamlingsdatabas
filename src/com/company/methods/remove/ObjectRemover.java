@@ -190,6 +190,7 @@ public class ObjectRemover {
                         if (actor.getId().equals(id)) {
                             movie.getCast().remove(actor);
                             fileManager.writeToFile(App.MOVIEFOLDER + movie.getId() + ".txt", movie);
+                            break;
                         }
                     }
                 case director:
@@ -197,6 +198,7 @@ public class ObjectRemover {
                         if (director.getId().equals(id)) {
                             movie.getDirector().remove(director);
                             fileManager.writeToFile(App.MOVIEFOLDER + movie.getId() + ".txt", movie);
+                            break;
                         }
                     }
             }

@@ -67,6 +67,7 @@ public class CrewAdder {
                                 app.getMovies().get(app.getMovies().size() - 1).addToCast(actor);
                                 fileManager.deleteFiles(Paths.get(App.ACTORFOLDER + id + ".txt"));
                                 fileManager.writeToFile(App.ACTORFOLDER + id + ".txt", app.getActors().get(i));
+                                break;
                         }
                     }
                 }
