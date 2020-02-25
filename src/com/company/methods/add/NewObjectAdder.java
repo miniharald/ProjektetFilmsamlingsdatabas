@@ -1,8 +1,6 @@
 package com.company.methods.add;
 
 import com.company.App;
-import com.company.dbmaker.FileManager;
-import com.company.objects.Director;
 import com.company.objects.MovieObjects;
 
 import java.util.Collections;

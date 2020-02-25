@@ -117,8 +117,7 @@ public class ObjectRemover {
         System.out.println(goBack + ".) Gå tillbaka");
         System.out.println("Välj ett alternativ ovan!");
         String inputChoice = scan.nextLine();
-        int choice = Integer.parseInt(inputChoice) - 1;
-        return choice;
+        return Integer.parseInt(inputChoice) - 1;
     }
 
     private void removeMovieFromCrew(int choice) {

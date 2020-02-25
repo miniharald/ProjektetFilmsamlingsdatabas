@@ -10,14 +10,14 @@ import java.util.List;
 import java.util.Scanner;
 
 public class MovieObjectsUpdater {
-    App app;
-    FileManager fileManager = new FileManager<>();
-    Scanner scan = new Scanner (System.in);
-    String firstName = "";
-    String lastName = "";
-    String name = "";
-    int counter = 0;
-    int choice = 0;
+    private App app;
+    private FileManager fileManager = new FileManager<>();
+    private Scanner scan = new Scanner (System.in);
+    private String firstName = "";
+    private String lastName = "";
+    private String name = "";
+    private int counter = 0;
+    private int choice = 0;
 
     public MovieObjectsUpdater(App app) {
         this.app = app;
@@ -136,20 +136,20 @@ public class MovieObjectsUpdater {
         }
     }
 
-    public void chooseObject(List<BaseObject> list) {
+    private void chooseObject(List<BaseObject> list) {
         counter = fileManager.showListOfOptions(list);
         String input = scan.nextLine();
         choice = Integer.parseInt(input) - 1;
     }
 
-    public void inputCrewsName() {
+    private void inputCrewsName() {
         System.out.println("Förnamn:");
         firstName = scan.nextLine();
         System.out.println("Efternamn:");
         lastName = scan.nextLine();
     }
 
-    public void inputNameOfObject() {
+    private void inputNameOfObject() {
         System.out.println("Namn:");
         name = scan.nextLine();
     }

@@ -17,8 +17,6 @@ public class MovieAdder {
     private GenreAndAwardAdder addGenreAndAwardsToMovie;
     private FileManager fileManager = new FileManager();
     private boolean inputOk = false;
-    private String fileName;
-    private String input;
     private String title;
     private String year;
     private Format format;
@@ -46,7 +44,7 @@ public class MovieAdder {
         addCrew.addActorToMovie();
         addMore("skådespelare");
         Movie movie = app.getMovies().get(app.getMovies().size() - 1);
-        fileName = app.getMovies().get(app.getMovies().size() - 1).getId();
+        String fileName = app.getMovies().get(app.getMovies().size() - 1).getId();
         fileManager.writeToFile(App.MOVIEFOLDER + fileName + ".txt", movie);
         System.out.println("Filmen är inlagd");
     }
@@ -72,7 +70,7 @@ public class MovieAdder {
             year = scan.nextLine();
             inputOk = checker.checkIfStringOfNumbers(year);
             //;
-            int yearGivenOut = Integer.parseInt(year);
+            //int yearGivenOut = Integer.parseInt(year);
             /*if (year.length() != 4 || year.isBlank()) {
                 System.out.println("Årtalet måste innehålla 4 siffror!");
                 inputOk = false;
@@ -126,7 +124,7 @@ public class MovieAdder {
         Format format = null;
         do {
             System.out.println("Nytt Format:");
-            input = scan.nextLine();
+            String input = scan.nextLine();
             inputOk = checker.checkIfStringOfLetters(input);
             if (input.length() < 1 || input.isBlank()) {
                 System.out.println("Formatet måste innehålla minst en bokstav!");

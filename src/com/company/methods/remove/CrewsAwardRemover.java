@@ -29,11 +29,7 @@ public class CrewsAwardRemover {
                         .getAwards().get(choice));
                 fileManager.writeToFile(App.ACTORFOLDER + app.getActors().get(actorChoice).getId() +
                         ".txt", app.getActors().get(actorChoice));
-            } else if (choice == goBack) {
-                return;
             }
-        } else if (actorChoice == goBack) {
-            return;
         }
     }
 
@@ -51,11 +47,7 @@ public class CrewsAwardRemover {
                         .getAwards().get(choice));
                 fileManager.writeToFile(App.DIRECTORFOLDER + app.getDirectors().get(directorChoice).getId() +
                         ".txt", app.getDirectors().get(directorChoice));
-            } else if (choice == goBack) {
-                return;
             }
-        } else if (directorChoice == goBack) {
-            return;
         }
     }
 
@@ -63,7 +55,6 @@ public class CrewsAwardRemover {
         System.out.println(goBack + ".) Gå tillbaka");
         System.out.println("Välj ett alternativ ovan!");
         String inputChoice = scan.nextLine();
-        int choice = Integer.parseInt(inputChoice) - 1;
-        return choice;
+        return Integer.parseInt(inputChoice) - 1;
     }
 }

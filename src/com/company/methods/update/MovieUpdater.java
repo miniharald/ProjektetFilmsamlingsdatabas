@@ -4,7 +4,6 @@ import com.company.App;
 import com.company.dbmaker.BaseObject;
 import com.company.dbmaker.FileManager;
 import com.company.dbmaker.InputChecker;
-import com.company.methods.add.CrewAdder;
 import com.company.objects.*;
 
 import java.nio.file.Paths;
@@ -15,7 +14,6 @@ import java.util.Scanner;
 public class MovieUpdater {
 
     private App app;
-    private CrewAdder crewAdder;
     private InputChecker checker;
     private FileManager fileManager = new FileManager();
     private Scanner scan = new Scanner(System.in);
@@ -27,7 +25,6 @@ public class MovieUpdater {
 
     public MovieUpdater(App app) {
         this.app = app;
-        this.crewAdder = new CrewAdder(app);
         this.checker = new InputChecker(app);
     }
 
@@ -100,7 +97,7 @@ public class MovieUpdater {
         } while (!inputOk);
     }
 
-    public void addNewGenre(int movieChoice, MovieObjects movieObjects, List<BaseObject> list) {
+    private void addNewGenre(int movieChoice, MovieObjects movieObjects, List<BaseObject> list) {
         inputMovieObjectNames(movieObjects);
         app.getGenres().add(new Genre(input));
         Genre genre = app.getGenres().get(app.getGenres().size() - 1);
@@ -126,7 +123,7 @@ public class MovieUpdater {
         } while (!inputOk);
     }
 
-    public void addNewAward(int movieChoice, MovieObjects movieObjects) {
+    private void addNewAward(int movieChoice, MovieObjects movieObjects) {
         inputMovieObjectNames(movieObjects);
         app.getAwards().add(new AcademyAward(input));
         AcademyAward award = app.getAwards().get(app.getAwards().size() - 1);
@@ -188,7 +185,7 @@ public class MovieUpdater {
     }
 
     private void addExistingFormat(int choice, int movieChoice) {
-        Format format =  null;
+        Format format;
         for (int i = 0; i < app.getFormats().size(); i++) {
             if (choice - 1 == i) {
                 format = app.getFormats().get(i);
@@ -199,7 +196,7 @@ public class MovieUpdater {
     }
 
     private void addNewFormat(int movieChoice, MovieObjects movieObjects) {
-        Format format = null;
+        Format format;
         inputMovieObjectNames(movieObjects);
         app.getFormats().add(new Format(input));
         format = app.getFormats().get(app.getFormats().size() - 1);
@@ -247,8 +244,7 @@ public class MovieUpdater {
     private int chooseMovie() {
         fileManager.showListOfOptions(app.getMovies());
         String input = scan.nextLine();
-        int movieChoice = Integer.parseInt(input) - 1;
-        return movieChoice;
+        return Integer.parseInt(input) - 1;
     }
 
     private int addOption(List<BaseObject> list, String movieObject) {

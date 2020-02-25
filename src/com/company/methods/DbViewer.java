@@ -3,7 +3,6 @@ package com.company.methods;
 import com.company.App;
 import com.company.dbmaker.BaseObject;
 import com.company.dbmaker.FileManager;
-import com.company.dbmaker.InputChecker;
 import com.company.objects.*;
 
 import java.util.*;
@@ -11,15 +10,13 @@ import java.util.*;
 public class DbViewer {
 
     private Scanner scan = new Scanner(System.in);
-    App app;
-    InputChecker checker;
+    private App app;
     private int counter;
     private List<Movie> newMovieList = new ArrayList<>();
     private FileManager fileManager = new FileManager();
 
     public DbViewer(App app) {
         this.app = app;
-        this.checker = new InputChecker(app);
     }
 
     public void browseByMovies(Object o) {
@@ -62,7 +59,7 @@ public class DbViewer {
         printMovieChoiceFromOtherObject("Actor");
     }
 
-    public void printMovieChoice(boolean isMovie) {
+    private void printMovieChoice(boolean isMovie) {
         String input = scan.nextLine();
         int choice = Integer.parseInt(input) - 1;
         if (choice < counter) {
