@@ -112,6 +112,7 @@ public class MenuFactory {
         removeFromMovieMenu.add(new MenuPicker("Ta bort skådespelare från film", '1', objectsInMovieRemover::removeActorFromMovie));
         removeFromMovieMenu.add(new MenuPicker("Ta bort regissör från film", '2', objectsInMovieRemover::removeDirectorFromMovie));
         removeFromMovieMenu.add(new MenuPicker("Ta bort Oscars från film", '3', objectsInMovieRemover::removeAwardFromMovie));
+        removeFromMovieMenu.add(new MenuPicker("Ta bort genre från film", '4', objectsInMovieRemover::removeGenreFromMovie));
         removeFromMovieMenu.add(new MenuPicker("Tillbaka till huvudmeny", '0', this::showMainMenu));
     }
 

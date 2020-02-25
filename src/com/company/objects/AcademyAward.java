@@ -24,11 +24,11 @@ public class AcademyAward extends BaseObject {
     }
 
     @Override
-    public String getKeyWords() {
+    public String getSearchTerms() {
         return this.name;
     }
 
-    public String listToString() {
+    public String ToStringForList() {
         return name;
     }
 

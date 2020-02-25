@@ -10,13 +10,11 @@ public abstract class BaseObject implements Serializable {
         this.id = generateId();
     }
 
-
-
     abstract public String getPrimary();
 
-    abstract public String getKeyWords();
+    abstract public String getSearchTerms();
 
-    abstract public String listToString();
+    abstract public String ToStringForList();
 
     abstract public String toString();
 

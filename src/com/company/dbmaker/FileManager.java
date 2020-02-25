@@ -1,10 +1,14 @@
 package com.company.dbmaker;
 
+import com.company.objects.Movie;
+
 import java.io.*;
+import java.lang.reflect.Field;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -47,6 +51,25 @@ public class FileManager<D> {
     }
 
     public void writeToFile(String fileName, Object object) {
+        Field[] fields = object.getClass().getDeclaredFields();
+        String test = "";
+        for (Field field : fields) {
+            LengthChecker annotation = field.getAnnotation(LengthChecker.class);
+            if (annotation != null /*&& field.getClass().equals(String.class)*/) {
+                try {
+                    field.setAccessible(true);
+                    test = (String) field.get(object);
+                } catch (IllegalAccessException e) {
+                    e.printStackTrace();
+                }
+
+                if (test.length() != annotation.length()) {
+                    System.out.println("Rätt tecken i " + annotation.name() + " möttes ej. Krävs " + annotation.length() + ".");
+                    return;
+                }
+            }
+        }
+
         try (ObjectOutputStream output = new ObjectOutputStream(new FileOutputStream(fileName))) {
             output.writeObject(object);
         } catch (IOException i) {
@@ -61,7 +84,7 @@ public class FileManager<D> {
             String path = String.valueOf(file);
             list.add((D) readFromFile(path));
         }
-        if(readFromFolder(folderPath).length < 1) {
+        if (readFromFolder(folderPath).length < 1) {
             list = new ArrayList<>();
         }
         return list;
@@ -69,8 +92,9 @@ public class FileManager<D> {
 
     public int showListOfOptions(List<BaseObject> list) {
         int counter = 1;
+        //list.sort(Comparator.comparing(BaseObject::getPrimary));
         for (BaseObject baseObject : list) {
-            System.out.println(counter + ".) " + baseObject.listToString());
+            System.out.println(counter + ".) " + baseObject.ToStringForList());
             counter++;
         }
         return counter;
@@ -83,7 +107,7 @@ public class FileManager<D> {
 
     public List<BaseObject> search(String input, List<BaseObject> list) {
         List<BaseObject> newList = list.stream()
-                .filter(o -> o.getKeyWords().toLowerCase().contains(input.toLowerCase()))
+                .filter(o -> o.getSearchTerms().toLowerCase().contains(input.toLowerCase()))
                 .collect(Collectors.toList());
         return newList;
     }

@@ -32,10 +32,10 @@ public class MovieAdder {
     }
 
     public void run(Object o) {
-        title = title();
-        year = year();
-        lengthMinutes = lengthMinutes();
-        format = format();
+        title = getTitle();
+        year = getYear();
+        lengthMinutes = getLengthMinutes();
+        format = getFormat();
         app.getMovies().add(new Movie(title, year, format, lengthMinutes));
         addGenreAndAwardsToMovie.addGenreToMovie();
         addMore("genre");
@@ -60,26 +60,28 @@ public class MovieAdder {
         return fileName;
     }*/
 
-    private String title() {
+    private String getTitle() {
         System.out.println("Titel: ");
         title = scan.nextLine();
         return title;
     }
 
-    private String year() {
+    private String getYear() {
         do {
             System.out.println("Årtal: ");
             year = scan.nextLine();
             inputOk = checker.checkIfStringOfNumbers(year);
-            if (year.length() != 4 || year.isBlank()) {
+            //;
+            int yearGivenOut = Integer.parseInt(year);
+            /*if (year.length() != 4 || year.isBlank()) {
                 System.out.println("Årtalet måste innehålla 4 siffror!");
                 inputOk = false;
-            }
+            }*/
         } while (!inputOk);
         return year;
     }
 
-    private String lengthMinutes() {
+    private String getLengthMinutes() {
         do {
             System.out.println("Filmens längd: ");
             lengthMinutes = scan.nextLine();
@@ -92,7 +94,7 @@ public class MovieAdder {
         return lengthMinutes;
     }
 
-    private Format format() {
+    private Format getFormat() {
         do {
             fileManager.showListOfOptions(app.getFormats());
             int newFormat = app.getFormats().size() + 1;

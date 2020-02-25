@@ -76,18 +76,18 @@ public class Director extends BaseObject {
     }
 
     @Override
-    public String getKeyWords() {
+    public String getSearchTerms() {
         StringBuilder info = new StringBuilder(this.firstName + " " + lastName);
         for (AcademyAward award : this.awards) {
             info.append(" ").append(award.getName());
         }
         for (Movie movie : this.filmography) {
-            info.append(movie.getKeyWords());
+            info.append(movie.getSearchTerms());
         }
         return info.toString();
     }
 
-    public String listToString() {
+    public String ToStringForList() {
         return this.firstName + " " + this.lastName;
     }
 

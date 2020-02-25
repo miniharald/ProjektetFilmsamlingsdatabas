@@ -108,7 +108,6 @@ public class GenreAndAwardAdder {
         if(input.equals("1")) {
             addAwardToMovie();
         }
-        return;
     }
 
     private void inputNames(String type) {

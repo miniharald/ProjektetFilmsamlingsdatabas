@@ -122,7 +122,7 @@ public class ObjectRemover {
     }
 
     private void removeMovieFromCrew(int choice) {
-        String id = app.getMovies().get(choice - 1).getId();
+        String id = app.getMovies().get(choice).getId();
         for (Actor actor : app.getActors()) {
             for (Movie movie : actor.getFilmography()) {
                 if (movie.getId().equals(id)) {
@@ -142,7 +142,7 @@ public class ObjectRemover {
     }
 
     private void removeAwardFromMovieAndCrew(int choice) {
-        String id = app.getAwards().get(choice - 1).getId();
+        String id = app.getAwards().get(choice).getId();
         for (Movie movie : app.getMovies()) {
             for (AcademyAward award : movie.getAwards()) {
                 if (award.getId().equals(id)) {
@@ -170,7 +170,7 @@ public class ObjectRemover {
     }
 
     private void removeGenreFromMovie(int choice) {
-        String id = app.getGenres().get(choice - 1).getId();
+        String id = app.getGenres().get(choice).getId();
         for (Movie movie : app.getMovies()) {
             for (Genre genre : movie.getGenre()) {
                 if (genre.getId().equals(id)) {

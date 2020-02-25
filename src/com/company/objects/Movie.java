@@ -1,6 +1,7 @@
 package com.company.objects;
 
 import com.company.dbmaker.BaseObject;
+import com.company.dbmaker.LengthChecker;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -10,6 +11,7 @@ import java.util.stream.Collectors;
 public class Movie extends BaseObject {
 
     private String title;
+    @LengthChecker(name = "År", length = 4)
     private String year;
     private List<Genre> genre = new ArrayList<>();
     private List<Director> director = new ArrayList<>();
@@ -122,7 +124,7 @@ public class Movie extends BaseObject {
     }
 
     @Override
-    public String getKeyWords() {
+    public String getSearchTerms() {
         StringBuilder info = new StringBuilder(String.format("%s %s %s %s", title, year, lengthMinutes, format.getName()));
         for (Genre genreObj : this.genre) {
             info.append(" ").append(genreObj.getName());
@@ -140,11 +142,11 @@ public class Movie extends BaseObject {
     }
 
 
-    public String listToString() {
+    public String ToStringForList() {
         if(director.size() > 1) {
             return String.format("%s (%s) regisserad av %s", title, year, director.stream()
                     .map(Director::getWholeName)
-                    .collect(Collectors.joining(" & ")));
+                    .collect(Collectors.joining(", ")));
         }
         return String.format("%s (%s) regisserad av %s %s", title, year, director.get(0).getFirstName(), director.get(0).getLastName());
     }
