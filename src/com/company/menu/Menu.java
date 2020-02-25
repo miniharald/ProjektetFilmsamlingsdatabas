@@ -13,11 +13,10 @@ public class Menu {
     }
 
     private void printMenu() {
-        System.out.println("");
         for (MenuPicker menuPicker : menuFactory.getCurrentMenu()) {
-            System.out.printf("%s%n", menuPicker.getKeyAndTitle());
+            System.out.printf("%s\n", menuPicker.getKeyAndTitle());
         }
-        System.out.println("Ange ditt val: ");
+        System.out.println("Välj ett alternativ ovan: ");
     }
 
     private MenuPicker getMenuChoice() {
@@ -40,9 +39,9 @@ public class Menu {
             printMenu();
             menuPicker = getMenuChoice();
             if (menuPicker == null) {
-                System.out.println("Felaktigt val, försök igen!");
+                System.out.println("Något gick snett, försök igen!");
             } else {
-                System.out.printf("Du valde: %s%n", menuPicker.getTitle());
+                System.out.printf("-:%s:-\n", menuPicker.getTitle());
                 isStopping = menuPicker.getFunction() == null;
                 if (!isStopping) {
                     menuPicker.getFunction().accept(null);

@@ -3,6 +3,16 @@ package com.company;
 import com.company.dbmaker.FileManager;
 
 import com.company.menu.Menu;
+import com.company.methods.DbViewer;
+import com.company.methods.SearchFinder;
+import com.company.methods.add.CrewsAwardAdder;
+import com.company.methods.add.MovieAdder;
+import com.company.methods.add.ObjectAdder;
+import com.company.methods.remove.CrewsAwardRemover;
+import com.company.methods.remove.ObjectRemover;
+import com.company.methods.remove.ObjectsInMovieRemover;
+import com.company.methods.update.MovieObjectsUpdater;
+import com.company.methods.update.MovieUpdater;
 import com.company.objects.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -15,7 +25,16 @@ public class App {
     private List<Actor> actors = new ArrayList<>();
     private List<Genre> genres = new ArrayList<>();
     private List<Format> formats = new ArrayList<>();
-    private FileManager fileManager = new FileManager();
+    private MovieAdder movieAdder;
+    private ObjectAdder objectAdder;
+    private DbViewer dbViewer;
+    private MovieUpdater movieUpdater;
+    private MovieObjectsUpdater movieObjectsUpdater;
+    private ObjectRemover objectRemover;
+    private ObjectsInMovieRemover objectsInMovieRemover;
+    private SearchFinder searchFinder;
+    private CrewsAwardRemover crewsAwardRemover;
+    private CrewsAwardAdder crewsAwardAdder;
     public static final String DIRECTORFOLDER = "database/directors/";
     public static final String ACTORFOLDER = "database/actors/";
     public static final String MOVIEFOLDER = "database/movies/";
@@ -24,12 +43,23 @@ public class App {
     public static final String FORMATFOLDER = "database/formats/";
 
     public App() {
+        FileManager fileManager = new FileManager();
         this.awards = (List<AcademyAward>) fileManager.load(awards, AWARDFOLDER);
         this.genres = (List<Genre>) fileManager.load(genres, GENREFOLDER);
         this.formats = (List<Format>) fileManager.load(formats, FORMATFOLDER);
         this.movies = (List<Movie>) fileManager.load(movies, MOVIEFOLDER);
         this.directors = (List<Director>) fileManager.load(directors, DIRECTORFOLDER);
         this.actors = (List<Actor>) fileManager.load(actors, ACTORFOLDER);
+        movieAdder = new MovieAdder(this);
+        dbViewer = new DbViewer(this);
+        objectAdder = new ObjectAdder(this);
+        movieUpdater = new MovieUpdater(this);
+        movieObjectsUpdater = new MovieObjectsUpdater(this);
+        objectRemover = new ObjectRemover(this);
+        objectsInMovieRemover = new ObjectsInMovieRemover(this);
+        searchFinder = new SearchFinder(this);
+        crewsAwardRemover = new CrewsAwardRemover(this);
+        crewsAwardAdder = new CrewsAwardAdder(this);
         Menu menu = new Menu(this);
         menu.handleMenu();
     }
@@ -56,5 +86,45 @@ public class App {
 
     public List<Format> getFormats() {
         return formats;
+    }
+
+    public MovieAdder getMovieAdder() {
+        return movieAdder;
+    }
+
+    public ObjectAdder getObjectAdder() {
+        return objectAdder;
+    }
+
+    public DbViewer getDbViewer() {
+        return dbViewer;
+    }
+
+    public MovieUpdater getMovieUpdater() {
+        return movieUpdater;
+    }
+
+    public MovieObjectsUpdater getMovieObjectsUpdater() {
+        return movieObjectsUpdater;
+    }
+
+    public ObjectRemover getObjectRemover() {
+        return objectRemover;
+    }
+
+    public ObjectsInMovieRemover getObjectsInMovieRemover() {
+        return objectsInMovieRemover;
+    }
+
+    public SearchFinder getSearchFinder() {
+        return searchFinder;
+    }
+
+    public CrewsAwardRemover getCrewsAwardRemover() {
+        return crewsAwardRemover;
+    }
+
+    public CrewsAwardAdder getCrewsAwardAdder() {
+        return crewsAwardAdder;
     }
 }
