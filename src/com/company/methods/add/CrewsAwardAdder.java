@@ -1,8 +1,12 @@
 package com.company.methods.add;
 
 import com.company.App;
+import com.company.dbmaker.BaseObject;
 import com.company.dbmaker.FileManager;
+import com.company.objects.MovieObjects;
 
+import java.util.Collections;
+import java.util.List;
 import java.util.Scanner;
 
 public class CrewsAwardAdder {
@@ -16,42 +20,33 @@ public class CrewsAwardAdder {
     }
 
     public void addAwardToActor(Object o) {
-        fileManager.showListOfOptions(app.getActors());
-        int goBack = app.getActors().size() + 1;
-        int actorChoice = getChoice(goBack);
-        if (actorChoice < goBack) {
-            fileManager.showListOfOptions(app.getAwards());
-            goBack = app.getAwards().size() + 1;
-            int choice = getChoice(goBack);
-            if (actorChoice < goBack) {
-                app.getActors().get(actorChoice).addToAwards(app.getAwards().get(choice));
-                fileManager.writeToFile(App.ACTORFOLDER + app.getActors().get(actorChoice).getId() +
-                        ".txt", app.getActors().get(actorChoice));
-            } else if (choice == goBack) {
-                return;
-            }
-        } else if (actorChoice == goBack) {
-            return;
-        }
+        addAwardToCrew(Collections.unmodifiableList(app.getActors()), App.ACTORFOLDER, MovieObjects.actor);
     }
 
-    public void addAwardFromDirector(Object o) {
-        fileManager.showListOfOptions(app.getDirectors());
-        int goBack = app.getDirectors().size() + 1;
-        int directorChoice = getChoice(goBack);
-        if (directorChoice < goBack) {
+    public void addAwardToDirector(Object o) {
+        addAwardToCrew(Collections.unmodifiableList(app.getDirectors()), App.DIRECTORFOLDER, MovieObjects.director);
+    }
+
+    private void addAwardToCrew(List<BaseObject> list, String folder, MovieObjects movieObjects) {
+        fileManager.showListOfOptions(list);
+        int goBack = list.size() + 1;
+        int crewChoice = getChoice(goBack);
+        if (crewChoice < goBack) {
             fileManager.showListOfOptions(app.getAwards());
             goBack = app.getAwards().size() + 1;
             int choice = getChoice(goBack);
-            if (directorChoice < goBack) {
-                app.getDirectors().get(directorChoice).addToAwards(app.getAwards().get(choice));
-                fileManager.writeToFile(App.DIRECTORFOLDER + app.getDirectors().get(directorChoice).getId() +
-                        ".txt", app.getDirectors().get(directorChoice));
-            } else if (choice == goBack) {
-                return;
+            if (crewChoice < goBack) {
+                switch (movieObjects) {
+                    case actor:
+                        app.getActors().get(crewChoice).addToAwards(app.getAwards().get(choice));
+                        break;
+                    case director:
+                        app.getDirectors().get(crewChoice).addToAwards(app.getAwards().get(choice));
+                        break;
+                }
+                fileManager.writeToFile(folder + list.get(crewChoice).getId() +
+                        ".txt", list.get(crewChoice));
             }
-        } else if (directorChoice == goBack) {
-            return;
         }
     }
 
@@ -59,7 +54,6 @@ public class CrewsAwardAdder {
         System.out.println(goBack + ".) Gå tillbaka");
         System.out.println("Välj ett alternativ ovan!");
         String inputChoice = scan.nextLine();
-        int choice = Integer.parseInt(inputChoice) - 1;
-        return choice;
+        return Integer.parseInt(inputChoice) - 1;
     }
 }

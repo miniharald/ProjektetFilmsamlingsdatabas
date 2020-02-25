@@ -97,7 +97,7 @@ class MenuFactory {
         removeAwardFromCrewMenu.add(new MenuPicker("Lägg till Oscars till skådespelare"
                 , '3', app.getCrewsAwardAdder()::addAwardToActor));
         removeAwardFromCrewMenu.add(new MenuPicker("Lägg till Oscars till regissör"
-                , '4', app.getCrewsAwardAdder()::addAwardFromDirector));
+                , '4', app.getCrewsAwardAdder()::addAwardToDirector));
         removeAwardFromCrewMenu.add(new MenuPicker("Tillbaka till huvudmeny", '0', this::showMainMenu));
     }
 
