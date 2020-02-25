@@ -39,7 +39,7 @@ public class MovieAdder {
         app.getMovies().add(new Movie(title, year, format, lengthMinutes));
         addGenreAndAwardsToMovie.addGenreToMovie();
         addMore("genre");
-        addGenreAndAwardsToMovie.areYouAddingAward();
+        addGenreAndAwardsToMovie.askToAddAward();
         addMore("Oscar");
         addCrew.addDirectorToMovie();
         addMore("regissör");

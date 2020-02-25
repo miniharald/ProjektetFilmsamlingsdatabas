@@ -7,7 +7,7 @@ import com.company.objects.AcademyAward;
 import com.company.objects.Genre;
 import java.util.Scanner;
 
-public class GenreAndAwardAdder {
+class GenreAndAwardAdder {
 
     private App app;
     private InputChecker checker;
@@ -17,12 +17,12 @@ public class GenreAndAwardAdder {
     private String id = "";
     private String input;
 
-    public GenreAndAwardAdder(App app) {
+    GenreAndAwardAdder(App app) {
         this.app = app;
         this.checker = new InputChecker(app);
     }
 
-    public void addGenreToMovie() {
+    void addGenreToMovie() {
         do {
             fileManager.showListOfOptions(app.getGenres());
             int newGenre = app.getGenres().size() + 1;
@@ -53,7 +53,7 @@ public class GenreAndAwardAdder {
         }
     }
 
-    public void addNewGenre() {
+    void addNewGenre() {
         inputNames("Genre");
         app.getGenres().add(new Genre(input));
         Genre genre = app.getGenres().get(app.getGenres().size() - 1);
@@ -62,7 +62,7 @@ public class GenreAndAwardAdder {
         app.getMovies().get(app.getMovies().size() - 1).addToGenre(genre);
     }
 
-    public void addAwardToMovie() {
+    void addAwardToMovie() {
         do {
             fileManager.showListOfOptions(app.getAwards());
             int newAward = app.getAwards().size() + 1;
@@ -93,7 +93,7 @@ public class GenreAndAwardAdder {
         }
     }
 
-    public void addNewAward() {
+    void addNewAward() {
         inputNames("Oscar");
         app.getAwards().add(new AcademyAward(input));
         AcademyAward award = app.getAwards().get(app.getAwards().size() - 1);
@@ -102,7 +102,7 @@ public class GenreAndAwardAdder {
         app.getMovies().get(app.getMovies().size() - 1).addToAwards(award);
     }
 
-    public void areYouAddingAward() {
+    void askToAddAward() {
         System.out.println("Tryck 1 för att lägga till en Oscars. Annars valfri bokstav eller siffra!");
         String input = scan.nextLine();
         if(input.equals("1")) {

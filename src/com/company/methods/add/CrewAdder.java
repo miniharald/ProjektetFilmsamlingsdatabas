@@ -38,23 +38,13 @@ public class CrewAdder {
             String directorChoice = scan.nextLine();
             int choice = Integer.parseInt(directorChoice);
             if (choice < newDirector) {
-                addExistingCrewToMovie(choice, Collections.unmodifiableList(app.getDirectors()), MovieObjects.director);
+                addExistingCrewToMovie(choice, Collections.unmodifiableList(app.getDirectors()), App.DIRECTORFOLDER, MovieObjects.director);
                 inputOk = true;
             } else if (choice == newDirector) {
-                addNewDirectorToMovie();
+                addNewCrewToMovie(Collections.unmodifiableList(app.getDirectors()), App.DIRECTORFOLDER, MovieObjects.director);
                 inputOk = true;
             }
         } while (!inputOk);
-    }
-
-    private void addNewDirectorToMovie() {
-        inputName();
-
-        app.getDirectors().add(new Director(firstName, lastName, app.getMovies().get(app.getMovies().size() - 1)));
-        Director directorObj = app.getDirectors().get(app.getDirectors().size() - 1);
-        id = app.getDirectors().get(app.getDirectors().size() - 1).getId();
-        fileManager.writeToFile(App.DIRECTORFOLDER + id + ".txt", app.getDirectors().get(app.getDirectors().size() - 1));
-        app.getMovies().get(app.getMovies().size() - 1).addToDirector(directorObj);
     }
 
     void addActorToMovie() {
@@ -66,25 +56,33 @@ public class CrewAdder {
             String actorChoice = scan.nextLine();
             int choice = Integer.parseInt(actorChoice);
             if (choice < newActor) {
-                addExistingCrewToMovie(choice, Collections.unmodifiableList(app.getActors()), MovieObjects.actor);
+                addExistingCrewToMovie(choice, Collections.unmodifiableList(app.getActors()), App.ACTORFOLDER, MovieObjects.actor);
                 inputOk = true;
             } else if (choice == newActor) {
-                addNewActorToMovie();
+                addNewCrewToMovie(Collections.unmodifiableList(app.getActors()), App.ACTORFOLDER, MovieObjects.actor);
                 inputOk = true;
             }
         } while (!inputOk);
     }
 
-    private void addNewActorToMovie() {
+    private void addNewCrewToMovie(List<BaseObject> list, String folder, MovieObjects movieObjects) {
         inputName();
-        app.getActors().add(new Actor(firstName, lastName, app.getMovies().get(app.getMovies().size() - 1)));
-        Actor actorObj = app.getActors().get(app.getActors().size() - 1);
-        id = app.getActors().get(app.getActors().size() - 1).getId();
-        fileManager.writeToFile(App.ACTORFOLDER + id + ".txt", app.getActors().get(app.getActors().size() - 1));
-        app.getMovies().get(app.getMovies().size() - 1).addToCast(actorObj);
+        switch (movieObjects) {
+            case actor:
+                app.getActors().add(new Actor(firstName, lastName, app.getMovies().get(app.getMovies().size() - 1)));
+                app.getMovies().get(app.getMovies().size() - 1).addToCast(app.getActors().get(app.getActors().size() - 1));
+                break;
+            case director:
+                app.getDirectors().add(new Director(firstName, lastName, app.getMovies().get(app.getMovies().size() - 1)));
+                app.getMovies().get(app.getMovies().size() - 1).addToDirector(app.getDirectors().get(app.getDirectors().size() - 1));
+                break;
+        }
+        id = list.get(list.size() - 1).getId();
+        fileManager.writeToFile(folder + id + ".txt", list.get(list.size() - 1));
+
     }
 
-    private void addExistingCrewToMovie(int choice, List<BaseObject> list, MovieObjects movieObjects) {
+    private void addExistingCrewToMovie(int choice, List<BaseObject> list, String folder, MovieObjects movieObjects) {
         id = list.get(choice - 1).getId();
         for (BaseObject baseObject : list) {
             if (baseObject.getId().equals(id)) {
@@ -93,31 +91,30 @@ public class CrewAdder {
                         Director director = (Director) baseObject;
                         director.addToFilmography(app.getMovies().get(app.getMovies().size() - 1));
                         app.getMovies().get(app.getMovies().size() - 1).addToDirector(director);
-                        fileManager.deleteFiles(Paths.get(App.DIRECTORFOLDER + id + ".txt"));
-                        fileManager.writeToFile(App.DIRECTORFOLDER + id + ".txt", app.getDirectors().get(choice - 1));
                         break;
                     case actor:
                         Actor actor = (Actor) baseObject;
                         actor.addToFilmography(app.getMovies().get(app.getMovies().size() - 1));
                         app.getMovies().get(app.getMovies().size() - 1).addToCast(actor);
-                        fileManager.deleteFiles(Paths.get(App.ACTORFOLDER + id + ".txt"));
-                        fileManager.writeToFile(App.ACTORFOLDER + id + ".txt", app.getActors().get(choice - 1));
                         break;
                 }
+                fileManager.deleteFiles(Paths.get(folder + id + ".txt"));
+                fileManager.writeToFile(folder + id + ".txt", list.get(choice - 1));
             }
         }
     }
 
-    void addNewDirector() {
+    void addNewCrew(List<BaseObject> list, String folder, MovieObjects movieObjects) {
         inputName();
-        app.getDirectors().add(new Director(firstName, lastName));
-        fileManager.writeToFile(App.DIRECTORFOLDER + id + ".txt", app.getDirectors().get(app.getDirectors().size() - 1));
-    }
-
-    void addNewActor() {
-        inputName();
-        app.getActors().add(new Actor(firstName, lastName));
-        fileManager.writeToFile(App.ACTORFOLDER + id + ".txt", app.getActors().get(app.getActors().size() - 1));
+        switch (movieObjects) {
+            case director:
+                app.getDirectors().add(new Director(firstName, lastName));
+                break;
+            case actor:
+                app.getActors().add(new Actor(firstName, lastName));
+                break;
+        }
+        fileManager.writeToFile(folder + id + ".txt", list.get(list.size() - 1));
     }
 
     private void inputName() {

@@ -7,7 +7,7 @@ import com.company.methods.DbViewer;
 import com.company.methods.SearchFinder;
 import com.company.methods.add.CrewsAwardAdder;
 import com.company.methods.add.MovieAdder;
-import com.company.methods.add.ObjectAdder;
+import com.company.methods.add.NewObjectAdder;
 import com.company.methods.remove.CrewsAwardRemover;
 import com.company.methods.remove.ObjectRemover;
 import com.company.methods.remove.ObjectsInMovieRemover;
@@ -26,7 +26,7 @@ public class App {
     private List<Genre> genres = new ArrayList<>();
     private List<Format> formats = new ArrayList<>();
     private MovieAdder movieAdder;
-    private ObjectAdder objectAdder;
+    private NewObjectAdder newObjectAdder;
     private DbViewer dbViewer;
     private MovieUpdater movieUpdater;
     private MovieObjectsUpdater movieObjectsUpdater;
@@ -52,7 +52,7 @@ public class App {
         this.actors = (List<Actor>) fileManager.load(actors, ACTORFOLDER);
         movieAdder = new MovieAdder(this);
         dbViewer = new DbViewer(this);
-        objectAdder = new ObjectAdder(this);
+        newObjectAdder = new NewObjectAdder(this);
         movieUpdater = new MovieUpdater(this);
         movieObjectsUpdater = new MovieObjectsUpdater(this);
         objectRemover = new ObjectRemover(this);
@@ -92,8 +92,8 @@ public class App {
         return movieAdder;
     }
 
-    public ObjectAdder getObjectAdder() {
-        return objectAdder;
+    public NewObjectAdder getNewObjectAdder() {
+        return newObjectAdder;
     }
 
     public DbViewer getDbViewer() {
