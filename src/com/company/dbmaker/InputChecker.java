@@ -4,7 +4,7 @@ import com.company.App;
 
 public class InputChecker {
 
-    App app;
+    private App app;
 
     public InputChecker(App app) {
         this.app = app;
@@ -29,6 +29,7 @@ public class InputChecker {
         stringToCheck = stringToCheck.replace(" ", "");
         stringToCheck = stringToCheck.replace(".", "");
         stringToCheck = stringToCheck.replace("-", "");
+        stringToCheck = stringToCheck.replace("'", "");
         Character[] charList = new Character[stringToCheck.length()];
         for (int i = 0; i < stringToCheck.length(); i++) {
             charList[i] = stringToCheck.charAt(i);
