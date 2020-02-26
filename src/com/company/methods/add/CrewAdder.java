@@ -7,9 +7,7 @@ import com.company.dbmaker.InputChecker;
 import com.company.objects.Actor;
 import com.company.objects.Director;
 import com.company.objects.MovieObjects;
-
 import java.nio.file.Paths;
-import java.util.Collections;
 import java.util.List;
 import java.util.Scanner;
 
@@ -29,37 +27,19 @@ public class CrewAdder {
         this.checker = new InputChecker(app);
     }
 
-    void addDirectorToMovie() {
+    void addCrewToMovie(List<BaseObject> list, String folder, MovieObjects movieObjects, String crewType) {
         do {
-            fileManager.showListOfOptions(app.getDirectors());
-            int newDirector = app.getDirectors().size() + 1;
-            System.out.println(newDirector + ".) Lägg till regissör");
+            fileManager.showListOfOptions(list);
+            int newCrew = list.size() + 1;
+            System.out.println(newCrew + ".) Lägg till " + crewType);
             System.out.println("Välj ett alternativ ovan!");
-            String directorChoice = scan.nextLine();
-            int choice = Integer.parseInt(directorChoice);
-            if (choice < newDirector) {
-                addExistingCrewToMovie(choice, Collections.unmodifiableList(app.getDirectors()), App.DIRECTORFOLDER, MovieObjects.director);
+            String crewChoice = scan.nextLine();
+            int choice = Integer.parseInt(crewChoice);
+            if (choice < newCrew) {
+                addExistingCrewToMovie(choice, list, folder, movieObjects);
                 inputOk = true;
-            } else if (choice == newDirector) {
-                addNewCrewToMovie(Collections.unmodifiableList(app.getDirectors()), App.DIRECTORFOLDER, MovieObjects.director);
-                inputOk = true;
-            }
-        } while (!inputOk);
-    }
-
-    void addActorToMovie() {
-        do {
-            fileManager.showListOfOptions(app.getActors());
-            int newActor = app.getActors().size() + 1;
-            System.out.println(newActor + ".) Lägg till skådespelare");
-            System.out.println("Välj ett alternativ ovan!:");
-            String actorChoice = scan.nextLine();
-            int choice = Integer.parseInt(actorChoice);
-            if (choice < newActor) {
-                addExistingCrewToMovie(choice, Collections.unmodifiableList(app.getActors()), App.ACTORFOLDER, MovieObjects.actor);
-                inputOk = true;
-            } else if (choice == newActor) {
-                addNewCrewToMovie(Collections.unmodifiableList(app.getActors()), App.ACTORFOLDER, MovieObjects.actor);
+            } else if (choice == newCrew) {
+                addNewCrewToMovie(list, folder, movieObjects);
                 inputOk = true;
             }
         } while (!inputOk);
@@ -83,25 +63,20 @@ public class CrewAdder {
     }
 
     private void addExistingCrewToMovie(int choice, List<BaseObject> list, String folder, MovieObjects movieObjects) {
-        id = list.get(choice - 1).getId();
-        for (BaseObject baseObject : list) {
-            if (baseObject.getId().equals(id)) {
-                switch (movieObjects) {
-                    case director:
-                        Director director = (Director) baseObject;
-                        director.addToFilmography(app.getMovies().get(app.getMovies().size() - 1));
-                        app.getMovies().get(app.getMovies().size() - 1).addToDirector(director);
-                        break;
-                    case actor:
-                        Actor actor = (Actor) baseObject;
-                        actor.addToFilmography(app.getMovies().get(app.getMovies().size() - 1));
-                        app.getMovies().get(app.getMovies().size() - 1).addToCast(actor);
-                        break;
-                }
-                fileManager.deleteFiles(Paths.get(folder + id + ".txt"));
-                fileManager.writeToFile(folder + id + ".txt", list.get(choice - 1));
-            }
+        switch (movieObjects) {
+            case director:
+                Director director = (Director) list.get(choice - 1);
+                director.addToFilmography(app.getMovies().get(app.getMovies().size() - 1));
+                app.getMovies().get(app.getMovies().size() - 1).addToDirector(director);
+                break;
+            case actor:
+                Actor actor = (Actor) list.get(choice - 1);
+                actor.addToFilmography(app.getMovies().get(app.getMovies().size() - 1));
+                app.getMovies().get(app.getMovies().size() - 1).addToCast(actor);
+                break;
         }
+        fileManager.deleteFiles(Paths.get(folder + list.get(choice - 1).getId() + ".txt"));
+        fileManager.writeToFile(folder + list.get(choice - 1).getId() + ".txt", list.get(choice - 1));
     }
 
     void addNewCrew(List<BaseObject> list, String folder, MovieObjects movieObjects) {
@@ -114,7 +89,7 @@ public class CrewAdder {
                 app.getActors().add(new Actor(firstName, lastName));
                 break;
         }
-        fileManager.writeToFile(folder + id + ".txt", list.get(list.size() - 1));
+        fileManager.writeToFile(folder + list.get(list.size() - 1).getId() + ".txt", list.get(list.size() - 1));
     }
 
     private void inputName() {

@@ -107,6 +107,8 @@ class GenreAndAwardAdder {
         String input = scan.nextLine();
         if(input.equals("1")) {
             addAwardToMovie();
+            MovieAdder movieAdder = new MovieAdder(app);
+            movieAdder.addMore("Oscar");
         }
     }
 

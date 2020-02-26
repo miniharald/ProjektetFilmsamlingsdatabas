@@ -5,7 +5,9 @@ import com.company.dbmaker.FileManager;
 import com.company.dbmaker.InputChecker;
 import com.company.objects.Format;
 import com.company.objects.Movie;
+import com.company.objects.MovieObjects;
 
+import java.util.Collections;
 import java.util.Scanner;
 
 public class MovieAdder {
@@ -38,10 +40,9 @@ public class MovieAdder {
         addGenreAndAwardsToMovie.addGenreToMovie();
         addMore("genre");
         addGenreAndAwardsToMovie.askToAddAward();
-        addMore("Oscar");
-        addCrew.addDirectorToMovie();
+        addCrew.addCrewToMovie(Collections.unmodifiableList(app.getDirectors()), App.DIRECTORFOLDER, MovieObjects.director, "regissör");
         addMore("regissör");
-        addCrew.addActorToMovie();
+        addCrew.addCrewToMovie(Collections.unmodifiableList(app.getActors()), App.ACTORFOLDER, MovieObjects.actor, "skådespelare");
         addMore("skådespelare");
         Movie movie = app.getMovies().get(app.getMovies().size() - 1);
         String fileName = app.getMovies().get(app.getMovies().size() - 1).getId();
@@ -138,20 +139,20 @@ public class MovieAdder {
         return format;
     }
 
-    private void addMore(String choice) {
+    void addMore(String choice) {
         boolean addMore = true;
         String input;
         do {
             System.out.printf("Tryck 1 för att lägga till en till %s, tryck annars valfri siffra eller bokstav!", choice);
             input = scan.nextLine();
             if(input.equals("1") && choice.equals("regissör")) {
-                addCrew.addDirectorToMovie();
+                addCrew.addCrewToMovie(Collections.unmodifiableList(app.getDirectors()), App.DIRECTORFOLDER, MovieObjects.director, "regissör");
             }
             else if(input.equals("1") && choice.equals("genre")) {
                 addGenreAndAwardsToMovie.addGenreToMovie();
             }
             else if(input.equals("1") && choice.equals("skådespelare")) {
-                addCrew.addActorToMovie();
+                addCrew.addCrewToMovie(Collections.unmodifiableList(app.getActors()), App.ACTORFOLDER, MovieObjects.actor, "skådespelare");
             }
             else if(input.equals("1") && choice.equals("Oscar")) {
                 addGenreAndAwardsToMovie.addAwardToMovie();
