@@ -16,7 +16,7 @@ public class MovieAdder {
     private App app;
     private InputChecker checker;
     private CrewAdder addCrew;
-    private GenreAndAwardAdder addGenreAndAwardsToMovie;
+    private MovieObjectsAdder addGenreAndAwardsToMovie;
     private FileManager fileManager = new FileManager();
     private boolean inputOk = false;
     private String title;
@@ -28,7 +28,7 @@ public class MovieAdder {
         this.app = app;
         this.checker = new InputChecker(app);
         this.addCrew = new CrewAdder(app);
-        this.addGenreAndAwardsToMovie = new GenreAndAwardAdder(app);
+        this.addGenreAndAwardsToMovie = new MovieObjectsAdder(app);
     }
 
     public void run(Object o) {

@@ -12,7 +12,7 @@ import com.company.objects.MovieObjects;
 import java.util.List;
 import java.util.Scanner;
 
-class GenreAndAwardAdder {
+class MovieObjectsAdder {
 
     private App app;
     private InputChecker checker;
@@ -22,7 +22,7 @@ class GenreAndAwardAdder {
     private String id = "";
     private String input;
 
-    GenreAndAwardAdder(App app) {
+    MovieObjectsAdder(App app) {
         this.app = app;
         this.checker = new InputChecker(app);
     }
