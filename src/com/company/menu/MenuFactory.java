@@ -100,11 +100,11 @@ class MenuFactory {
     private void createACreateDbObjectsMenu() {
         createDbObjectsMenu = new ArrayList<>();
         createDbObjectsMenu.add(new MenuPicker("Skapa ny film", '1', app.getMovieAdder()::run));
-        createDbObjectsMenu.add(new MenuPicker("Skapa ny genre", '2', app.getNewObjectAdder()::addNewGenre));
-        createDbObjectsMenu.add(new MenuPicker("Skapa ny Oscar", '3', app.getNewObjectAdder()::addNewAward));
-        createDbObjectsMenu.add(new MenuPicker("Skapa nytt format", '4', app.getNewObjectAdder()::addNewFormat));
-        createDbObjectsMenu.add(new MenuPicker("Skapa ny Skådespelare", '5', app.getNewObjectAdder()::addNewActor));
-        createDbObjectsMenu.add(new MenuPicker("Skapa ny Regissör", '6', app.getNewObjectAdder()::addNewDirector));
+        createDbObjectsMenu.add(new MenuPicker("Skapa ny genre", '2', app.getNewObjectAdderFacade()::addNewGenre));
+        createDbObjectsMenu.add(new MenuPicker("Skapa ny Oscar", '3', app.getNewObjectAdderFacade()::addNewAward));
+        createDbObjectsMenu.add(new MenuPicker("Skapa nytt format", '4', app.getNewObjectAdderFacade()::addNewFormat));
+        createDbObjectsMenu.add(new MenuPicker("Skapa ny Skådespelare", '5', app.getNewObjectAdderFacade()::addNewActor));
+        createDbObjectsMenu.add(new MenuPicker("Skapa ny Regissör", '6', app.getNewObjectAdderFacade()::addNewDirector));
         createDbObjectsMenu.add(new MenuPicker("Tillbaka till huvudmeny", '0', this::showMainMenu));
     }
 

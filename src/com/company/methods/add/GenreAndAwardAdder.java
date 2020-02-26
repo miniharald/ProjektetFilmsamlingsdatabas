@@ -1,10 +1,15 @@
 package com.company.methods.add;
 
 import com.company.App;
+import com.company.dbmaker.BaseObject;
 import com.company.dbmaker.FileManager;
 import com.company.dbmaker.InputChecker;
 import com.company.objects.AcademyAward;
+import com.company.objects.Format;
 import com.company.objects.Genre;
+import com.company.objects.MovieObjects;
+
+import java.util.List;
 import java.util.Scanner;
 
 class GenreAndAwardAdder {
@@ -53,9 +58,24 @@ class GenreAndAwardAdder {
         }
     }
 
+    void addNewMovieObject(List<BaseObject> list, String folder, MovieObjects movieObjects, String type) {
+        inputName(type);
+        switch (movieObjects) {
+            case genre:
+                app.getGenres().add(new Genre(input));
+                break;
+            case Oscars:
+                app.getAwards().add(new AcademyAward(input));
+                break;
+            case format:
+                app.getFormats().add(new Format(input));
+                break;
+        }
+        fileManager.writeToFile(folder + list.get(list.size() - 1).getId() + ".txt", list.get(list.size() - 1));
+    }
+
     void addNewGenre() {
-        inputNames("Genre");
-        app.getGenres().add(new Genre(input));
+        inputName("Genre");
         Genre genre = app.getGenres().get(app.getGenres().size() - 1);
         id = app.getGenres().get(app.getGenres().size() - 1).getId();
         fileManager.writeToFile(App.GENREFOLDER + id + ".txt", genre);
@@ -94,7 +114,7 @@ class GenreAndAwardAdder {
     }
 
     void addNewAward() {
-        inputNames("Oscar");
+        inputName("Oscar");
         app.getAwards().add(new AcademyAward(input));
         AcademyAward award = app.getAwards().get(app.getAwards().size() - 1);
         id = app.getAwards().get(app.getAwards().size() - 1).getId();
@@ -112,7 +132,7 @@ class GenreAndAwardAdder {
         }
     }
 
-    private void inputNames(String type) {
+    private void inputName(String type) {
         input = "";
         do {
             System.out.println("Ny " + type + ":");
