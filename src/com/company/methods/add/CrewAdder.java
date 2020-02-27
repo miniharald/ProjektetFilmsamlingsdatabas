@@ -57,9 +57,7 @@ public class CrewAdder {
                 app.getMovies().get(app.getMovies().size() - 1).addToDirector(app.getDirectors().get(app.getDirectors().size() - 1));
                 break;
         }
-        id = list.get(list.size() - 1).getId();
-        fileManager.writeToFile(folder + id + ".txt", list.get(list.size() - 1));
-
+        fileManager.writeToFile(folder + list.get(list.size() - 1).getId() + ".txt", list.get(list.size() - 1));
     }
 
     private void addExistingCrewToMovie(int choice, List<BaseObject> list, String folder, MovieObjects movieObjects) {
@@ -75,7 +73,6 @@ public class CrewAdder {
                 app.getMovies().get(app.getMovies().size() - 1).addToCast(actor);
                 break;
         }
-        fileManager.deleteFiles(Paths.get(folder + list.get(choice - 1).getId() + ".txt"));
         fileManager.writeToFile(folder + list.get(choice - 1).getId() + ".txt", list.get(choice - 1));
     }
 

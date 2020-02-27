@@ -23,15 +23,10 @@ public class Movie extends BaseObject {
     public Movie() {
     }
 
-    public Movie(String title, String year, Format format, String lengthMinutes) {
+    public Movie(String title, String year, String lengthMinutes) {
         super();
         this.title = title;
         this.year = year;
-        this.genre = new ArrayList<>();
-        this.director = new ArrayList<>();
-        this.cast = new ArrayList<>();
-        this.awards = new ArrayList<>();
-        this.format = format;
         this.lengthMinutes = lengthMinutes;
 
     }

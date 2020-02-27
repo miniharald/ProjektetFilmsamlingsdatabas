@@ -4,11 +4,9 @@ import com.company.App;
 import com.company.dbmaker.BaseObject;
 import com.company.dbmaker.FileManager;
 import com.company.dbmaker.InputChecker;
-import com.company.objects.AcademyAward;
-import com.company.objects.Format;
-import com.company.objects.Genre;
-import com.company.objects.MovieObjects;
+import com.company.objects.*;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Scanner;
 
@@ -27,34 +25,63 @@ class MovieObjectsAdder {
         this.checker = new InputChecker(app);
     }
 
-    void addGenreToMovie() {
+    void addMovieObjectToMovie(List<BaseObject> list, String folder, MovieObjects movieObjects, String type) {
         do {
-            fileManager.showListOfOptions(app.getGenres());
-            int newGenre = app.getGenres().size() + 1;
-            System.out.println(newGenre + ".) Lägg till genre");
+            fileManager.showListOfOptions(list);
+            int newMovieObject = list.size() + 1;
+            System.out.println(newMovieObject + ".) Lägg till " + type);
             System.out.println("Välj ett alternativ ovan!");
-            String genreChoice = scan.nextLine();
-            int choice = Integer.parseInt(genreChoice);
-            if (choice < newGenre) {
-                addExistingGenreToMovie(choice);
+            String crewChoice = scan.nextLine();
+            int choice = Integer.parseInt(crewChoice);
+            if (choice < newMovieObject) {
+                addExistingMovieObjectToMovie(choice, movieObjects);
                 inputOk = true;
-            } else if (choice == newGenre) {
-                addNewGenre();
+            } else if (choice == newMovieObject) {
+                addNewMovieObjectToMovie(list, folder, movieObjects, type);
                 inputOk = true;
             }
         } while (!inputOk);
     }
 
-    private void addExistingGenreToMovie(int choice) {
-        for (int i = 0; i < app.getGenres().size(); i++) {
-            if (choice - 1 == i) {
-                id = app.getGenres().get(i).getId();
-                for (Genre genre : app.getGenres()) {
-                    if (genre.getId().equals(id)) {
-                        app.getMovies().get(app.getMovies().size() - 1).addToGenre(genre);
-                    }
-                }
-            }
+    public void addExistingMovieObjectToMovie(int choice, MovieObjects movieObject) {
+        switch (movieObject) {
+            case genre:
+                app.getMovies().get(app.getMovies().size() - 1).addToGenre(app.getGenres().get(choice -1));
+                break;
+            case Oscars:
+                app.getMovies().get(app.getMovies().size() - 1).addToAwards(app.getAwards().get(choice - 1));
+                break;
+            case format:
+                app.getMovies().get(app.getMovies().size() - 1).setFormat(app.getFormats().get(choice - 1));
+        }
+    }
+
+    public void addNewMovieObjectToMovie(List<BaseObject> list, String folder, MovieObjects movieObjects, String type) {
+        inputName(type);
+        switch (movieObjects) {
+            case genre:
+                app.getGenres().add(new Genre(input));
+                app.getMovies().get(app.getMovies().size() - 1).addToGenre(app.getGenres().get(app.getGenres().size() - 1));
+                break;
+            case Oscars:
+                app.getAwards().add(new AcademyAward(input));
+                app.getMovies().get(app.getMovies().size() - 1).addToAwards(app.getAwards().get(app.getAwards().size() - 1));
+                break;
+            case format:
+                app.getFormats().add(new Format(input));
+                app.getMovies().get(app.getMovies().size() - 1).setFormat(app.getFormats().get(app.getFormats().size() - 1));
+                break;
+        }
+        fileManager.writeToFile(folder + list.get(list.size() - 1).getId() + ".txt", list.get(list.size() - 1));
+    }
+
+    void askToAddAwardToMovie() {
+        System.out.println("Tryck 1 för att lägga till en Oscars. Annars valfri bokstav eller siffra!");
+        String input = scan.nextLine();
+        if(input.equals("1")) {
+            addMovieObjectToMovie(Collections.unmodifiableList(app.getAwards()), App.AWARDFOLDER, MovieObjects.Oscars, "Oscars");
+            MovieAdder movieAdder = new MovieAdder(app);
+            movieAdder.addMore("Oscar");
         }
     }
 
@@ -72,64 +99,6 @@ class MovieObjectsAdder {
                 break;
         }
         fileManager.writeToFile(folder + list.get(list.size() - 1).getId() + ".txt", list.get(list.size() - 1));
-    }
-
-    void addNewGenre() {
-        inputName("Genre");
-        Genre genre = app.getGenres().get(app.getGenres().size() - 1);
-        id = app.getGenres().get(app.getGenres().size() - 1).getId();
-        fileManager.writeToFile(App.GENREFOLDER + id + ".txt", genre);
-        app.getMovies().get(app.getMovies().size() - 1).addToGenre(genre);
-    }
-
-    void addAwardToMovie() {
-        do {
-            fileManager.showListOfOptions(app.getAwards());
-            int newAward = app.getAwards().size() + 1;
-            System.out.println(newAward + ".) Lägg till Oscar");
-            System.out.println("Välj ett alternativ ovan!");
-            String awardChoice = scan.nextLine();
-            int choice = Integer.parseInt(awardChoice);
-            if (choice < newAward) {
-                addExistingAwardToMovie(choice);
-                inputOk = true;
-            } else if (choice == newAward) {
-                addNewAward();
-                inputOk = true;
-            }
-        } while (!inputOk);
-    }
-
-    private void addExistingAwardToMovie(int choice) {
-        for (int i = 0; i < app.getAwards().size(); i++) {
-            if (choice - 1 == i) {
-                id = app.getAwards().get(i).getId();
-                for (AcademyAward award : app.getAwards()) {
-                    if (award.getId().equals(id)) {
-                        app.getMovies().get(app.getMovies().size() - 1).addToAwards(award);
-                    }
-                }
-            }
-        }
-    }
-
-    void addNewAward() {
-        inputName("Oscar");
-        app.getAwards().add(new AcademyAward(input));
-        AcademyAward award = app.getAwards().get(app.getAwards().size() - 1);
-        id = app.getAwards().get(app.getAwards().size() - 1).getId();
-        fileManager.writeToFile(App.AWARDFOLDER + id + ".txt", award);
-        app.getMovies().get(app.getMovies().size() - 1).addToAwards(award);
-    }
-
-    void askToAddAward() {
-        System.out.println("Tryck 1 för att lägga till en Oscars. Annars valfri bokstav eller siffra!");
-        String input = scan.nextLine();
-        if(input.equals("1")) {
-            addAwardToMovie();
-            MovieAdder movieAdder = new MovieAdder(app);
-            movieAdder.addMore("Oscar");
-        }
     }
 
     private void inputName(String type) {

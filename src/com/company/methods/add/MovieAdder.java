@@ -16,7 +16,7 @@ public class MovieAdder {
     private App app;
     private InputChecker checker;
     private CrewAdder addCrew;
-    private MovieObjectsAdder addGenreAndAwardsToMovie;
+    private MovieObjectsAdder movieObjectsAdder;
     private FileManager fileManager = new FileManager();
     private boolean inputOk = false;
     private String title;
@@ -28,18 +28,18 @@ public class MovieAdder {
         this.app = app;
         this.checker = new InputChecker(app);
         this.addCrew = new CrewAdder(app);
-        this.addGenreAndAwardsToMovie = new MovieObjectsAdder(app);
+        this.movieObjectsAdder = new MovieObjectsAdder(app);
     }
 
     public void run(Object o) {
         title = getTitle();
         year = getYear();
         lengthMinutes = getLengthMinutes();
-        format = getFormat();
-        app.getMovies().add(new Movie(title, year, format, lengthMinutes));
-        addGenreAndAwardsToMovie.addGenreToMovie();
+        app.getMovies().add(new Movie(title, year, lengthMinutes));
+        movieObjectsAdder.addMovieObjectToMovie(Collections.unmodifiableList(app.getFormats()), App.FORMATFOLDER, MovieObjects.format, "format");
+        movieObjectsAdder.addMovieObjectToMovie(Collections.unmodifiableList(app.getGenres()), App.GENREFOLDER, MovieObjects.genre, "genre");
         addMore("genre");
-        addGenreAndAwardsToMovie.askToAddAward();
+        movieObjectsAdder.askToAddAwardToMovie();
         addCrew.addCrewToMovie(Collections.unmodifiableList(app.getDirectors()), App.DIRECTORFOLDER, MovieObjects.director, "regissör");
         addMore("regissör");
         addCrew.addCrewToMovie(Collections.unmodifiableList(app.getActors()), App.ACTORFOLDER, MovieObjects.actor, "skådespelare");
@@ -49,15 +49,6 @@ public class MovieAdder {
         fileManager.writeToFile(App.MOVIEFOLDER + fileName + ".txt", movie);
         System.out.println("Filmen är inlagd");
     }
-
-    /*private String fileName() {
-        do {
-            fileName = movieObj.getId();
-            File folderPath = new File(App.MOVIEFOLDER);
-            isDuplicate = fileManager.checkForDuplicateFileNames(folderPath, fileName);
-        } while (isDuplicate);
-        return fileName;
-    }*/
 
     private String getTitle() {
         System.out.println("Titel: ");
@@ -92,53 +83,7 @@ public class MovieAdder {
         } while (!inputOk);
         return lengthMinutes;
     }
-
-    private Format getFormat() {
-        do {
-            fileManager.showListOfOptions(app.getFormats());
-            int newFormat = app.getFormats().size() + 1;
-            System.out.println(newFormat + ".) Lägg till nytt format");
-            System.out.println("Välj ett alternativ ovan!");
-            String formatChoice = scan.nextLine();
-            int choice = Integer.parseInt(formatChoice);
-            if (choice < newFormat) {
-                format = addExistingFormat(choice);
-                inputOk = true;
-            } else if (choice == newFormat) {
-                format = addNewFormat();
-                inputOk = true;
-            }
-        } while (!inputOk);
-        return format;
-    }
-
-    private Format addExistingFormat(int choice) {
-        for (int i = 0; i < app.getFormats().size(); i++) {
-            if (choice - 1 == i) {
-                format = app.getFormats().get(i);
-            }
-        }
-        return format;
-    }
-
-    Format addNewFormat() {
-        Format format = null;
-        do {
-            System.out.println("Nytt Format:");
-            String input = scan.nextLine();
-            inputOk = checker.checkIfStringOfLetters(input);
-            if (input.length() < 1 || input.isBlank()) {
-                System.out.println("Formatet måste innehålla minst en bokstav!");
-                inputOk = false;
-            } else {
-                app.getFormats().add(new Format(input));
-                format = app.getFormats().get(app.getFormats().size() - 1);
-                fileManager.writeToFile(App.FORMATFOLDER + format.getId() + ".txt", format);
-            }
-        } while (!inputOk);
-        return format;
-    }
-
+    
     void addMore(String choice) {
         boolean addMore = true;
         String input;
@@ -149,13 +94,13 @@ public class MovieAdder {
                 addCrew.addCrewToMovie(Collections.unmodifiableList(app.getDirectors()), App.DIRECTORFOLDER, MovieObjects.director, "regissör");
             }
             else if(input.equals("1") && choice.equals("genre")) {
-                addGenreAndAwardsToMovie.addGenreToMovie();
+                movieObjectsAdder.addMovieObjectToMovie(Collections.unmodifiableList(app.getGenres()), App.GENREFOLDER, MovieObjects.genre, "genre");
             }
             else if(input.equals("1") && choice.equals("skådespelare")) {
                 addCrew.addCrewToMovie(Collections.unmodifiableList(app.getActors()), App.ACTORFOLDER, MovieObjects.actor, "skådespelare");
             }
             else if(input.equals("1") && choice.equals("Oscar")) {
-                addGenreAndAwardsToMovie.addAwardToMovie();
+                movieObjectsAdder.addNewMovieObjectToMovie(Collections.unmodifiableList(app.getAwards()), App.AWARDFOLDER, MovieObjects.Oscars, "Oscars");
             } else {
                 addMore = false;
             }
