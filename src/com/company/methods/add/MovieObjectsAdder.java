@@ -5,7 +5,6 @@ import com.company.dbmaker.BaseObject;
 import com.company.dbmaker.FileManager;
 import com.company.dbmaker.InputChecker;
 import com.company.objects.*;
-
 import java.util.Collections;
 import java.util.List;
 import java.util.Scanner;
