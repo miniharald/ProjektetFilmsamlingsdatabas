@@ -4,7 +4,6 @@ import com.company.App;
 import com.company.dbmaker.BaseObject;
 import com.company.dbmaker.FileManager;
 import com.company.objects.MovieObjects;
-
 import java.util.Collections;
 import java.util.List;
 import java.util.Scanner;

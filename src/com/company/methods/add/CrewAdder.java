@@ -7,7 +7,6 @@ import com.company.dbmaker.InputChecker;
 import com.company.objects.Actor;
 import com.company.objects.Director;
 import com.company.objects.MovieObjects;
-import java.nio.file.Paths;
 import java.util.List;
 import java.util.Scanner;
 
@@ -18,7 +17,6 @@ public class CrewAdder {
     private FileManager fileManager = new FileManager();
     private Scanner scan = new Scanner(System.in);
     private boolean inputOk = false;
-    private String id ="";
     private String firstName;
     private String lastName;
 

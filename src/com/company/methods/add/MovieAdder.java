@@ -21,7 +21,6 @@ public class MovieAdder {
     private boolean inputOk = false;
     private String title;
     private String year;
-    private Format format;
     private String lengthMinutes;
 
     public MovieAdder(App app) {
@@ -83,7 +82,7 @@ public class MovieAdder {
         } while (!inputOk);
         return lengthMinutes;
     }
-    
+
     void addMore(String choice) {
         boolean addMore = true;
         String input;

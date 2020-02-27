@@ -9,13 +9,11 @@ public class NewObjectAdderFacade {
 
     private MovieObjectsAdder movieObjectsAdder;
     private CrewAdder crewAdder;
-    private MovieAdder movieAdder;
     private App app;
 
     public NewObjectAdderFacade(App app) {
         this.app = app;
         this.movieObjectsAdder = new MovieObjectsAdder(app);
-        this.movieAdder = new MovieAdder(app);
         this.crewAdder = new CrewAdder(app);
     }
 
