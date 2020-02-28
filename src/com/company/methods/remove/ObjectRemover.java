@@ -187,7 +187,7 @@ public class ObjectRemover {
                 case actor:
                     for (Actor actor : movie.getCast()) {
                         if (actor.getId().equals(id)) {
-                            movie.getCast().remove(actor);
+                            movie.removeFromCast(actor);
                             fileManager.writeToFile(App.MOVIEFOLDER + movie.getId() + ".txt", movie);
                             break;
                         }
@@ -195,7 +195,7 @@ public class ObjectRemover {
                 case director:
                     for (Director director : movie.getDirector()) {
                         if (director.getId().equals(id)) {
-                            movie.getDirector().remove(director);
+                            movie.removeFromDirector(director);
                             fileManager.writeToFile(App.MOVIEFOLDER + movie.getId() + ".txt", movie);
                             break;
                         }

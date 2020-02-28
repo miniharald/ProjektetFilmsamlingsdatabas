@@ -6,7 +6,6 @@ import com.company.dbmaker.FileManager;
 import com.company.dbmaker.InputChecker;
 import com.company.objects.*;
 
-import java.nio.file.Paths;
 import java.util.Collections;
 import java.util.List;
 import java.util.Scanner;
@@ -29,62 +28,49 @@ public class MovieUpdater {
     }
 
     public void addDirector(Object o) {
-        int movieChoice = chooseMovie();
-        do {
-            int newDirector = addOption(Collections.unmodifiableList(app.getDirectors()), "regissör");
-            String directorChoice = scan.nextLine();
-            int choice = Integer.parseInt(directorChoice);
-            if (choice < newDirector) {
-                addExistingMovieObjects(choice, movieChoice, Collections.unmodifiableList(app.getDirectors()), MovieObjects.director);
-                inputOk = true;
-            } else if (choice == newDirector) {
-                addNewDirector(movieChoice);
-                inputOk = true;
-            }
-        } while (!inputOk);
-    }
-
-    private void addNewDirector(int movieChoice) {
-        inputCrewName();
-
-        app.getDirectors().add(new Director(firstName, lastName, app.getMovies().get(movieChoice)));
-        Director directorObj = app.getDirectors().get(app.getDirectors().size() - 1);
-        id = app.getDirectors().get(app.getDirectors().size() - 1).getId();
-        fileManager.writeToFile(App.DIRECTORFOLDER + id + ".txt", app.getDirectors().get(app.getDirectors().size() - 1));
-        app.getMovies().get(movieChoice).addToDirector(directorObj);
-        updateMovieFile(movieChoice);
+        addCrew(Collections.unmodifiableList(app.getDirectors()), "regissör", MovieObjects.director, App.DIRECTORFOLDER);
     }
 
     public void addActor(Object o) {
+        addCrew(Collections.unmodifiableList(app.getActors()), "skådespelare", MovieObjects.actor, App.ACTORFOLDER);
+    }
+
+    public void addCrew(List<BaseObject> list, String crewType, MovieObjects crew, String folder) {
         int movieChoice = chooseMovie();
         do {
-            int newActor = addOption(Collections.unmodifiableList(app.getActors()), "skådespelare");
-            String actorChoice = scan.nextLine();
-            int choice = Integer.parseInt(actorChoice);
-            if (choice < newActor) {
-                addExistingMovieObjects(choice, movieChoice, Collections.unmodifiableList(app.getActors()), MovieObjects.actor);
+            int newCrew = addNewOptionForList(list, crewType);
+            String crewChoice = scan.nextLine();
+            int choice = Integer.parseInt(crewChoice);
+            if (choice < newCrew) {
+                addExistingMovieObjects(choice, movieChoice, list, crew);
                 inputOk = true;
-            } else if (choice == newActor) {
-                addNewActor(movieChoice);
+            } else if (choice == newCrew) {
+                addNewCrew(movieChoice, list, folder, crew);
                 inputOk = true;
             }
         } while (!inputOk);
     }
 
-    private void addNewActor(int movieChoice) {
+    private void addNewCrew(int movieChoice, List<BaseObject> list, String folder, MovieObjects crew) {
         inputCrewName();
-        app.getActors().add(new Actor(firstName, lastName, app.getMovies().get(movieChoice)));
-        Actor actorObj = app.getActors().get(app.getActors().size() - 1);
-        id = app.getActors().get(app.getActors().size() - 1).getId();
-        fileManager.writeToFile(App.ACTORFOLDER + id + ".txt", app.getActors().get(app.getActors().size() - 1));
-        app.getMovies().get(movieChoice).addToCast(actorObj);
+        switch (crew) {
+            case actor:
+                app.getActors().add(new Actor(firstName, lastName, app.getMovies().get(movieChoice)));
+                app.getMovies().get(movieChoice).addToCast(app.getActors().get(app.getActors().size() - 1));
+                break;
+            case director:
+                app.getDirectors().add(new Director(firstName, lastName, app.getMovies().get(movieChoice)));
+                app.getMovies().get(movieChoice).addToDirector(app.getDirectors().get(app.getDirectors().size() - 1));
+                break;
+        }
+        fileManager.writeToFile(folder + list.get(list.size() - 1).getId() + ".txt", list.get(list.size() - 1));
         updateMovieFile(movieChoice);
     }
 
     public void addGenre(Object o) {
         int movieChoice = chooseMovie();
         do {
-            int newGenre = addOption(Collections.unmodifiableList(app.getGenres()), "genre");
+            int newGenre = addNewOptionForList(Collections.unmodifiableList(app.getGenres()), "genre");
             String genreChoice = scan.nextLine();
             int choice = Integer.parseInt(genreChoice);
             if (choice < newGenre) {
@@ -110,7 +96,7 @@ public class MovieUpdater {
     public void addAward(Object o) {
         int movieChoice = chooseMovie();
         do {
-            int newAward = addOption(Collections.unmodifiableList(app.getAwards()), "Oscars");
+            int newAward = addNewOptionForList(Collections.unmodifiableList(app.getAwards()), "Oscars");
             String awardChoice = scan.nextLine();
             int choice = Integer.parseInt(awardChoice);
             if (choice < newAward) {
@@ -150,14 +136,12 @@ public class MovieUpdater {
                                 Actor actor = (Actor) baseObject;
                                 actor.addToFilmography(app.getMovies().get(movieChoice));
                                 app.getMovies().get(movieChoice).addToCast(actor);
-                                fileManager.deleteFiles(Paths.get(App.ACTORFOLDER + id + ".txt"));
                                 fileManager.writeToFile(App.ACTORFOLDER + id + ".txt", app.getActors().get(i));
                                 break;
                             case director:
                                 Director director = (Director) baseObject;
                                 director.addToFilmography(app.getMovies().get(movieChoice));
                                 app.getMovies().get(movieChoice).addToDirector(director);
-                                fileManager.deleteFiles(Paths.get(App.DIRECTORFOLDER + id + ".txt"));
                                 fileManager.writeToFile(App.DIRECTORFOLDER + id + ".txt", app.getDirectors().get(i));
                                 break;
                         }
@@ -171,7 +155,7 @@ public class MovieUpdater {
     public void changeFormat(Object o) {
         int movieChoice = chooseMovie();
         do {
-            int newFormat = addOption(Collections.unmodifiableList(app.getFormats()), "format");
+            int newFormat = addNewOptionForList(Collections.unmodifiableList(app.getFormats()), "format");
             String formatChoice = scan.nextLine();
             int choice = Integer.parseInt(formatChoice);
             if (choice < newFormat) {
@@ -247,7 +231,7 @@ public class MovieUpdater {
         return Integer.parseInt(input) - 1;
     }
 
-    private int addOption(List<BaseObject> list, String movieObject) {
+    private int addNewOptionForList(List<BaseObject> list, String movieObject) {
         fileManager.showListOfOptions(list);
         int addOption = list.size() + 1;
         System.out.println(addOption + ".) Lägg till " + movieObject);

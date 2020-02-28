@@ -1,5 +1,6 @@
 package com.company;
 
+import com.company.dbmaker.BaseObject;
 import com.company.dbmaker.FileManager;
 
 import com.company.menu.Menu;
@@ -15,7 +16,9 @@ import com.company.methods.update.MovieObjectsUpdater;
 import com.company.methods.update.MovieUpdater;
 import com.company.objects.*;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class App {
 

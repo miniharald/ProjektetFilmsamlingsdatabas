@@ -92,7 +92,6 @@ public class FileManager<D> {
 
     public int showListOfOptions(List<BaseObject> list) {
         int counter = 1;
-        //list.sort(Comparator.comparing(BaseObject::getPrimary));
         for (BaseObject baseObject : list) {
             System.out.println(counter + ".) " + baseObject.ToStringForList());
             counter++;

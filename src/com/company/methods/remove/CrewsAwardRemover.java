@@ -15,6 +15,7 @@ public class CrewsAwardRemover {
         this.app = app;
     }
 
+
     public void removeAwardFromActor(Object o) {
         fileManager.showListOfOptions(app.getActors());
         int goBack = app.getActors().size() + 1;

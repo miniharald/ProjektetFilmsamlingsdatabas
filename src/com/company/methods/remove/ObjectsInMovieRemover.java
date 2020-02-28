@@ -34,16 +34,16 @@ public class ObjectsInMovieRemover {
         removeObjectsFromMovie(MovieObjects.genre);
     }
 
-    public void removeObjectsFromMovie(MovieObjects movieObjects) {
+    public void removeObjectsFromMovie(MovieObjects movieObject) {
         fileManager.showListOfOptions(app.getMovies());
         int goBack = app.getMovies().size() + 1;
         int movieChoice = getChoice(goBack);
         if (movieChoice < goBack) {
-            showObjects(movieObjects, movieChoice);
+            showObjects(movieObject, movieChoice);
             goBack = app.getMovies().size() + 1;
             int choice = getChoice(goBack);
             if (choice < goBack) {
-                removeObjectFromMovie(movieObjects, movieChoice, choice);
+                removeObjectFromMovie(movieObject, movieChoice, choice);
                 fileManager.writeToFile(App.MOVIEFOLDER + app.getMovies().get(movieChoice).getId() + ".txt", app.getMovies().get(movieChoice));
             } else if (choice == goBack) {
                 return;

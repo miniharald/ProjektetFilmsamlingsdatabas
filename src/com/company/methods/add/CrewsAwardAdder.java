@@ -26,7 +26,7 @@ public class CrewsAwardAdder {
         addAwardToCrew(Collections.unmodifiableList(app.getDirectors()), App.DIRECTORFOLDER, MovieObjects.director);
     }
 
-    private void addAwardToCrew(List<BaseObject> list, String folder, MovieObjects movieObjects) {
+    private void addAwardToCrew(List<BaseObject> list, String folder, MovieObjects crew) {
         fileManager.showListOfOptions(list);
         int goBack = list.size() + 1;
         int crewChoice = getChoice(goBack);
@@ -35,7 +35,7 @@ public class CrewsAwardAdder {
             goBack = app.getAwards().size() + 1;
             int choice = getChoice(goBack);
             if (crewChoice < goBack) {
-                switch (movieObjects) {
+                switch (crew) {
                     case actor:
                         app.getActors().get(crewChoice).addToAwards(app.getAwards().get(choice));
                         break;

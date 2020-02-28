@@ -25,7 +25,7 @@ public class CrewAdder {
         this.checker = new InputChecker(app);
     }
 
-    void addCrewToMovie(List<BaseObject> list, String folder, MovieObjects movieObjects, String crewType) {
+    void addCrewToMovie(List<BaseObject> list, String folder, MovieObjects crew, String crewType) {
         do {
             fileManager.showListOfOptions(list);
             int newCrew = list.size() + 1;
@@ -34,18 +34,18 @@ public class CrewAdder {
             String crewChoice = scan.nextLine();
             int choice = Integer.parseInt(crewChoice);
             if (choice < newCrew) {
-                addExistingCrewToMovie(choice, list, folder, movieObjects);
+                addExistingCrewToMovie(choice, list, folder, crew);
                 inputOk = true;
             } else if (choice == newCrew) {
-                addNewCrewToMovie(list, folder, movieObjects);
+                addNewCrewToMovie(list, folder, crew);
                 inputOk = true;
             }
         } while (!inputOk);
     }
 
-    private void addNewCrewToMovie(List<BaseObject> list, String folder, MovieObjects movieObjects) {
+    private void addNewCrewToMovie(List<BaseObject> list, String folder, MovieObjects crew) {
         inputName();
-        switch (movieObjects) {
+        switch (crew) {
             case actor:
                 app.getActors().add(new Actor(firstName, lastName, app.getMovies().get(app.getMovies().size() - 1)));
                 app.getMovies().get(app.getMovies().size() - 1).addToCast(app.getActors().get(app.getActors().size() - 1));
@@ -58,8 +58,8 @@ public class CrewAdder {
         fileManager.writeToFile(folder + list.get(list.size() - 1).getId() + ".txt", list.get(list.size() - 1));
     }
 
-    private void addExistingCrewToMovie(int choice, List<BaseObject> list, String folder, MovieObjects movieObjects) {
-        switch (movieObjects) {
+    private void addExistingCrewToMovie(int choice, List<BaseObject> list, String folder, MovieObjects crew) {
+        switch (crew) {
             case director:
                 Director director = (Director) list.get(choice - 1);
                 director.addToFilmography(app.getMovies().get(app.getMovies().size() - 1));
@@ -74,9 +74,9 @@ public class CrewAdder {
         fileManager.writeToFile(folder + list.get(choice - 1).getId() + ".txt", list.get(choice - 1));
     }
 
-    void addNewCrew(List<BaseObject> list, String folder, MovieObjects movieObjects) {
+    void addNewCrew(List<BaseObject> list, String folder, MovieObjects crew) {
         inputName();
-        switch (movieObjects) {
+        switch (crew) {
             case director:
                 app.getDirectors().add(new Director(firstName, lastName));
                 break;
