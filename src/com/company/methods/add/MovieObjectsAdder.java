@@ -26,8 +26,17 @@ class MovieObjectsAdder {
 
     void addMovieObjectToMovie(List<BaseObject> list, String folder, MovieObjects movieObjects, String type) {
         do {
-            fileManager.showListOfOptions(list);
-            int newMovieObject = list.size() + 1;
+            int newMovieObject;
+            if (list.size() > 10) {
+                System.out.println("Gör en sökning för att se om det/den " + type + " du ska lägga in redan finns:");
+                String input = scan.nextLine();
+                List<BaseObject> searchResult = fileManager.search(input, list);
+                fileManager.showListOfOptions(searchResult);
+                newMovieObject = searchResult.size() + 1;
+            } else {
+                fileManager.showListOfOptions(list);
+                newMovieObject = list.size() + 1;
+            }
             System.out.println(newMovieObject + ".) Lägg till " + type);
             System.out.println("Välj ett alternativ ovan!");
             String crewChoice = scan.nextLine();

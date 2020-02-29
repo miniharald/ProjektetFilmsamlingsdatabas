@@ -27,8 +27,17 @@ public class CrewAdder {
 
     void addCrewToMovie(List<BaseObject> list, String folder, MovieObjects crew, String crewType) {
         do {
-            fileManager.showListOfOptions(list);
-            int newCrew = list.size() + 1;
+            int newCrew;
+            if (list.size() > 10) {
+                System.out.println("Gör en sökning för att se om den " + crewType + " du ska lägga in redan finns:");
+                String input = scan.nextLine();
+                List<BaseObject> searchResult = fileManager.search(input, list);
+                fileManager.showListOfOptions(searchResult);
+                newCrew = searchResult.size() + 1;
+            } else {
+                fileManager.showListOfOptions(list);
+                newCrew = list.size() + 1;
+            }
             System.out.println(newCrew + ".) Lägg till " + crewType);
             System.out.println("Välj ett alternativ ovan!");
             String crewChoice = scan.nextLine();

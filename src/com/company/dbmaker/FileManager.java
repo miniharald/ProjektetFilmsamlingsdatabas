@@ -107,6 +107,7 @@ public class FileManager<D> {
     public List<BaseObject> search(String input, List<BaseObject> list) {
         List<BaseObject> newList = list.stream()
                 .filter(o -> o.getSearchTerms().toLowerCase().contains(input.toLowerCase()))
+                .sorted(Comparator.comparing(BaseObject::getPrimary))
                 .collect(Collectors.toList());
         return newList;
     }
