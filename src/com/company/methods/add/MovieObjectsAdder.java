@@ -63,7 +63,11 @@ class MovieObjectsAdder {
                 }
                 break;
             case Oscars:
-                app.getMovies().get(app.getMovies().size() - 1).addToAwards(app.getAwards().get(choice - 1));
+                if (app.getAwards().size() > 10) {
+                    app.getMovies().get(app.getMovies().size() - 1).addToAwards((AcademyAward) searchresult.get(choice -1));
+                } else {
+                    app.getMovies().get(app.getMovies().size() - 1).addToAwards(app.getAwards().get(choice -1));
+                }
                 break;
             case format:
                 app.getMovies().get(app.getMovies().size() - 1).setFormat(app.getFormats().get(choice - 1));
