@@ -30,7 +30,7 @@ class MovieObjectsAdder {
             if (list.size() > 10) {
                 System.out.println("Gör en sökning för att se om det/den " + type + " du ska lägga in redan finns:");
                 String input = scan.nextLine();
-                List<BaseObject> searchResult = fileManager.search(input, list);
+                List<BaseObject> searchResult = fileManager.searchSpecific(input, list);
                 fileManager.showListOfOptions(searchResult);
                 newMovieObject = searchResult.size() + 1;
             } else {

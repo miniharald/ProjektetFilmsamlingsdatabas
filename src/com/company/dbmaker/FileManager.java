@@ -104,9 +104,17 @@ public class FileManager<D> {
         deleteFiles(Paths.get(folder + list.get(choice).getId() + ".txt"));
     }
 
-    public List<BaseObject> search(String input, List<BaseObject> list) {
+    public List<BaseObject> searchAll(String input, List<BaseObject> list) {
         List<BaseObject> newList = list.stream()
                 .filter(o -> o.getSearchTerms().toLowerCase().contains(input.toLowerCase()))
+                .sorted(Comparator.comparing(BaseObject::getPrimary))
+                .collect(Collectors.toList());
+        return newList;
+    }
+
+    public List<BaseObject> searchSpecific(String input, List<BaseObject> list) {
+        List<BaseObject> newList = list.stream()
+                .filter(o -> o.getPrimary().toLowerCase().contains(input.toLowerCase()))
                 .sorted(Comparator.comparing(BaseObject::getPrimary))
                 .collect(Collectors.toList());
         return newList;

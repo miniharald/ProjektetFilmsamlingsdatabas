@@ -19,7 +19,7 @@ public class SearchFinder {
 
     public void search(Object o) {
         String input = scan.nextLine();
-        List<Movie> searchResult = (List<Movie>) fileManager.search(input, app.getMovies());
+        List<Movie> searchResult = (List<Movie>) fileManager.searchAll(input, app.getMovies());
         fileManager.showListOfOptions(searchResult);
     }
 }
