@@ -50,13 +50,21 @@ public class DbViewer {
     public void browseByDirector(Object o) {
         newMovieList.clear();
         counter = fileManager.showListOfOptions(app.getDirectors());
-        printMovieChoiceFromOtherObject("Director");
+        String input = scan.nextLine();
+        int choice = Integer.parseInt(input) - 1;
+        if (choice < counter) {
+            printCrew(choice, MovieObjects.director);
+        }
     }
 
     public void browseByActor(Object o) {
         newMovieList.clear();
-        counter = fileManager.showListOfOptions(app.getActors());
-        printMovieChoiceFromOtherObject("Actor");
+        counter = fileManager.showListOfOptions(app.getDirectors());
+        String input = scan.nextLine();
+        int choice = Integer.parseInt(input) - 1;
+        if (choice < counter) {
+            printCrew(choice, MovieObjects.director);
+        }
     }
 
     private void printMovieChoice(boolean isMovie) {
@@ -106,15 +114,22 @@ public class DbViewer {
         }
         if (object.equals("Director")) {
             //app.getDirectors().sort(Comparator.comparing(Director::getLastName));
-            for (Director director: movie.getDirector()) {
-                printCrewIfMatch(Collections.unmodifiableList(app.getDirectors()), choice, director, movie);
-            }
+            System.out.println(app.getDirectors().get(choice));
         }
         if (object.equals("Actor")) {
             //app.getActors().sort(Comparator.comparing(Actor::getLastName));
             for (Actor actor: movie.getCast()) {
                 printCrewIfMatch(Collections.unmodifiableList(app.getActors()), choice, actor, movie);
             }
+        }
+    }
+
+    private  void printCrew(int choice, MovieObjects crew) {
+        switch (crew) {
+            case director:
+                System.out.println(app.getDirectors().get(choice));
+            case actor:
+                System.out.println(app.getActors().get(choice));
         }
     }
 

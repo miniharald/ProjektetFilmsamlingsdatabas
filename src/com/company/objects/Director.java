@@ -3,7 +3,9 @@ package com.company.objects;
 import com.company.dbmaker.BaseObject;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class Director extends BaseObject {
 
@@ -93,6 +95,25 @@ public class Director extends BaseObject {
 
     @Override
     public String toString() {
-        return firstName + " " + lastName;
+        if (awards.size() < 1) {
+            return printIfAwardIsEmpty();
+        } else {
+            return printIfAwardIsNotEmpty();
+        }
+    }
+
+    private String printIfAwardIsEmpty() {
+        return String.format("%s %s\nOscars: %s\nFilmer:\n%s", this.firstName, this.lastName, this.awards.size(), this.filmography.stream()
+                .sorted(Comparator.comparing(Movie::getTitle))
+                .map(Movie::getTitle).collect(Collectors.joining("\n")));
+    }
+
+    private String printIfAwardIsNotEmpty() {
+        return String.format("%s %s\nOscars: %s (%s)\nFilmer:\n%s", this.firstName, this.lastName, this.awards.size(), awards.stream()
+                .sorted(Comparator.comparing(AcademyAward::getName))
+                .map(AcademyAward::getName).collect(Collectors.joining(", ")),
+                this.filmography.stream()
+                .sorted(Comparator.comparing(Movie::getTitle))
+                .map(Movie::getTitle).collect(Collectors.joining("\n")));
     }
 }

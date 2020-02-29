@@ -13,6 +13,7 @@ public class Menu {
     }
 
     private void printMenu() {
+        System.out.println("\n");
         for (MenuPicker menuPicker : menuFactory.getCurrentMenu()) {
             System.out.printf("%s\n", menuPicker.getKeyAndTitle());
         }
