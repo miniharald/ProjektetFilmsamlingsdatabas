@@ -5,6 +5,8 @@ import com.company.dbmaker.BaseObject;
 import com.company.dbmaker.FileManager;
 import com.company.dbmaker.InputChecker;
 import com.company.objects.*;
+
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Scanner;
@@ -16,7 +18,6 @@ class MovieObjectsAdder {
     private FileManager fileManager = new FileManager();
     private Scanner scan = new Scanner(System.in);
     private boolean inputOk = false;
-    private String id = "";
     private String input;
 
     MovieObjectsAdder(App app) {
@@ -27,10 +28,11 @@ class MovieObjectsAdder {
     void addMovieObjectToMovie(List<BaseObject> list, String folder, MovieObjects movieObjects, String type) {
         do {
             int newMovieObject;
+            List<BaseObject> searchResult = new ArrayList<>();
             if (list.size() > 10) {
                 System.out.println("Gör en sökning för att se om det/den " + type + " du ska lägga in redan finns:");
                 String input = scan.nextLine();
-                List<BaseObject> searchResult = fileManager.searchSpecific(input, list);
+                searchResult = fileManager.searchSpecific(input, list);
                 fileManager.showListOfOptions(searchResult);
                 newMovieObject = searchResult.size() + 1;
             } else {
@@ -42,7 +44,7 @@ class MovieObjectsAdder {
             String crewChoice = scan.nextLine();
             int choice = Integer.parseInt(crewChoice);
             if (choice < newMovieObject) {
-                addExistingMovieObjectToMovie(choice, movieObjects);
+                addExistingMovieObjectToMovie(choice, movieObjects, searchResult);
                 inputOk = true;
             } else if (choice == newMovieObject) {
                 addNewMovieObjectToMovie(list, folder, movieObjects, type);
@@ -51,7 +53,7 @@ class MovieObjectsAdder {
         } while (!inputOk);
     }
 
-    public void addExistingMovieObjectToMovie(int choice, MovieObjects movieObject) {
+    private void addExistingMovieObjectToMovie(int choice, MovieObjects movieObject) {
         switch (movieObject) {
             case genre:
                 app.getMovies().get(app.getMovies().size() - 1).addToGenre(app.getGenres().get(choice -1));
@@ -64,7 +66,7 @@ class MovieObjectsAdder {
         }
     }
 
-    public void addNewMovieObjectToMovie(List<BaseObject> list, String folder, MovieObjects movieObjects, String type) {
+    void addNewMovieObjectToMovie(List<BaseObject> list, String folder, MovieObjects movieObjects, String type) {
         inputName(type);
         switch (movieObjects) {
             case genre:

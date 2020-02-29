@@ -1,11 +1,13 @@
 package com.company.methods.remove;
 
 import com.company.App;
+import com.company.dbmaker.BaseObject;
 import com.company.dbmaker.FileManager;
 import com.company.objects.Actor;
 import com.company.objects.Movie;
 import com.company.objects.MovieObjects;
 
+import java.util.List;
 import java.util.Scanner;
 
 public class ObjectsInMovieRemover {
@@ -35,8 +37,17 @@ public class ObjectsInMovieRemover {
     }
 
     public void removeObjectsFromMovie(MovieObjects movieObject) {
-        fileManager.showListOfOptions(app.getMovies());
-        int goBack = app.getMovies().size() + 1;
+        int goBack;
+        if (app.getMovies().size() > 10) {
+            System.out.println("Gör en sökning på den film du ska ta bort filmobjekt från:");
+            String input = scan.nextLine();
+            List<BaseObject> searchResult = fileManager.searchSpecific(input, app.getMovies());
+            fileManager.showListOfOptions(searchResult);
+            goBack = searchResult.size() + 1;
+        } else {
+            fileManager.showListOfOptions(app.getMovies());
+            goBack = app.getMovies().size() + 1;
+        }
         int movieChoice = getChoice(goBack);
         if (movieChoice < goBack) {
             showObjects(movieObject, movieChoice);
@@ -62,18 +73,43 @@ public class ObjectsInMovieRemover {
     }
 
     private void showObjects(MovieObjects movieObjects, int movieChoice) {
+        String input = "";
+        if (app.getMovies().size() > 10) {
+            System.out.println("Gör en sökning på det du ska ta bort filmobjekt från:");
+            input = scan.nextLine();
+        }
         switch (movieObjects) {
             case director:
-                fileManager.showListOfOptions(app.getMovies().get(movieChoice).getDirector());
+                if (app.getMovies().size() > 10) {
+                    List<BaseObject> searchResult = fileManager.searchSpecific(input, app.getMovies().get(movieChoice).getDirector());
+                    fileManager.showListOfOptions(searchResult);
+                } else {
+                    fileManager.showListOfOptions(app.getMovies().get(movieChoice).getDirector());
+                }
                 break;
             case actor:
-                fileManager.showListOfOptions(app.getMovies().get(movieChoice).getCast());
+                if (app.getMovies().size() > 10) {
+                    List<BaseObject> searchResult = fileManager.searchSpecific(input, app.getMovies().get(movieChoice).getCast());
+                    fileManager.showListOfOptions(searchResult);
+                } else {
+                    fileManager.showListOfOptions(app.getMovies().get(movieChoice).getCast());
+                }
                 break;
             case Oscars:
-                fileManager.showListOfOptions(app.getMovies().get(movieChoice).getAwards());
+                if (app.getMovies().size() > 10) {
+                    List<BaseObject> searchResult = fileManager.searchSpecific(input, app.getMovies().get(movieChoice).getAwards());
+                    fileManager.showListOfOptions(searchResult);
+                } else {
+                    fileManager.showListOfOptions(app.getMovies().get(movieChoice).getAwards());
+                }
                 break;
             case genre:
-                fileManager.showListOfOptions(app.getMovies().get(movieChoice).getGenre());
+                if (app.getMovies().size() > 10) {
+                    List<BaseObject> searchResult = fileManager.searchSpecific(input, app.getMovies().get(movieChoice).getGenre());
+                    fileManager.showListOfOptions(searchResult);
+                } else {
+                    fileManager.showListOfOptions(app.getMovies().get(movieChoice).getGenre());
+                }
                 break;
         }
     }

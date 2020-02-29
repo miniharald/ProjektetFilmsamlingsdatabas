@@ -7,6 +7,8 @@ import com.company.dbmaker.InputChecker;
 import com.company.objects.Actor;
 import com.company.objects.Director;
 import com.company.objects.MovieObjects;
+
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
@@ -28,10 +30,11 @@ public class CrewAdder {
     void addCrewToMovie(List<BaseObject> list, String folder, MovieObjects crew, String crewType) {
         do {
             int newCrew;
+            List<BaseObject> searchResult = new ArrayList<>();
             if (list.size() > 10) {
                 System.out.println("Gör en sökning för att se om den " + crewType + " du ska lägga in redan finns:");
                 String input = scan.nextLine();
-                List<BaseObject> searchResult = fileManager.searchSpecific(input, list);
+                searchResult = fileManager.searchSpecific(input, list);
                 fileManager.showListOfOptions(searchResult);
                 newCrew = searchResult.size() + 1;
             } else {
@@ -43,7 +46,7 @@ public class CrewAdder {
             String crewChoice = scan.nextLine();
             int choice = Integer.parseInt(crewChoice);
             if (choice < newCrew) {
-                addExistingCrewToMovie(choice, list, folder, crew);
+                addExistingCrewToMovie(choice, list, folder, crew, searchResult);
                 inputOk = true;
             } else if (choice == newCrew) {
                 addNewCrewToMovie(list, folder, crew);
@@ -67,15 +70,25 @@ public class CrewAdder {
         fileManager.writeToFile(folder + list.get(list.size() - 1).getId() + ".txt", list.get(list.size() - 1));
     }
 
-    private void addExistingCrewToMovie(int choice, List<BaseObject> list, String folder, MovieObjects crew) {
-        switch (crew) {
+    private void addExistingCrewToMovie(int choice, List<BaseObject> list, String folder, MovieObjects crew, List<BaseObject> searchResult) {
+        Director director;
+        Actor actor;
+                switch (crew) {
             case director:
-                Director director = (Director) list.get(choice - 1);
+                if(list.size() > 10) {
+                    director = (Director) searchResult.get(choice - 1);
+                } else {
+                    director = (Director) list.get(choice - 1);
+                }
                 director.addToFilmography(app.getMovies().get(app.getMovies().size() - 1));
                 app.getMovies().get(app.getMovies().size() - 1).addToDirector(director);
                 break;
             case actor:
-                Actor actor = (Actor) list.get(choice - 1);
+                if(list.size() > 10) {
+                    actor = (Actor) searchResult.get(choice - 1);
+                } else {
+                    actor = (Actor) list.get(choice - 1);
+                }
                 actor.addToFilmography(app.getMovies().get(app.getMovies().size() - 1));
                 app.getMovies().get(app.getMovies().size() - 1).addToCast(actor);
                 break;
