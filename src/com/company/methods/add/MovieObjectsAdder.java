@@ -53,10 +53,14 @@ class MovieObjectsAdder {
         } while (!inputOk);
     }
 
-    private void addExistingMovieObjectToMovie(int choice, MovieObjects movieObject) {
+    private void addExistingMovieObjectToMovie(int choice, MovieObjects movieObject, List<BaseObject> searchresult) {
         switch (movieObject) {
             case genre:
-                app.getMovies().get(app.getMovies().size() - 1).addToGenre(app.getGenres().get(choice -1));
+                if (app.getGenres().size() > 10) {
+                    app.getMovies().get(app.getMovies().size() - 1).addToGenre((Genre) searchresult.get(choice -1));
+                } else {
+                    app.getMovies().get(app.getMovies().size() - 1).addToGenre(app.getGenres().get(choice -1));
+                }
                 break;
             case Oscars:
                 app.getMovies().get(app.getMovies().size() - 1).addToAwards(app.getAwards().get(choice - 1));
