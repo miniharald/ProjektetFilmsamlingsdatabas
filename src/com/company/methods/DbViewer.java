@@ -61,11 +61,11 @@ public class DbViewer {
 
     public void browseByActor(Object o) {
         app.getActors().sort(Comparator.comparing(Actor::getPrimary));
-        counter = fileManager.showListOfOptions(app.getDirectors());
+        counter = fileManager.showListOfOptions(app.getActors());
         String input = scan.nextLine();
         int choice = Integer.parseInt(input) - 1;
         if (choice < counter) {
-            printCrew(choice, MovieObjects.director);
+            printCrew(choice, MovieObjects.actor);
         }
     }
 

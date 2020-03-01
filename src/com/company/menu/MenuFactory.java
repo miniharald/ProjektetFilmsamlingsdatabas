@@ -125,7 +125,9 @@ class MenuFactory {
         displayDbMenu.add(new MenuPicker("Alla regissörer", '3', app.getDbViewer()::browseByDirector));
         displayDbMenu.add(new MenuPicker("Alla skådespelare", '4', app.getDbViewer()::browseByActor));
         displayDbMenu.add(new MenuPicker("Alla Format", '5', app.getDbViewer()::browseByFormat));
-        displayDbMenu.add(new MenuPicker("Sök", '6', app.getSearchFinder()::search));
+        displayDbMenu.add(new MenuPicker("Sök film", '6', app.getSearchFinder()::searchForMovie));
+        displayDbMenu.add(new MenuPicker("Sök skådespelare", '7', app.getSearchFinder()::searchForActor));
+        displayDbMenu.add(new MenuPicker("Sök regissör", '8', app.getSearchFinder()::searchForDirector));
         displayDbMenu.add(new MenuPicker("Tillbaka till huvudmeny", '0', this::showMainMenu));
     }
 
