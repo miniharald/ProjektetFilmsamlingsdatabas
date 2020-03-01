@@ -1,7 +1,6 @@
 package com.company.methods;
 
 import com.company.App;
-import com.company.dbmaker.BaseObject;
 import com.company.dbmaker.FileManager;
 import com.company.objects.*;
 
@@ -21,18 +20,21 @@ public class DbViewer {
 
     public void browseByMovies(Object o) {
         newMovieList.clear();
+        app.getMovies().sort(Comparator.comparing(Movie::getPrimary));
         counter = fileManager.showListOfOptions(app.getMovies());
         printMovieChoice(true);
     }
 
     public void browseByGenre(Object o) {
         newMovieList.clear();
+        app.getGenres().sort(Comparator.comparing(Genre::getPrimary));
         counter = fileManager.showListOfOptions(app.getGenres());
         printMovieChoiceFromOtherObject("Genre");
     }
 
     public void browseByFormat(Object o) {
         newMovieList.clear();
+        app.getFormats().sort(Comparator.comparing(Format::getPrimary));
         counter = fileManager.showListOfOptions(app.getFormats());
         String input = scan.nextLine();
         int choice = Integer.parseInt(input) - 1;
@@ -48,7 +50,7 @@ public class DbViewer {
     }
 
     public void browseByDirector(Object o) {
-        newMovieList.clear();
+        app.getDirectors().sort(Comparator.comparing(Director::getPrimary));
         counter = fileManager.showListOfOptions(app.getDirectors());
         String input = scan.nextLine();
         int choice = Integer.parseInt(input) - 1;
@@ -58,7 +60,7 @@ public class DbViewer {
     }
 
     public void browseByActor(Object o) {
-        newMovieList.clear();
+        app.getActors().sort(Comparator.comparing(Actor::getPrimary));
         counter = fileManager.showListOfOptions(app.getDirectors());
         String input = scan.nextLine();
         int choice = Integer.parseInt(input) - 1;
@@ -112,32 +114,16 @@ public class DbViewer {
                 }
             }
         }
-        if (object.equals("Director")) {
-            //app.getDirectors().sort(Comparator.comparing(Director::getLastName));
-            System.out.println(app.getDirectors().get(choice));
-        }
-        if (object.equals("Actor")) {
-            //app.getActors().sort(Comparator.comparing(Actor::getLastName));
-            for (Actor actor: movie.getCast()) {
-                printCrewIfMatch(Collections.unmodifiableList(app.getActors()), choice, actor, movie);
-            }
-        }
     }
 
     private  void printCrew(int choice, MovieObjects crew) {
         switch (crew) {
             case director:
                 System.out.println(app.getDirectors().get(choice));
+                break;
             case actor:
                 System.out.println(app.getActors().get(choice));
+                break;
         }
-    }
-
-    private void printCrewIfMatch(List<BaseObject> list, int choice, BaseObject baseObject, Movie movie) {
-            if (baseObject.getId().equals(list.get(choice).getId())) {
-                newMovieList.add(movie);
-                System.out.println(counter + ".) " + movie.ToStringForList());
-                counter++;
-            }
     }
 }
